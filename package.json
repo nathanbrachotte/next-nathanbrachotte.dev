@@ -2,13 +2,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npm run setup && next build",
-    "build-only": "next build",
+    "build": "next build",
     "start": "next start",
     "setup": "node ./lib/setup.mjs",
     "lint": "next lint"
   },
   "dependencies": {
+    "@csstools/postcss-oklab-function": "^3.0.1",
     "@planetscale/database": "^1.7.0",
     "@vercel/analytics": "^1.0.1",
     "@vercel/edge-config": "^0.2.1",
