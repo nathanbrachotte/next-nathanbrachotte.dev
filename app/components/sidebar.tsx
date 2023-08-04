@@ -1,26 +1,29 @@
-'use client';
+'use client'
 
-import clsx from 'clsx';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
-import { LayoutGroup, motion } from 'framer-motion';
+import clsx from 'clsx'
+import { usePathname } from 'next/navigation'
+import Link from 'next/link'
+import { LayoutGroup, motion } from 'framer-motion'
 
 const navItems = {
   '/': {
-    name: 'home',
+    name: 'Home',
   },
   '/blog': {
-    name: 'blog',
+    name: 'Blog',
   },
-  '/guestbook': {
-    name: 'guestbook',
+  // '/guestbook': {
+  //   name: 'guestbook',
+  // },
+  '/uses': {
+    name: 'Uses',
   },
-};
+}
 
 export default function Navbar() {
-  let pathname = usePathname() || '/';
+  let pathname = usePathname() || '/'
   if (pathname.includes('/blog/')) {
-    pathname = '/blog';
+    pathname = '/blog'
   }
 
   return (
@@ -33,7 +36,7 @@ export default function Navbar() {
           >
             <div className="flex flex-row space-x-0 pr-10">
               {Object.entries(navItems).map(([path, { name }]) => {
-                const isActive = path === pathname;
+                const isActive = path === pathname
                 return (
                   <Link
                     key={path}
@@ -42,7 +45,7 @@ export default function Navbar() {
                       'transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle',
                       {
                         'text-neutral-500': !isActive,
-                      }
+                      },
                     )}
                   >
                     <span className="relative py-1 px-2">
@@ -50,6 +53,7 @@ export default function Navbar() {
                       {path === pathname ? (
                         <motion.div
                           className="absolute h-[1px] top-7 mx-2 inset-0 bg-neutral-200 dark:bg-neutral-800 z-[-1] dark:bg-gradient-to-r from-transparent to-neutral-900"
+                          // className="absolute h-[3px] top-7 mx-2 inset-0 bg-blue-400 dark:bg-blue-400 z-[-1] dark:bg-gradient-to-r from-transparent to-purple-500"
                           layoutId="sidebar"
                           transition={{
                             type: 'spring',
@@ -60,12 +64,12 @@ export default function Navbar() {
                       ) : null}
                     </span>
                   </Link>
-                );
+                )
               })}
             </div>
           </nav>
         </LayoutGroup>
       </div>
     </aside>
-  );
+  )
 }
