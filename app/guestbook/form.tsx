@@ -1,22 +1,22 @@
-'use client';
+'use client'
 
-import { useRef } from 'react';
-import { saveGuestbookEntry } from '../actions';
-import { experimental_useFormStatus as useFormStatus } from 'react-dom';
+import { useRef } from 'react'
+// import { saveGuestbookEntry } from '../actions';
+import { experimental_useFormStatus as useFormStatus } from 'react-dom'
 
 export default function Form() {
-  const formRef = useRef<HTMLFormElement>(null);
-  const { pending } = useFormStatus();
+  const formRef = useRef<HTMLFormElement>(null)
+  const { pending } = useFormStatus()
 
   return (
     <form
       style={{ opacity: !pending ? 1 : 0.7 }}
       className="relative max-w-[500px]"
       ref={formRef}
-      action={async (formData) => {
-        await saveGuestbookEntry(formData);
-        formRef.current?.reset();
-      }}
+      // action={async (formData) => {
+      //   await saveGuestbookEntry(formData);
+      //   formRef.current?.reset();
+      // }}
     >
       <input
         aria-label="Your message"
@@ -35,5 +35,5 @@ export default function Form() {
         Sign
       </button>
     </form>
-  );
+  )
 }
