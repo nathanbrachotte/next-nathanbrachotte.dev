@@ -1,14 +1,14 @@
 ---
-title: "Hello, World!"
-publishedAt: "2023-01-01"
-summary: "This is your first blog post."
+title: 'Hello, World!'
+publishedAt: '2023-01-01'
+summary: 'This is your first blog post.'
 ---
 
 Hello, World!
 
 <Image
   alt={`Loading Placeholder`}
-  src={`/images/loading-placeholder-with-sass/example.gif`}
+  src={`/images/snow.jpg`}
   width={695}
   height={419}
   priority
@@ -226,24 +226,24 @@ acme-core
 Each file inside of `acme-core/src` is a component inside our design system. For example:
 
 ```tsx title="acme-core/src/Button.tsx"
-import * as React from "react";
+import * as React from 'react'
 
 export interface ButtonProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export function Button(props: ButtonProps) {
-  return <button>{props.children}</button>;
+  return <button>{props.children}</button>
 }
 
-Button.displayName = "Button";
+Button.displayName = 'Button'
 ```
 
 When adding a new file, ensure the component is also exported from the entry `index.tsx` file:
 
 ```tsx title="acme-core/src/index.tsx"
-import * as React from "react";
-export { Button, type ButtonProps } from "./Button";
+import * as React from 'react'
+export { Button, type ButtonProps } from './Button'
 // Add new component exports here
 ```
 
