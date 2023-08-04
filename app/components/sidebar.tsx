@@ -52,13 +52,12 @@ export default function Navbar() {
                       {name}
                       {path === pathname ? (
                         <motion.div
-                          className="absolute h-[1px] top-7 mx-2 inset-0 bg-neutral-200 dark:bg-neutral-800 z-[-1] dark:bg-gradient-to-r from-transparent to-neutral-900"
-                          // className="absolute h-[3px] top-7 mx-2 inset-0 bg-blue-400 dark:bg-blue-400 z-[-1] dark:bg-gradient-to-r from-transparent to-purple-500"
+                          className="absolute h-[3px] top-7 mx-2 inset-0 bg-gradient-purple z-[-1] bg-gradient-to-tr from-transparent to-gradient-pink"
                           layoutId="sidebar"
                           transition={{
                             type: 'spring',
                             stiffness: 350,
-                            damping: 30,
+                            damping: 20,
                           }}
                         />
                       ) : null}
