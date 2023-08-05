@@ -1,5 +1,4 @@
 import clsx from 'clsx'
-import { getSingleGradientColorPerIndex } from 'helpers/gradients'
 
 const projects = [
   {
@@ -72,16 +71,16 @@ const Project = ({
   ] as const
 
   return (
-    <div className="flex flex-col justify-between group">
+    <div className="group flex flex-col justify-between">
       <div
         className={clsx(
-          'relative mx-auto overflow-hidden rounded-lg p-[1px] transition-all duration-300 ease-in-out bg-gradient-to-r',
+          'relative mx-auto overflow-hidden rounded-lg bg-gradient-to-r p-[1px] transition-all duration-300 ease-in-out',
           borderRadiant[index],
         )}
       >
         <div
           className={clsx(
-            'group-hover:animate-spin-surround visible absolute -top-96 -bottom-96 left-10 right-10 group-hover:visible',
+            'visible absolute -bottom-96 -top-96 left-10 right-10 group-hover:visible group-hover:animate-spin-surround',
             `bg-gradient-to-r from-transparent ${animatedGradient[index]} to-transparent`,
           )}
         />
@@ -93,7 +92,7 @@ const Project = ({
               width={50}
               height={50}
             />
-            <h2 className="font-bold text-xl tracking-tighter">{name}</h2>
+            <h2 className="text-xl font-bold tracking-tighter">{name}</h2>
             <p className="font-md text-slate-500">{description}</p>
           </div>
         </div>
@@ -105,10 +104,10 @@ const Project = ({
 export default function ProjectsPage() {
   return (
     <section>
-      <h1 className="font-bold text-2xl mb-8 tracking-tighter">
+      <h1 className="mb-8 text-2xl font-bold tracking-tighter">
         A curated list of some of projects I've worked on in the past 👇
       </h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {projects.map((project, index) => (
           <Project key={project.name} project={project} index={index} />
         ))}
