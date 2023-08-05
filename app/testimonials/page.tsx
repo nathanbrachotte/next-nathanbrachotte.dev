@@ -1,5 +1,7 @@
+import { User } from 'app/icons/user'
 import clsx from 'clsx'
 import { getGradientPerIndex } from 'helpers/gradients'
+import Image from 'next/image'
 import React from 'react'
 
 interface Testimonial {
@@ -7,9 +9,10 @@ interface Testimonial {
   position: string
   paragraphs: string[]
   link: string
+  pic?: string
 }
 
-export const testimonials = [
+const testimonials = [
   {
     name: 'Gerald Kropitz',
     position: 'Co-Founder & CTO at MEMBER',
@@ -18,6 +21,7 @@ export const testimonials = [
       'I can therefore highly recommend Nathan for any software development or freelancing opportunity. He is not only a talented engineer but also a reliable and collaborative team member who consistently exceeds expectations. I am confident that he will continue to excel in all his future endeavors.',
     ],
     link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    pic: '/images/testimonials/gerald.jpeg',
   },
   {
     name: 'Lucas Michot',
@@ -28,6 +32,7 @@ export const testimonials = [
       `Nathan is a highly skilled Senior Developer and a genuine team player. I wholeheartedly endorse him for any software development role he chooses to pursue in the future.`,
     ],
     link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    pic: '/images/testimonials/lucas.jpeg',
   },
   {
     name: 'Jimin Park',
@@ -37,16 +42,18 @@ export const testimonials = [
       "During our time at a start-up where we built the codebase from scratch, Nathan proved himself to be a proactive problem-solver who quickly tackled complex tasks. He's an excellent communicator with a good grasp of best software practices. Nathan's positive attitude and dedication to team culture also made him a valuable asset to our team.",
     ],
     link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    pic: '/images/testimonials/jimin.jpeg',
   },
   {
     name: 'Vitali Yazvinski',
     position: 'Senior Software Engineer at Genie',
     paragraphs: [
       'I had a chance to work with Nathan for about half a year. Nathan is a great colleague to work with.',
-      "He has awesome skills in web and for me there were plenty of things to learn from him, especially in organizing ideas and barnstorming them. In addition, it's easy and it's a fun to work with him, which I believe is very important too.",
+      "He has awesome skills in web and for me there were plenty of things to learn from him, especially in organizing ideas and brainstorming them. In addition, it's easy and it's a fun to work with him, which I believe is very important too.",
       'I would not hesitate to hire him if you want to build a team with healthy relationships in it and build an exceptional product.',
     ],
     link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    pic: '/images/testimonials/vitali.jpeg',
   },
   {
     name: 'Roney Castro',
@@ -56,6 +63,7 @@ export const testimonials = [
       'This is also reflected on his behavior as a team member, where he was always very active discussing and proposing solutions and engaging other engineers and designers with the goal of providing the best possible experience for the users.',
     ],
     link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    pic: '/images/testimonials/roney.jpeg',
   },
   {
     name: 'Varun Pal',
@@ -64,6 +72,7 @@ export const testimonials = [
       'Nathan and I worked in Klarna for 1.5 years. Nathan is a unique engineer who makes everything better for the end customer. He goes beyond the task requirements and adds customer wow features like Accessibility, animations and an improved UX. He continuously aligns with designers and improves the designs so that end users get the best experience. Nathan is very thorough in his work and holds discussions with stakeholders, documents everything properly and presents his work to a wider audience through engaging demos. I was very lucky to have Nathan in my team and I wish him the best for his future.',
     ],
     link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    pic: '/images/testimonials/varun.jpeg',
   },
   {
     name: 'Erik Waterloo',
@@ -89,6 +98,7 @@ technologies in his spare time which shows his commitment to software
 development in general.`,
     ],
     link: 'https://drive.google.com/file/d/1OBdJPIpDbbQxoLmfAxmL_A7vHCMPwEJJ/view?usp=sharing',
+    pic: '/images/testimonials/erik.jpeg',
   },
   {
     name: 'Olfa Karoui',
@@ -109,20 +119,18 @@ development in general.`,
       "I couldn't recommend Nathan any higher in a professional environment and consider him to be top of my value add list.",
     ],
     link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    pic: '/images/testimonials/hemang.jpeg',
   },
 ] satisfies Testimonial[]
 
 export const Page = () => {
   return (
-    <section className="prose prose-invert">
-      <h1 className="font-bold text-2xl mb-8 tracking-tighter">
+    <section>
+      <h1 className="font-bold text-2xl tracking-tighter mb-12">
         Some good words from my past clients, leads, coworkers or mentees 🙏
       </h1>
-      {testimonials.map(({ name, paragraphs, position }, index) => (
-        <div className="mt-10">
-          <h3>
-            {name} - {position}
-          </h3>
+      {testimonials.map(({ name, paragraphs, position, pic }, index) => (
+        <div className="prose prose-invert mb-12">
           <blockquote className="relative pl-4 py border-l-0">
             <div
               className={clsx(
@@ -131,9 +139,28 @@ export const Page = () => {
               )}
             />
             {paragraphs.map((paragraph) => (
-              <p className="">{paragraph}</p>
+              <p className="text-lg">{paragraph}</p>
             ))}
           </blockquote>
+          <div className="flex flex-row justify-start items-center">
+            {pic ? (
+              <Image
+                alt={name}
+                src={pic}
+                width={50}
+                height={50}
+                className="w-14 h-14 rounded-full"
+              />
+            ) : (
+              <div className="w-14 h-14 rounded-full flex justify-center items-center bg-gray-800">
+                <User />
+              </div>
+            )}
+            <div className="flex-col justify-center ml-2">
+              <h3 className="mb-0 mt-0">{name}</h3>
+              <span>{position}</span>
+            </div>
+          </div>
         </div>
       ))}
     </section>
