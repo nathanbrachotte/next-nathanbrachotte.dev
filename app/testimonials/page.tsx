@@ -123,7 +123,7 @@ development in general.`,
   },
 ] satisfies Testimonial[]
 
-export const Page = () => {
+const TestimonialsPage = () => {
   return (
     <section>
       <h1 className="font-bold text-2xl tracking-tighter mb-12">
@@ -167,4 +167,4 @@ export const Page = () => {
   )
 }
 
-export default Page
+export default TestimonialsPage
