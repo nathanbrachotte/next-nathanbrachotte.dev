@@ -1,6 +1,6 @@
-import { User } from 'app/icons/user'
 import clsx from 'clsx'
 import { getGradientPerIndex } from 'helpers/gradients'
+import { User } from 'icons/User'
 import Image from 'next/image'
 import React from 'react'
 
