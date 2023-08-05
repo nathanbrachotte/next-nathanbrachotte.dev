@@ -1,7 +1,9 @@
 import clsx from 'clsx'
 import { getGradientPerIndex } from 'helpers/gradients'
+import { ArrowUpRight } from 'icons/ArrowUpRight'
 import { User } from 'icons/User'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 interface Testimonial {
@@ -20,7 +22,7 @@ const testimonials = [
       "I had the pleasure of working closely with Nathan during his time as freelancer at MEMBER and his contributions to MEMBER's mobile application had a big impact immediately.",
       'I can therefore highly recommend Nathan for any software development or freelancing opportunity. He is not only a talented engineer but also a reliable and collaborative team member who consistently exceeds expectations. I am confident that he will continue to excel in all his future endeavors.',
     ],
-    link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    link: 'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
     pic: '/images/testimonials/gerald.jpeg',
   },
   {
@@ -31,7 +33,7 @@ const testimonials = [
       `In addition to his technical experience, Nathan consistently demonstrated excellent communication skills and a collaborative spirit. His mentorship and guidance have been invaluable to our team, especially to junior developers and other peers, fostering a positive and productive work environment.`,
       `Nathan is a highly skilled Senior Developer and a genuine team player. I wholeheartedly endorse him for any software development role he chooses to pursue in the future.`,
     ],
-    link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    link: 'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
     pic: '/images/testimonials/lucas.jpeg',
   },
   {
@@ -41,7 +43,7 @@ const testimonials = [
       'I highly recommend Nathan for any software development position.',
       "During our time at a start-up where we built the codebase from scratch, Nathan proved himself to be a proactive problem-solver who quickly tackled complex tasks. He's an excellent communicator with a good grasp of best software practices. Nathan's positive attitude and dedication to team culture also made him a valuable asset to our team.",
     ],
-    link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    link: 'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
     pic: '/images/testimonials/jimin.jpeg',
   },
   {
@@ -52,7 +54,7 @@ const testimonials = [
       "He has awesome skills in web and for me there were plenty of things to learn from him, especially in organizing ideas and brainstorming them. In addition, it's easy and it's a fun to work with him, which I believe is very important too.",
       'I would not hesitate to hire him if you want to build a team with healthy relationships in it and build an exceptional product.',
     ],
-    link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    link: 'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
     pic: '/images/testimonials/vitali.jpeg',
   },
   {
@@ -62,7 +64,7 @@ const testimonials = [
       'I had the pleasure of working with Nathan for almost one year. He always demonstrated a significant ability to think about the entire user journey beyond the "happy path", proposing solutions and ensuring that the end user experience will always be consistent and optimal.',
       'This is also reflected on his behavior as a team member, where he was always very active discussing and proposing solutions and engaging other engineers and designers with the goal of providing the best possible experience for the users.',
     ],
-    link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    link: 'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
     pic: '/images/testimonials/roney.jpeg',
   },
   {
@@ -71,7 +73,7 @@ const testimonials = [
     paragraphs: [
       'Nathan and I worked in Klarna for 1.5 years. Nathan is a unique engineer who makes everything better for the end customer. He goes beyond the task requirements and adds customer wow features like Accessibility, animations and an improved UX. He continuously aligns with designers and improves the designs so that end users get the best experience. Nathan is very thorough in his work and holds discussions with stakeholders, documents everything properly and presents his work to a wider audience through engaging demos. I was very lucky to have Nathan in my team and I wish him the best for his future.',
     ],
-    link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    link: 'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
     pic: '/images/testimonials/varun.jpeg',
   },
   {
@@ -108,7 +110,7 @@ development in general.`,
       "He was very supportive and helped me get onboarded on one of the company's most important projects. He always made sure to share his experience with me and guide me in the right direction. Working with him was a huge learning experience, he was a great part of my professional growth. At such a young age, he's already a great mentor.",
       'I am very thankful that I got the chance to work closely with him. ',
     ],
-    link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    link: 'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
   },
   {
     name: 'Hemang Pandya',
@@ -118,7 +120,7 @@ development in general.`,
       'He will always go that extra mile to look after and deliver for his clients whilst spending as much time in the office as he needs to finish the job and meet his targets. He is always a very good communicator, also when the pressure is rising, calling for clear communication about goals, responsibility, performance, expectations and feedback for every member involved in the project he’s managing. No matter how tense a meeting, Nathan made sure everyone left with a smile.',
       "I couldn't recommend Nathan any higher in a professional environment and consider him to be top of my value add list.",
     ],
-    link: 'https://www.linkedin.com/in/nathan-brachotte/',
+    link: 'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
     pic: '/images/testimonials/hemang.jpeg',
   },
 ] satisfies Testimonial[]
@@ -129,12 +131,12 @@ const TestimonialsPage = () => {
       <h1 className="font-bold text-2xl tracking-tighter mb-12">
         Some good words from my past clients, leads, coworkers or mentees 🙏
       </h1>
-      {testimonials.map(({ name, paragraphs, position, pic }, index) => (
-        <div className="prose prose-invert mb-12">
+      {testimonials.map(({ name, paragraphs, position, pic, link }, index) => (
+        <div className="prose prose-invert mb-12 group/testimonials">
           <blockquote className="relative pl-4 py border-l-0">
             <div
               className={clsx(
-                'absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b',
+                'absolute top-0 left-0 bottom-0 w-[2px] bg-gradient-to-b',
                 getGradientPerIndex(index),
               )}
             />
@@ -142,23 +144,73 @@ const TestimonialsPage = () => {
               <p className="text-lg">{paragraph}</p>
             ))}
           </blockquote>
-          <div className="flex flex-row justify-start items-center">
-            {pic ? (
-              <Image
-                alt={name}
-                src={pic}
-                width={50}
-                height={50}
-                className="w-14 h-14 rounded-full"
-              />
-            ) : (
-              <div className="w-14 h-14 rounded-full flex justify-center items-center bg-gray-800">
-                <User />
+          <div className="flex flex-row justify-between items-center">
+            <div className="flex flex-row items-center cursor-pointer">
+              {pic ? (
+                <Image
+                  alt={name}
+                  src={pic}
+                  width={50}
+                  height={50}
+                  className="w-14 h-14 rounded-full transition-all group-hover/testimonials:shadow-neon"
+                />
+              ) : (
+                <div className="w-14 h-14 rounded-full flex justify-center items-center bg-gray-800">
+                  <User />
+                </div>
+              )}
+              <div className="flex-col justify-center ml-2">
+                <h3
+                  className={clsx(
+                    'mb-0 mt-0',
+                    'transition-all duration-300 ease-out',
+                    'group-hover/testimonials:text-transparent',
+                    'bg-clip-text bg-gradient-to-r from-gradient-purple to-gradient-pink',
+                    'animate-text-gradient-background',
+                  )}
+                >
+                  {name}
+                </h3>
+                <span
+                  className={clsx(
+                    'transition-all duration-300 ease-out',
+                    'group-hover/testimonials:text-transparent',
+                    'bg-clip-text bg-gradient-to-r from-gradient-purple to-gradient-pink',
+                    'animate-text-gradient-background',
+                  )}
+                >
+                  {position}
+                </span>
               </div>
-            )}
-            <div className="flex-col justify-center ml-2">
-              <h3 className="mb-0 mt-0">{name}</h3>
-              <span>{position}</span>
+            </div>
+            <div
+              className={clsx(
+                'flex flex-row justify-center items-center',
+                'ml-4',
+                'translate-x-4 opacity-0',
+                'transition duration-300 ease-out',
+                'group-hover/testimonials:opacity-100 group-hover/testimonials:translate-x-2 group-hover/testimonials:scale-100',
+              )}
+            >
+              <Link
+                href={link}
+                className={clsx(
+                  'flex flex-row justify-center items-center',
+                  'rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
+                  'bg-gradient-to-r from-gradient-blue to-gradient-cyan',
+                  'animate-text-gradient-background',
+                  // TODO: Make shadow-neon work
+                  'transition-shadow hover:shadow-lg',
+                  'no-underline',
+                  'hover:scale-105',
+                  'active:scale-95',
+                )}
+              >
+                <span className="transition-all">See original review</span>
+                <ArrowUpRight
+                  className={clsx('stroke-slate-100 w-4 h-4 ml-2')}
+                />
+              </Link>
             </div>
           </div>
         </div>
