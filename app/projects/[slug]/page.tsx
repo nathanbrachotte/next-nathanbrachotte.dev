@@ -82,8 +82,6 @@ function formatDate(date: string) {
   }
 
   const fullDate = targetDate.toLocaleString('en-us', {
-    month: 'long',
-    day: 'numeric',
     year: 'numeric',
   })
 
@@ -114,7 +112,7 @@ export default async function Project({ params }) {
       </h1>
       <div className="mb-8 mt-2 flex max-w-[650px] items-center justify-between text-sm">
         <p className="text-sm text-neutral-400">
-          {formatDate(post.publishedAt)}
+          Started in {formatDate(post.publishedAt)}
         </p>
         {/* <ViewCounter allViews={allViews} slug={post.slug} trackView /> */}
       </div>

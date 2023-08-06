@@ -33,6 +33,47 @@ You can trick your users into thinking your website loads faster using skeleton 
 ### Building a Placeholder
 
 First, let's create the base structure. In this example, the placeholder is supposed to represent a text area. We'll use [BEM](http://getbem.com/naming/) (Base - Element - Modifier) naming for our classes.
+1. Create a project in [Firebase](https://firebase.google.com/docs/firestore/quickstart).
+1. In the Firebase console, open Settings > Service Accounts.
+1. Click Generate New Private Key, then confirm by clicking Generate Key.
+1. Download and open the JSON file containing your service account.
+1. Create a new file `.env.local` and add environment variables with those values.
+
+```bash: title=".env.local"
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=replace-me
+FIREBASE_CLIENT_EMAIL=replace-me
+FIREBASE_PRIVATE_KEY=replace-me
+```
+
+You can now fetch data from Firebase directly inside a Server Component in the `app` directory:
+
+```js title="app/page.tsx"
+import 'server-only';
+import { notFound } from 'next/navigation';
+import * as admin from 'firebase-admin';
+
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert({
+      projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+    }),
+  });
+}
+
+const db = admin.firestore();
+
+export default async function Page() {
+  const user = await db.collection('users').doc('leerob').get();
+
+  if (!user.exists) {
+    notFound();
+  }
+
+  return <div>Hello, {user.data().name}!</div>;
+}
+```
 
 ```html
 <div class="text-input__loading">

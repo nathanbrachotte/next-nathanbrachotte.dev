@@ -17,3 +17,41 @@ tools:
   - Tailwind
   - Netlify
 ---
+
+Hello, World!
+
+<Callout emoji="💡">
+
+Test test
+
+</Callout>
+
+## Context
+
+This project was started by [Cathy Nguyen](), as she was the Course Coordinator at [ALYNEA](https://alynea.org/). During that time, she helped migrants and people in need to learn french and get integrated into the french system. As she started creating a collection of resources in her free time, she started the Pantou-FLE project, destined to make these resources as accessible as possible. The [Pantou-FLE](https://www.facebook.com/apprendreAvecPantouFLE) Facebook page currently has over 3.8k likes. 
+I joined the project as I find using my skillset to help people in need very rewarding. I designed for Pantou-FLE a new logo and a new branding and designed and built a brand new website.
+
+## Challenges
+
+The old website uses Google Site and therefore gives low personalization options, and the UI and UX make navigation and browsing resources inconvenient.
+Some of the top priorities were:
+
+1. Design a logo compatible with the brand.
+1. Build a design system that allows coherence and consistency between the website, and social network pages
+1. Provide a faster, SEO optimized, more straightforward website that would make resources easy to read and access.
+1. Allow building resources collaboratively using a CMS which would be easy to use.
+
+## Solution
+
+This logo was supposed to represent things that both Cathy and I love: Dogs 🐶. It also has a french Béret and seems happy, most of the resources on the website are trying to keep this light and colorful playfulness to make learning french less discouraging (we know it can sometimes be).
+The website uses Gatsby, a framework that generates pages at build time (SSG) to be blazing fast and SEO optimized. I also used Contentful as a CMS, allowing creating and managing of resources collaboratively and efficiently.
+Contentful offers the possibility of using Rich Text to create complex resources that React can then consume using the @contentful/rich-text-react-renderer library. Rich text provides excellent flexibility for Cathy to create her resources, whether PDFs, audio recordings, or iFrames pointing at other resource websites.
+The website is hosted at Netlify, allowing webhooks to trigger a new build on each change in the CMS data. The latest version of the website is then automatically deployed. 
+We're currently migrating all the resources to the new website, and then we will release it to the public.
+
+## Feature highlights
+
+The new logo is particularly successful. We are receiving lots of good feedback about it.
+The new website is fast and looks cleaner.
+A newsletter built using Revue.
+Rich text use allows for great flexibility.
