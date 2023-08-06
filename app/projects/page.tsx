@@ -1,3 +1,4 @@
+import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
 import clsx from 'clsx'
 import { Project, allProjects } from 'contentlayer/generated'
 import Link from 'next/link'
@@ -42,13 +43,9 @@ const Project = ({
             )}
           />
           <div className="relative h-full rounded-lg bg-background p-6">
-            <div>
-              <img src={image} alt="" width={50} height={50} />
-              <h2 className="mt-2 text-xl font-bold tracking-tighter">
-                {title}
-              </h2>
-              <p className="font-md text-slate-300">{summary}</p>
-            </div>
+            {image && <ProjectLogo image={image} title={title} />}
+            <h2 className="mt-2 text-xl font-bold tracking-tighter">{title}</h2>
+            <p className="font-md text-slate-300">{summary}</p>
           </div>
         </div>
       </div>

@@ -6,6 +6,8 @@ import { allProjects } from 'contentlayer/generated'
 import Balancer from 'react-wrap-balancer'
 import { Badges } from 'app/components/Badges'
 import React from 'react'
+import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
+import { LinkButton } from 'app/components/LinkButton'
 // import { getViewsCount } from 'lib/metrics'
 
 const findProject = (slug: string) => {
@@ -105,15 +107,22 @@ export default async function Project({ params }) {
   //   getViewsCount(),
   //   getTweets(post.tweetIds),
   // ])
+  console.log({ postUrl: post.projectUrl })
 
   return (
     <section>
       <script type="application/ld+json" suppressHydrationWarning>
         {JSON.stringify(post.structuredData)}
       </script>
-      <h1 className="max-w-[650px] text-2xl font-bold tracking-tighter">
-        <Balancer>{post.title}</Balancer>
-      </h1>
+      <div className="flex items-center justify-between">
+        <h1 className="flex max-w-[650px] items-center text-2xl font-bold tracking-tighter">
+          {post.image && <ProjectLogo image={post.image} title={post.title} />}
+          <Balancer className="ml-2">{post.title}</Balancer>
+        </h1>
+        {post.projectUrl && (
+          <LinkButton href={post.projectUrl}>Visit project</LinkButton>
+        )}
+      </div>
       <div className="mt-2 flex max-w-[650px] items-center justify-between text-sm">
         <p className="text-sm text-neutral-400">
           Started in {formatDate(post.publishedAt)}
