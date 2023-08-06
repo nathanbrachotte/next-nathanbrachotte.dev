@@ -4,14 +4,8 @@ import { Mdx } from 'app/components/mdx'
 import { allProjects } from 'contentlayer/generated'
 // import { getTweets } from 'lib/twitter'
 import Balancer from 'react-wrap-balancer'
-import {
-  GastbyBadge,
-  NextBadge,
-  PlanetScaleBadge,
-  ReactBadge,
-  ReactNativeBadge,
-  VercelBadge,
-} from 'app/components/Badges'
+import { Badges } from 'app/components/Badges'
+import React from 'react'
 // import { getViewsCount } from 'lib/metrics'
 
 const findProject = (slug: string) => {
@@ -88,10 +82,20 @@ function formatDate(date: string) {
   return `${fullDate} (${formattedDate})`
 }
 
+function Tools({ tools }: { tools: string[] }) {
+  return (
+    <div className="mb-8 mt-2 flex w-full flex-wrap">
+      {tools.map((tool) => {
+        return (
+          <div className="mr-2 mt-2">{React.createElement(Badges[tool])}</div>
+        )
+      })}
+    </div>
+  )
+}
+
 export default async function Project({ params }) {
   const post = findProject(params.slug)
-
-  console.log({ post, allProjects, params })
 
   if (!post) {
     notFound()
@@ -110,12 +114,14 @@ export default async function Project({ params }) {
       <h1 className="max-w-[650px] text-2xl font-bold tracking-tighter">
         <Balancer>{post.title}</Balancer>
       </h1>
-      <div className="mb-8 mt-2 flex max-w-[650px] items-center justify-between text-sm">
+      <div className="mt-2 flex max-w-[650px] items-center justify-between text-sm">
         <p className="text-sm text-neutral-400">
           Started in {formatDate(post.publishedAt)}
         </p>
+
         {/* <ViewCounter allViews={allViews} slug={post.slug} trackView /> */}
       </div>
+      <Tools tools={post.tools ?? []} />
       <Mdx
         code={post.body.code}
         // tweets={tweets}

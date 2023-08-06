@@ -8,14 +8,14 @@ missions:
   - Design
   - Website development
 tools:
-  - Figma
+  - React
   - TypeScript
   - Gatsby
-  - Tailwind CSS
+  - Tailwind
   - Contentful
   - GraphQL
-  - Tailwind
   - Netlify
+  - Figma
 ---
 
 This project was started by [Cathy Nguyen](https://www.linkedin.com/in/cathy-nguyen-014b8ba2/), as she was the Course Coordinator at [ALYNEA](https://alynea.org/). During that time, she helped migrants and people in need learn French and integrate into the French system. As she started creating a collection of resources in her free time, she started the Pantou-FLE project, destined to make these resources as accessible as possible. The [Pantou-FLE](https://www.facebook.com/apprendreAvecPantouFLE) Facebook page currently has over 3.8k likes. 
@@ -34,14 +34,18 @@ Some of the top priorities were:
 ## Solution
 
 This logo was supposed to represent things that both Cathy and I love: Dogs 🐶. It also has a French Béret and seems happy; most of the resources on the website are trying to keep this light and colorful playfulness to make learning French less discouraging (we know it can sometimes be).
-The website uses Gatsby, a framework that generates pages at build time (SSG) to be blazing fast and SEO optimized. I also used Contentful as a CMS, allowing the creation and management of resources collaboratively and efficiently.
-Contentful offers the possibility of using Rich Text to create complex resources that React can consume using the @contentful/rich-text-react-renderer library. Rich text provides excellent flexibility for Cathy to create her resources, whether PDFs, audio recordings or iFrames pointing at other resource websites.
-The website is hosted at Netlify, allowing webhooks to trigger a new build on each change in the CMS data. The latest version of the website is then automatically deployed. 
-We're migrating all the resources to the new website and will then release it to the public.
+The website use <Badges.Gatsby />, a framework that generates pages at build time ([SSG](https://www.gatsbyjs.com/docs/glossary/static-site-generator/)) to be blazing fast and SEO optimized. I also used Contentful as a CMS, allowing the creation and management of resources collaboratively and efficiently. <Badges.Contentful /> offers the possibility of using Rich Text to create
+complex resources that <Badges.React /> can consume using the [@contentful/rich-text-react-renderer](https://github.com/contentful/rich-text) library. [Rich text](https://github.com/contentful/rich-text) provides excellent flexibility for Cathy to create her resources, whether PDFs, audio recordings or iFrames pointing at other resource websites. The website is hosted at Netlify, allowing webhooks to trigger a new build on each change in the CMS data. The
+latest version of the website is then automatically deployed.  We're migrating
+all the resources to the new website and will then release it to the public.
 
 ## Feature highlights
 
-The new logo is particularly successful. We are receiving lots of good feedback about it.
-The new website is fast and looks cleaner.
-A newsletter built using Revue.
-Rich text use allows for great flexibility.
+- The new logo is particularly successful. We are receiving lots of good feedback about it.
+- The new website is fast and looks cleaner.
+- A newsletter built using Revue.
+- Rich text use allows for great flexibility.
+
+## Gallery
+
+<Image alt={`Loading Placeholder`} src={`/images/snow.jpg`} priority />
