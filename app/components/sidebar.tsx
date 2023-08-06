@@ -4,27 +4,7 @@ import clsx from 'clsx'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { LayoutGroup, motion } from 'framer-motion'
-
-const navItems = {
-  '/': {
-    name: 'Home',
-  },
-  '/testimonials': {
-    name: 'Testimonials',
-  },
-  '/projects': {
-    name: 'Projects',
-  },
-  '/blog': {
-    name: 'Blog',
-  },
-  // '/guestbook': {
-  //   name: 'guestbook',
-  // },
-  // '/uses': {
-  //   name: 'Uses',
-  // },
-}
+import { routes } from 'app/routes'
 
 export default function Navbar() {
   let pathname = usePathname() || '/'
@@ -37,28 +17,28 @@ export default function Navbar() {
       <div className="lg:sticky lg:top-20">
         <LayoutGroup>
           <nav
-            className="flex flex-row items-start relative px-0 pb-0 fade md:overflow-auto scroll-pr-6 md:relative"
+            className="fade relative flex scroll-pr-6 flex-row items-start px-0 pb-0 md:relative md:overflow-auto"
             id="nav"
           >
             <div className="flex flex-row space-x-0 pr-10">
-              {Object.entries(navItems).map(([path, { name }]) => {
+              {Object.entries(routes).map(([path, { name }]) => {
                 const isActive = path === pathname
                 return (
                   <Link
                     key={path}
                     href={path}
                     className={clsx(
-                      'transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle',
+                      'flex align-middle transition-all hover:text-neutral-800 dark:hover:text-neutral-200',
                       {
                         'text-neutral-500': !isActive,
                       },
                     )}
                   >
-                    <span className="relative py-1 px-2">
+                    <span className="relative px-2 py-1">
                       {name}
                       {path === pathname ? (
                         <motion.div
-                          className="absolute h-[3px] top-7 mx-2 inset-0 bg-gradient-purple z-[-1] bg-gradient-to-tr from-transparent to-gradient-pink"
+                          className="absolute inset-0 top-7 z-[-1] mx-2 h-[3px] bg-gradient-purple bg-gradient-to-tr from-transparent to-gradient-pink"
                           layoutId="sidebar"
                           transition={{
                             type: 'spring',

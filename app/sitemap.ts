@@ -1,4 +1,5 @@
-import { allBlogs } from 'contentlayer/generated'
+import { routes as allRoutes } from 'app/routes'
+import { allBlogs, allProjects } from 'contentlayer/generated'
 
 export default async function sitemap() {
   const blogs = allBlogs.map((post) => ({
@@ -6,10 +7,15 @@ export default async function sitemap() {
     lastModified: post.publishedAt,
   }))
 
-  const routes = ['', '/blog', '/guestbook', '/uses'].map((route) => ({
+  const projects = allProjects.map((post) => ({
+    url: `https://nathanbrachotte.dev/projects/${post.slug}`,
+    lastModified: post.publishedAt,
+  }))
+
+  const routes = ['', ...Object.keys(allRoutes)].map((route) => ({
     url: `https://nathanbrachotte.dev${route}`,
     lastModified: new Date().toISOString().split('T')[0],
   }))
 
-  return [...routes, ...blogs]
+  return [...routes, ...projects, ...blogs]
 }
