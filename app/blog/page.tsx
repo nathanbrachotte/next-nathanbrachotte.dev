@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default async function BlogPage() {
   // const allViews = await getViewsCount();
-  console.log({ allBlogs })
+
   return (
     <section>
       <h1 className="mb-8 text-2xl font-bold tracking-tighter">read my blog</h1>

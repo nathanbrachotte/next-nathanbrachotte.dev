@@ -26,7 +26,7 @@ const Project = ({
   // TODO: Add touch detection for animation to run on mobile - https://www.npmjs.com/package/react-touch
   return (
     <Link href={slug}>
-      <div className="group flex h-full cursor-pointer flex-col justify-between">
+      <div className="group flex h-full cursor-pointer flex-col justify-between transition-all hover:scale-105">
         <div
           className={clsx(
             'relative mx-auto h-full overflow-hidden rounded-lg bg-gradient-to-r p-[1px] transition-all duration-300 ease-in-out',

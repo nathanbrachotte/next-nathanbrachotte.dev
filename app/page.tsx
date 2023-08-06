@@ -4,7 +4,6 @@ import Link from 'next/link'
 import React from 'react'
 
 export default function Page() {
-  console.log({ Badges })
   return (
     <section>
       <h1 className="mb-8 text-2xl font-bold tracking-tighter">Hey there 👋</h1>

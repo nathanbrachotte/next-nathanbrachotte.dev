@@ -3,27 +3,49 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import Tweet from './tweet'
+import { Badges } from 'app/components/Badges'
 
 const CustomLink = (props) => {
   const href = props.href
+  const className =
+    'animate-text-gradient-background cursor-pointer bg-gradient-to-r from-gradient-cyan to-gradient-blue bg-clip-text text-gradient-blue decoration-gradient-blue decoration-[0.1em] underline-offset-2 transition-all visited:text-gradient-pink visited:decoration-gradient-pink hover:text-transparent hover:decoration-gradient-cyan'
 
   if (href.startsWith('/')) {
     return (
-      <Link href={href} {...props}>
+      <Link href={href} className={className} {...props}>
         {props.children}
       </Link>
     )
   }
 
   if (href.startsWith('#')) {
-    return <a {...props} />
+    return <a {...props} className={className} />
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...props} />
+  return (
+    <a
+      target="_blank"
+      rel="noopener noreferrer"
+      className={className}
+      {...props}
+    />
+  )
 }
 
 function RoundedImage(props) {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />
+  return (
+    <div className="relative aspect-video">
+      <Image
+        alt={props.alt}
+        fill="cover"
+        style={{
+          objectFit: 'cover',
+        }}
+        className="rounded-lg object-cover"
+        {...props}
+      />
+    </div>
+  )
 }
 
 function Callout(props) {
@@ -89,12 +111,15 @@ function ConsCard({ title, cons }) {
   )
 }
 
+// TODO: Implement Image gallery with cloudinary: https://github.com/vercel/next.js/blob/canary/examples/with-cloudinary/pages/p/%5BphotoId%5D.tsx
+// https://cloudinary.com/pricing
 const components = {
   Image: RoundedImage,
   a: CustomLink,
   Callout,
   ProsCard,
   ConsCard,
+  Badges,
 }
 
 interface MdxProps {
