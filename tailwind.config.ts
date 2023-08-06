@@ -52,6 +52,7 @@ export default {
         'gradient-yellow': 'oklch(85.82% 0.201 91.19)',
         'gradient-blue': 'oklch(59.59% 0.24 255.09156059071347)',
         'gradient-cyan': 'oklch(81.58% 0.189 190.74037768509325)',
+        background: "theme('colors.slate.900')",
       },
       boxShadow: {
         neon: "0 0 1rem theme('colors.gradient-purple'), 0 0 0.5rem theme('colors.gradient-pink')",

@@ -85,7 +85,7 @@ const Project = ({
             `bg-gradient-to-r from-transparent ${animatedGradient[index]} to-transparent`,
           )}
         />
-        <div className="relative rounded-lg bg-black  p-6">
+        <div className="relative rounded-lg bg-slate-900  p-6">
           <div>
             <img
               src="/images/projects/pantou-fle/logo.png"
@@ -93,8 +93,8 @@ const Project = ({
               width={50}
               height={50}
             />
-            <h2 className="text-xl font-bold tracking-tighter">{name}</h2>
-            <p className="font-md text-slate-500">{description}</p>
+            <h2 className="mt-2 text-xl font-bold tracking-tighter">{name}</h2>
+            <p className="font-md text-slate-300">{description}</p>
           </div>
         </div>
       </div>
