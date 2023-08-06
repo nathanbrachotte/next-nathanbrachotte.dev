@@ -8,6 +8,11 @@ import { Badges } from 'app/components/Badges'
 import React from 'react'
 import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
 import { LinkButton } from 'app/components/LinkButton'
+import { ArrowUpRight } from 'icons/ArrowUpRight'
+import { AppStoreIcon } from 'icons/AppStore'
+import { PlayStoreIcon } from 'icons/PlayStore'
+import Link from 'next/link'
+import { twMerge } from 'tailwind-merge'
 // import { getViewsCount } from 'lib/metrics'
 
 const findProject = (slug: string) => {
@@ -114,20 +119,56 @@ export default async function Project({ params }) {
       <script type="application/ld+json" suppressHydrationWarning>
         {JSON.stringify(post.structuredData)}
       </script>
-      <div className="flex items-center justify-between">
-        <h1 className="flex max-w-[650px] items-center text-2xl font-bold tracking-tighter">
+      <div className="flex flex-wrap items-center justify-between">
+        <div className="flex">
           {post.image && <ProjectLogo image={post.image} title={post.title} />}
-          <Balancer className="ml-2">{post.title}</Balancer>
-        </h1>
-        {post.projectUrl && (
-          <LinkButton href={post.projectUrl}>Visit project</LinkButton>
-        )}
+          <div className="ml-2 flex flex-col items-start justify-start">
+            <h1 className="flex-shrink-0 items-center text-2xl font-bold tracking-tighter">
+              <Balancer>{post.title}</Balancer>
+            </h1>
+            <p className="text-sm text-neutral-400">
+              Started in {formatDate(post.publishedAt)}
+            </p>
+          </div>
+        </div>
+        <div className="mt-4 flex flex-shrink-0 space-x-2 sm:mt-0">
+          {post.appleStoreUrl && (
+            // TODO: Improve color a11y
+            <Link
+              className={twMerge(
+                'flex flex-row items-center justify-center',
+                'rounded-md px-3 py-2 text-sm font-semibold text-white',
+                'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
+                'animate-text-gradient-background bg-gradient-to-r from-gradient-blue to-gradient-cyan',
+                'transition-all hover:scale-105 active:scale-95',
+              )}
+              href={post.appleStoreUrl}
+            >
+              iOS <AppStoreIcon className="ml-2 h-4 w-4 fill-white" />
+            </Link>
+          )}
+          {post.playStoreUrl && (
+            <Link
+              href={post.playStoreUrl}
+              className={twMerge(
+                'flex flex-row items-center justify-center',
+                'rounded-md px-3 py-2 text-sm font-semibold text-white',
+                'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
+                'animate-text-gradient-background bg-gradient-to-r from-gradient-green to-gradient-turquoise',
+                'transition-all hover:scale-105 active:scale-95',
+              )}
+            >
+              Android <PlayStoreIcon className="ml-2 h-4 w-4" />
+            </Link>
+          )}
+          {post.projectUrl && (
+            <LinkButton href={post.projectUrl}>
+              See project <ArrowUpRight className="ml-2 h-4 w-4" />
+            </LinkButton>
+          )}
+        </div>
       </div>
       <div className="mt-2 flex max-w-[650px] items-center justify-between text-sm">
-        <p className="text-sm text-neutral-400">
-          Started in {formatDate(post.publishedAt)}
-        </p>
-
         {/* <ViewCounter allViews={allViews} slug={post.slug} trackView /> */}
       </div>
       <Tools tools={post.tools ?? []} />

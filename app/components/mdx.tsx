@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import Tweet from './tweet'
 import { Badges } from 'app/components/Badges'
-import clsx from 'clsx'
+import { twMerge } from 'tailwind-merge'
 
 const CustomLink = (props) => {
   const href = props.href
@@ -36,14 +36,19 @@ const CustomLink = (props) => {
 // TODO: Optimize image size
 function RoundedImage(props) {
   return (
-    <div className={clsx('relative aspect-video rounded-lg', props?.className)}>
+    <div
+      className={twMerge(
+        'h- relative aspect-video rounded-lg',
+        props?.className,
+      )}
+    >
       <Image
         alt={props.alt}
         fill
-        style={{
-          objectFit: 'cover',
-        }}
-        className={'rounded-lg object-cover object-top'}
+        className={twMerge(
+          'rounded-lg object-cover  object-top',
+          props.imgClassName,
+        )}
         src={props.src}
         priority={props.priority}
       />

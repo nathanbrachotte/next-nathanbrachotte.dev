@@ -6,9 +6,35 @@ image: '/images/projects/solis/logo.png'
 missions:
   - Mobile
 tools:
-  - React Native
+  - ReactNative
   - TypeScript
 projectUrl: 'https://soliswifi.co/'
 appleStoreUrl: 'https://apps.apple.com/de/app/solis-wifi/id1411394761'
 playStoreUrl: 'https://play.google.com/store/apps/details?id=com.solisapp.solis&hl=en&gl=US'
 ---
+
+As I worked for [Colorfy](https://colorfy.me/), my first employer, I had the chance to build the Solis App from the ground up using <Badges.ReactNative />, witnessed the go live of the app and maintained it for over two years.
+The device was already usable using a web app but was limited in features and UX. This new mobile app was supposed to be the "remote" to the device.
+
+<Image
+  alt={`Solis overview`}
+  src={`/images/projects/solis/overview.png`}
+  priority
+  imgClassName="object-contain"
+/>
+
+### Challenges
+
+- Working in IoT means you're always dependent on another system for the app to function, making testing much harder.
+- This device was precisely about connecting to a Wi-Fi network and activating data to go online. That required the app to fully handle an offline mode, despite needing some network to log in/sign up and buy data packages. Since most of our users use the app while traveling, they can't be left without any internet in the middle of nowhere.
+
+### Key Achievements
+
+- Built the app from the ground up that helps set up and control the Solis device.
+- Handling of online/offline state.
+- Implemented an in-app store with [Braintree](https://www.braintreepayments.com/de), **bringing a new revenue stream to the company**.
+- Integration of [Firebase Analytics](https://firebase.google.com/docs/analytics) (RIP).
+- Set up with a Wi-Fi connection and QR Code scanning.
+- Migration to TypeScript in the second year.
+- Managed releases in the App Store and Play Store.
+- Onboarding of interns and other engineers in the project.

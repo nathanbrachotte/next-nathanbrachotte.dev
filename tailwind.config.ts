@@ -52,6 +52,8 @@ export default {
         'gradient-yellow': 'oklch(85.82% 0.201 91.19)',
         'gradient-blue': 'oklch(59.59% 0.24 255.09156059071347)',
         'gradient-cyan': 'oklch(81.58% 0.189 190.74037768509325)',
+        'gradient-green': '#15c064', // TODO: Make this oklch
+        'gradient-turquoise': '#80FF72',
         background: '#0B0F1A',
       },
       boxShadow: {
