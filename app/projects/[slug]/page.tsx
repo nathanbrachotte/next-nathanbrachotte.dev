@@ -1,21 +1,19 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { Mdx } from 'app/components/mdx'
-import { allBlogs } from 'contentlayer/generated'
+import { allProjects } from 'contentlayer/generated'
 // import { getTweets } from 'lib/twitter'
 import Balancer from 'react-wrap-balancer'
-import ViewCounter from '../view-counter'
 // import { getViewsCount } from 'lib/metrics'
 
-const findBlogPost = (slug: string) => {
-  return allBlogs.find((post) => post.slug.includes(slug))
+const findProject = (slug: string) => {
+  return allProjects.find((post) => post.slug.includes(slug))
 }
 
 export async function generateMetadata({
   params,
 }): Promise<Metadata | undefined> {
-  const post = findBlogPost(params.slug)
-
+  const post = findProject(params.slug)
   if (!post) {
     return
   }
@@ -84,8 +82,10 @@ function formatDate(date: string) {
   return `${fullDate} (${formattedDate})`
 }
 
-export default async function Blog({ params }) {
-  const post = findBlogPost(params.slug)
+export default async function Project({ params }) {
+  const post = findProject(params.slug)
+
+  console.log({ post, allProjects, params })
 
   if (!post) {
     notFound()

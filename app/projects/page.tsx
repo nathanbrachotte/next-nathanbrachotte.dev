@@ -23,7 +23,6 @@ const Project = ({
     'via-gradient-blue',
   ] as const
 
-  console.log({ slug })
   // TODO: Add touch detection for animation to run on mobile - https://www.npmjs.com/package/react-touch
   return (
     <Link href={slug}>

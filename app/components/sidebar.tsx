@@ -8,8 +8,13 @@ import { routes } from 'app/routes'
 
 export default function Navbar() {
   let pathname = usePathname() || '/'
-  if (pathname.includes('/blog/')) {
-    pathname = '/blog'
+
+  if (pathname.includes(routes['/blog'].url)) {
+    pathname = routes['/blog'].url
+  }
+
+  if (pathname.includes(routes['/projects'].url)) {
+    pathname = routes['/projects'].url
   }
 
   return (
