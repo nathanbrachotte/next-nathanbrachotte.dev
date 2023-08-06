@@ -1,4 +1,4 @@
-import * as Badges from 'app/components/Badges'
+import { Badges } from 'app/components/Badges'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -17,8 +17,8 @@ export default function Page() {
         >
           @N8
         </Link>
-        ), a Full Stack Software Engineer specializing in <Badges.ReactBadge />{' '}
-        & <Badges.ReactNativeBadge />.
+        ), a Full Stack Software Engineer specializing in <Badges.React /> &{' '}
+        <Badges.ReactNative />.
       </p>
       <Image
         alt="A photo of me"
@@ -36,15 +36,6 @@ export default function Page() {
       <div className="h-10 w-10 bg-gradient-purple bg-gradient-to-tr from-transparent to-gradient-pink"></div>
       <div className="h-10 w-10 bg-gradient-orange bg-gradient-to-tr from-transparent to-gradient-yellow"></div>
       <div className="h-10 w-10 bg-gradient-blue bg-gradient-to-tr from-transparent to-gradient-cyan"></div>
-      <div className="space-x-2">
-        {Object.values(Badges).map((BadgeComponent, index) => {
-          // Ensure BadgeComponent is a valid React component
-          if (React.isValidElement(<BadgeComponent />)) {
-            return <BadgeComponent key={index} />
-          }
-          return null
-        })}
-      </div>
     </section>
   )
 }

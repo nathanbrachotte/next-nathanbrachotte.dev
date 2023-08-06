@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import Tweet from './tweet'
 import { Badges } from 'app/components/Badges'
+import clsx from 'clsx'
 
 const CustomLink = (props) => {
   const href = props.href
@@ -32,17 +33,19 @@ const CustomLink = (props) => {
   )
 }
 
+// TODO: Optimize image size
 function RoundedImage(props) {
   return (
-    <div className="relative aspect-video">
+    <div className={clsx('relative aspect-video rounded-lg', props?.className)}>
       <Image
         alt={props.alt}
-        fill="cover"
+        fill
         style={{
           objectFit: 'cover',
         }}
-        className="rounded-lg object-cover"
-        {...props}
+        className={'rounded-lg object-cover object-top'}
+        src={props.src}
+        priority={props.priority}
       />
     </div>
   )
