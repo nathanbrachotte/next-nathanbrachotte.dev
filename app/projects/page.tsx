@@ -70,6 +70,7 @@ const Project = ({
     'via-gradient-cyan',
   ] as const
 
+  // TODO: Add touch detection for animation to run on mobile - https://www.npmjs.com/package/react-touch
   return (
     <div className="group flex flex-col justify-between">
       <div
@@ -80,7 +81,7 @@ const Project = ({
       >
         <div
           className={clsx(
-            'visible absolute -bottom-96 -top-96 left-10 right-10 group-hover:visible group-hover:animate-spin-surround',
+            'visible absolute -bottom-96 -top-96 left-10 right-10 group-hover:visible group-hover:animate-spin-surround group-focus:visible',
             `bg-gradient-to-r from-transparent ${animatedGradient[index]} to-transparent`,
           )}
         />

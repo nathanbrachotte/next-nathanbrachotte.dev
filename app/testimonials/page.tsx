@@ -144,6 +144,62 @@ development in general.`,
   },
 ] satisfies Testimonial[]
 
+const SeeOriginalButton = ({
+  testimonialLink,
+}: {
+  testimonialLink: string
+}) => {
+  //! FIXME:Button isn't displayed on tablets, add device detection (https://github.com/duskload/react-device-detect)
+  return (
+    <div
+      className={clsx(
+        'opacity-1 translate-x-0 sm:mt-0 sm:translate-x-4 sm:opacity-0',
+        'transition duration-300 ease-out',
+        'group-hover/testimonials:translate-x-0 group-hover/testimonials:scale-100 group-hover/testimonials:opacity-100',
+      )}
+    >
+      <Link
+        href={testimonialLink}
+        className={clsx(
+          'flex flex-row items-center justify-center',
+          'rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
+          'bg-gradient-to-r from-gradient-blue to-gradient-cyan',
+          'animate-text-gradient-background',
+          // TODO: Make shadow-neon work
+          'transition-shadow hover:shadow-lg',
+          'no-underline',
+          'hover:scale-105',
+          'active:scale-95',
+        )}
+      >
+        <span className="transition-all">See original</span>
+        <ArrowUpRight className={clsx('ml-2 h-4 w-4 stroke-slate-100')} />
+      </Link>
+    </div>
+  )
+}
+
+export const SeeOriginalLink = ({
+  testimonialLink,
+}: {
+  testimonialLink: string
+}) => {
+  return (
+    <Link
+      href={testimonialLink}
+      className={clsx(
+        'flex flex-row items-center justify-center',
+        'bg-gradient-to-r from-gradient-blue to-gradient-cyan bg-clip-text text-transparent',
+        'transition-shadow hover:shadow-lg',
+        'active:scale-95',
+      )}
+    >
+      <span className="transition-all">See original</span>
+      <ArrowUpRight className={clsx('ml-2 h-4 w-4 stroke-gradient-cyan')} />
+    </Link>
+  )
+}
+
 const TestimonialsPage = () => {
   return (
     <section>
@@ -155,8 +211,11 @@ const TestimonialsPage = () => {
           { name, paragraphs, position, pic, testimonialLink, authorLink },
           index,
         ) => (
-          <div className="group/testimonials prose prose-invert mb-12">
-            <blockquote className="py relative border-l-0 pl-4">
+          <div
+            className="group/testimonials prose prose-invert mb-16 sm:mb-12"
+            key={name}
+          >
+            <blockquote className="py relative border-l-0">
               <div
                 className={clsx(
                   'absolute bottom-0 left-0 top-0 w-[2px] bg-gradient-to-b',
@@ -167,7 +226,10 @@ const TestimonialsPage = () => {
                 <p className="text-lg">{paragraph}</p>
               ))}
             </blockquote>
-            <div className="flex flex-row items-center justify-between">
+            <div className="-mt-2 mb-4 flex flex-row justify-start sm:hidden">
+              <SeeOriginalLink testimonialLink={testimonialLink} />
+            </div>
+            <div className="flex flex-col items-start justify-start sm:flex-row sm:items-center sm:justify-between">
               <Link
                 href={authorLink}
                 className="flex cursor-pointer flex-row items-center no-underline"
@@ -209,34 +271,8 @@ const TestimonialsPage = () => {
                   </span>
                 </div>
               </Link>
-              <div
-                className={clsx(
-                  'flex flex-row items-center justify-center',
-                  'ml-4',
-                  'translate-x-4 opacity-0',
-                  'transition duration-300 ease-out',
-                  'group-hover/testimonials:translate-x-2 group-hover/testimonials:scale-100 group-hover/testimonials:opacity-100',
-                )}
-              >
-                <Link
-                  href={testimonialLink}
-                  className={clsx(
-                    'flex flex-row items-center justify-center',
-                    'rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
-                    'bg-gradient-to-r from-gradient-blue to-gradient-cyan',
-                    'animate-text-gradient-background',
-                    // TODO: Make shadow-neon work
-                    'transition-shadow hover:shadow-lg',
-                    'no-underline',
-                    'hover:scale-105',
-                    'active:scale-95',
-                  )}
-                >
-                  <span className="transition-all">See original</span>
-                  <ArrowUpRight
-                    className={clsx('ml-2 h-4 w-4 stroke-slate-100')}
-                  />
-                </Link>
+              <div className="hidden max-w-sm sm:flex">
+                <SeeOriginalButton testimonialLink={testimonialLink} />
               </div>
             </div>
           </div>
