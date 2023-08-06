@@ -239,7 +239,7 @@ const TestimonialsPage = () => {
                     className="h-14 w-14 rounded-full transition-all group-hover/testimonials:shadow-neon"
                   />
                 ) : (
-                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-800">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-gray-800 transition-all group-hover/testimonials:shadow-neon">
                     <User />
                   </div>
                 )}

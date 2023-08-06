@@ -55,7 +55,7 @@ export default {
         background: "theme('colors.slate.900')",
       },
       boxShadow: {
-        neon: "0 0 1rem theme('colors.gradient-purple'), 0 0 0.5rem theme('colors.gradient-pink')",
+        neon: "0 0 0.9rem theme('colors.gradient-purple'), 0 0 0.1rem theme('colors.gradient-pink')",
       },
     },
   },
