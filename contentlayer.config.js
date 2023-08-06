@@ -82,6 +82,26 @@ export const Project = defineDocumentType(() => ({
     image: {
       type: 'string',
     },
+    missions: {
+      type: 'list',
+      of: { type: 'string' },
+    },
+    tools: {
+      type: 'list',
+      of: { type: 'string' },
+    },
+    projectUrl: {
+      type: 'string',
+    },
+    repoUrl: {
+      type: 'string',
+    },
+    appleStoreUrl: {
+      type: 'string',
+    },
+    playStoreUrl: {
+      type: 'string',
+    },
   },
   computedFields,
 }))
