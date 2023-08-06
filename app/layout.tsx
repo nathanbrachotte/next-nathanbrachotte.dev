@@ -68,8 +68,13 @@ export default function RootLayout({
       lang="en"
       className={clsx(
         'dark',
+        // OG
         // 'bg-white text-black dark:bg-slate-800 dark:text-white',
-        'bg-slate-900 text-white',
+        // Nice alternative
+        // 'bg-slate-900 text-white',
+        // Newest
+        'bg-background text-white',
+
         graphik.variable,
       )}
     >
