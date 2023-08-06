@@ -4,6 +4,14 @@ import { Mdx } from 'app/components/mdx'
 import { allProjects } from 'contentlayer/generated'
 // import { getTweets } from 'lib/twitter'
 import Balancer from 'react-wrap-balancer'
+import {
+  GastbyBadge,
+  NextBadge,
+  PlanetScaleBadge,
+  ReactBadge,
+  ReactNativeBadge,
+  VercelBadge,
+} from 'app/components/Badges'
 // import { getViewsCount } from 'lib/metrics'
 
 const findProject = (slug: string) => {
@@ -105,7 +113,7 @@ export default async function Project({ params }) {
         <Balancer>{post.title}</Balancer>
       </h1>
       <div className="mb-8 mt-2 flex max-w-[650px] items-center justify-between text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+        <p className="text-sm text-neutral-400">
           {formatDate(post.publishedAt)}
         </p>
         {/* <ViewCounter allViews={allViews} slug={post.slug} trackView /> */}
