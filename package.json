@@ -4,7 +4,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "setup": "node ./lib/setup.mjs",
     "lint": "next lint"
   },
   "dependencies": {

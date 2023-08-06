@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { allProjects } from 'contentlayer/generated'
 
 type Project = {
   name: string
@@ -144,6 +145,8 @@ const Project = ({
 }
 
 export default function ProjectsPage() {
+  const newProjec = allProjects
+  console.log({ newProjec })
   return (
     <section>
       <h1 className="mb-8 text-2xl font-bold tracking-tighter">
