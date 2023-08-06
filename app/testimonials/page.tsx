@@ -179,11 +179,7 @@ const SeeOriginalButton = ({
   )
 }
 
-export const SeeOriginalLink = ({
-  testimonialLink,
-}: {
-  testimonialLink: string
-}) => {
+const SeeOriginalLink = ({ testimonialLink }: { testimonialLink: string }) => {
   return (
     <Link
       href={testimonialLink}
