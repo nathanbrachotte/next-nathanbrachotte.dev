@@ -47,6 +47,20 @@ function RoundedImage(props) {
   )
 }
 
+function Video(props) {
+  return (
+    <div className={'aspect-video'}>
+      <iframe
+        title={props.title}
+        className="h-full w-full"
+        src={props.src}
+        frameBorder="0"
+        allowFullScreen
+      />
+    </div>
+  )
+}
+
 function Callout(props) {
   return (
     <div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 px-4 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
@@ -119,6 +133,7 @@ const components = {
   ProsCard,
   ConsCard,
   Badges,
+  Video,
 }
 
 interface MdxProps {
