@@ -112,7 +112,6 @@ export default async function Project({ params }) {
   //   getViewsCount(),
   //   getTweets(post.tweetIds),
   // ])
-  console.log({ postUrl: post.projectUrl })
 
   return (
     <section>

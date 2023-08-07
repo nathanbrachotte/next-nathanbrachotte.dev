@@ -13,7 +13,7 @@ const CustomLink = (props) => {
 
   if (href.startsWith('/')) {
     return (
-      <Link href={href} className={className} {...props}>
+      <Link href={href} alt={props.children} className={className} {...props}>
         {props.children}
       </Link>
     )
@@ -33,24 +33,13 @@ const CustomLink = (props) => {
   )
 }
 
-// TODO: Optimize image size
 function RoundedImage(props) {
   return (
-    <div
-      className={twMerge(
-        'h- relative aspect-video rounded-lg',
-        props?.className,
-      )}
-    >
+    <div className={props.wrapperClassName}>
       <Image
         alt={props.alt}
-        fill
-        className={twMerge(
-          'rounded-lg object-cover  object-top',
-          props.imgClassName,
-        )}
-        src={props.src}
-        priority={props.priority}
+        {...props}
+        className={twMerge('rounded-lg', props.className)}
       />
     </div>
   )
