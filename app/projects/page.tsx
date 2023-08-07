@@ -1,7 +1,13 @@
 import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
 import clsx from 'clsx'
 import { Project, allProjects } from 'contentlayer/generated'
+import { Metadata } from 'next'
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+  title: 'Projects',
+  description: "A curated list of some of projects I've worked on in the past",
+}
 
 const Project = ({
   project: { title, summary, image, slug },

@@ -23,6 +23,7 @@ export async function generateMetadata({
   params,
 }): Promise<Metadata | undefined> {
   const post = findProject(params.slug)
+
   if (!post) {
     return
   }
@@ -34,9 +35,6 @@ export async function generateMetadata({
     image,
     slug,
   } = post
-  // const ogImage = image
-  //   ? `https://leerob.io${image}`
-  //   : `https://leerob.io/og?title=${title}`;
 
   return {
     title,
@@ -47,17 +45,12 @@ export async function generateMetadata({
       type: 'article',
       publishedTime,
       url: `https://nathanbrachotte.dev/blog/${slug}`,
-      // images: [
-      //   {
-      //     url: ogImage,
-      //   },
-      // ],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      // images: [ogImage],
+      ...(image && { images: [image] }),
     },
   }
 }
