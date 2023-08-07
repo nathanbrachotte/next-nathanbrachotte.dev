@@ -13,8 +13,9 @@ export function ProjectLogo({
         src={image}
         alt={title + "'s logo"}
         fill
+        sizes="50px"
         style={{
-          objectFit: 'cover',
+          objectFit: 'contain',
         }}
       />
     </div>

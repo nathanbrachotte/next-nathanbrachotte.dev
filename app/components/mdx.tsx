@@ -34,12 +34,14 @@ const CustomLink = (props) => {
 }
 
 function RoundedImage(props) {
+  const { wrapperClassName, className, ...restProps } = props
+
   return (
-    <div className={props.wrapperClassName}>
+    <div className={wrapperClassName}>
       <Image
-        alt={props.alt}
-        {...props}
-        className={twMerge('rounded-lg', props.className)}
+        alt={restProps.alt}
+        {...restProps}
+        className={twMerge('rounded-lg', className)}
       />
     </div>
   )

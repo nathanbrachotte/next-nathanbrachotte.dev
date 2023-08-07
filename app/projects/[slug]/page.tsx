@@ -94,7 +94,9 @@ function Tools({ tools }: { tools: string[] }) {
     <div className="mb-8 mt-2 flex w-full flex-wrap">
       {tools.map((tool) => {
         return (
-          <div className="mr-2 mt-2">{React.createElement(Badges[tool])}</div>
+          <div key={tool} className="mr-2 mt-2">
+            {React.createElement(Badges[tool])}
+          </div>
         )
       })}
     </div>
