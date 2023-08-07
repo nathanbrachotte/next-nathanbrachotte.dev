@@ -5,6 +5,7 @@ import { allBlogs } from 'contentlayer/generated'
 // import { getTweets } from 'lib/twitter'
 import Balancer from 'react-wrap-balancer'
 import ViewCounter from '../view-counter'
+import { getTimePerPost } from 'helpers/time'
 // import { getViewsCount } from 'lib/metrics'
 
 const findBlogPost = (slug: string) => {
@@ -91,6 +92,8 @@ export default async function Blog({ params }) {
     notFound()
   }
 
+  console.log({ post })
+
   // const [allViews, tweets] = await Promise.all([
   //   getViewsCount(),
   //   getTweets(post.tweetIds),
@@ -106,7 +109,7 @@ export default async function Blog({ params }) {
       </h1>
       <div className="mb-8 mt-2 flex max-w-[650px] items-center justify-between text-sm">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(post.publishedAt)}
+          {formatDate(post.publishedAt)} - {getTimePerPost(post.body.raw)}
         </p>
         {/* <ViewCounter allViews={allViews} slug={post.slug} trackView /> */}
       </div>

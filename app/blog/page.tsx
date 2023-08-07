@@ -4,6 +4,7 @@ import { Blog, allBlogs } from 'contentlayer/generated'
 import ViewCounter from './view-counter'
 import { twMerge } from 'tailwind-merge'
 import { parseISO, format } from 'date-fns'
+import { getTimePerPost } from 'helpers/time'
 // import { getViewsCount } from 'lib/metrics'
 
 export const metadata: Metadata = {
@@ -19,13 +20,9 @@ const formatDate = (date: string) => {
   return readableDate
 }
 
-const BlogPostCard = ({
-  blog: { title, summary, slug, publishedAt },
-  index,
-}: {
-  blog: Blog
-  index: number
-}) => {
+const BlogPostCard = ({ blog, index }: { blog: Blog; index: number }) => {
+  const { title, summary, slug, publishedAt, body } = blog
+
   const borderRadiant = [
     'from-gradient-purple via-transparent to-gradient-pink',
     'from-gradient-blue via-transparent to-gradient-cyan',
@@ -64,7 +61,10 @@ const BlogPostCard = ({
                 <h2 className=" text-xl font-bold tracking-tighter">{title}</h2>
                 <p className="font-md text-slate-300">{summary}</p>
               </div>
-              <p className="ml-2 min-w-fit">{formatDate(publishedAt)}</p>
+              <div className="ml-2 min-w-fit">
+                <p>{formatDate(publishedAt)}</p>
+                <p className="text-slate-300">{getTimePerPost(body.raw)}</p>
+              </div>
             </div>
           </div>
         </div>
