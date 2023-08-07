@@ -1,0 +1,49 @@
+---
+title: 'How I almost Killed the DJ 💀'
+publishedAt: '2018-09-01'
+summary: 'My first cross-platform app made in 🇫🇮.'
+---
+
+In 2016, during my Erasmus year at Åbo Akademi University in Turku, Finland, I embarked on a noteworthy journey that marked a significant milestone as the beginning of software engineering career.
+
+To validate the year, one of my class was to work on a real project during 3 semesters, and then a jury would elect the best project of all.
+
+## The idea
+
+We settled very fast with my Erasmus team on one idea: Develop an application allowing individuals sharing the same WiFi network to vote for their favorite song.
+The votes would then dictate the playlist, with a Raspberry Pi connected to speakers, streaming the most-voted song via the Spotify API. Given the frequent social gatherings and parties common to the Erasmus student experience, this idea was handy for us.
+With **"Kill the DJ"**, arguments over song selection would become a thing of the past.
+
+<Image
+  alt={`Product Vision`}
+  src={`/images/projects/how-i-almost-killed-the-dj/product-vision.png`}
+  priority
+  width={6234}
+  height={4368}
+/>
+
+## How we built it
+
+Building the application was complex, mainly because we decided to utilize [Ionic](https://ionicframework.com/) as a cross-platform mobile framework (<Badges.ReactNative /> wasn't that well known at the time) and [Angular 2](https://angular.io/).
+
+Google had just released its new flagshit framework, and Ionic had just switched new project creations to use Angular2 instead of AngularJS. Sadly, because of Angular20's API changes, this resulted in scarce documentation and few precedents to follow for problem-solving. StackOverflow was filled with answers using an Ionic and AngularJS combination, and our experience building mobile apps was limited.
+Through many trial-and-error cycles and late-night coding sessions, we persevered and managed to get most of the voting features to work and the streaming app running on the Raspberry PI. It was ugly but it worked.
+
+The app's name, "Kill the DJ," was inspired by two aspects. Firstly, the app's functionality eliminated the need for a human DJ at gatherings, effectively 'killing' the role. Secondly, the name is a nod to the [eponym song](https://www.youtube.com/watch?v=jW7VhkNqjnc) from Green Day - a favorite among my team members and me (and also less than a year old at the time, time flies huh?).
+
+## Results and aftermath
+
+At the end of the academic year, we presented our project alongside 70 others in the [ICT Showroom](https://www.ictshowroom.fi/), a city-wide event where hundreds of students were invited to try the projects out. The jury would listen to pitches from every project the whole day. At the closing ceremony, the most ambitious, promising, and impressive projects got rewarded.
+
+**"Kill the DJ" received the Best Project Award**, a testament to our innovative approach and the practicality of our concept. The jury congratulated us on the elegance and simplicity of our idea and its potential to streamline music selection at social gatherings.
+
+Following our victory, a startup incubator approached us, expressing interest in enabling the app's growth. However, after careful consideration, we decided against this offer. With our studies drawing to a close, and team members being from 3 different countries, our team was set to disband. We also conducted extensive market research and found similar, web applications. A few years later, [Spotify would themselves release the same feature](https://newsroom.spotify.com/2020-07-28/your-squad-can-now-stream-simultaneously-using-spotifys-group-session-beta/) called **Group sessions**.
+Questions about the app's unique selling proposition and doubts about its monetization strategy also influenced our decision.
+
+## Conclusion
+
+Despite deciding not to pursue the project further, our achievement did not go unnoticed. We were [featured in a local Finnish newspaper](https://svenska.yle.fi/a/7-1172813), bringing a satisfying close to our journey.
+
+In retrospect, my Erasmus year was not just about academic growth but also about diving into practical challenges, understanding the software development lifecycle, and learning to make informed decisions.
+(For example, don't build app with Angular)
+While "Kill the DJ" doesn't live, building it taught us so many things about how to work as a team, perseverance and how the power of the idea is as important as execution.
