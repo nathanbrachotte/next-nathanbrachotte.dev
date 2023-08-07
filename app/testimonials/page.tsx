@@ -161,12 +161,12 @@ const SeeOriginalButton = ({
       <Link
         href={testimonialLink}
         className={clsx(
-          'flex flex-row items-center justify-center',
+          'flex flex-row items-center justify-center transition-all',
           'rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
           'bg-gradient-to-r from-gradient-blue to-gradient-cyan',
           'animate-text-gradient-background',
           // TODO: Make shadow-neon work
-          'transition-shadow hover:shadow-lg',
+          'hover:shadow-lg',
           'no-underline',
           'hover:scale-105',
           'active:scale-95',
