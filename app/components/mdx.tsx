@@ -20,7 +20,7 @@ const CustomLink = (props) => {
   }
 
   if (href.startsWith('#')) {
-    return <a {...props} className={className} />
+    return <a {...props} />
   }
 
   return (
