@@ -11,26 +11,13 @@ html {
   min-width: 360px;
 }
 
+/* Anchor style */
 .prose .anchor {
-  @apply invisible absolute no-underline;
-
-  margin-left: -1em;
-  padding-right: 0.5em;
-  width: 80%;
-  max-width: 700px;
-  cursor: pointer;
-}
-
-.anchor:hover {
-  @apply visible;
-}
-
-.prose a {
-  /* @apply decoration-neutral-400 decoration-[0.1em] underline-offset-2 transition-all dark:decoration-neutral-600; */
+  @apply absolute -ml-4 w-full max-w-[700px] cursor-pointer pt-[2px] text-2xl no-underline opacity-0 transition-all hover:opacity-100;
 }
 
 .prose .anchor:after {
-  @apply text-neutral-300 dark:text-neutral-700;
+  @apply text-slate-300;
   content: '#';
 }
 
@@ -38,18 +25,23 @@ html {
   @apply visible;
 }
 
+/* Pre - surroundings and background */
 .prose pre {
-  @apply border border-neutral-800 bg-neutral-900;
+  /* @apply border border-neutral-800 bg-neutral-900; */
+  @apply border border-slate-700 bg-slate-800;
 }
 
+/* Inline code */
 .prose code {
-  @apply rounded-lg border border-neutral-100 bg-neutral-100 px-1 py-0.5 text-neutral-800 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-200;
+  /* @apply rounded-lg border border-neutral-100 bg-neutral-100 px-1 py-0.5 text-neutral-800 dark:border-neutral-800 dark:bg-neutral-900 dark:text-neutral-200; */
+  @apply rounded-lg bg-slate-800 p-1 text-neutral-200;
 }
 
-.prose pre code {
-  @apply p-0 text-neutral-800 dark:text-neutral-200;
-  border: initial;
-}
+/* .prose pre code {
+  /* @apply p-0 text-neutral-800 dark:text-neutral-200; */
+/* @apply p-0 text-red-600; */
+/* border: initial; 
+} */
 
 .prose img {
   /* Don't apply styles to next/image */
@@ -62,10 +54,10 @@ html {
   margin-bottom: 1.25em !important;
 }
 
-code[class*='language-'],
+/* code[class*='language-'],
 pre[class*='language-'] {
   @apply text-neutral-50;
-}
+} */
 
 pre::-webkit-scrollbar {
   display: none;
@@ -100,14 +92,51 @@ table {
   margin: 0 !important;
 }
 
+/* Whole code wrapper */
 [data-rehype-pretty-code-fragment] code {
   @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0 text-sm text-black;
   counter-reset: line;
   box-decoration-break: clone;
 }
-[data-rehype-pretty-code-fragment] .line {
-  @apply py-1;
+
+/* Code > Pre > Lines */
+[data-rehype-pretty-code-fragment] pre {
+  @apply overflow-x-auto border-transparent px-0 py-3;
 }
+
+/* Makes sure line count and code lines are correctly aligned */
+code > [data-line] {
+  @apply flex items-center border-l-4 border-transparent;
+}
+
+/* Line count */
+code > [data-line]::before {
+  @apply inline-block text-slate-600;
+  counter-increment: line;
+  content: counter(line);
+
+  /* Other styling */
+  display: inline-block;
+  width: 1rem;
+  margin-left: 0.3rem;
+  margin-right: 1.5rem;
+  text-align: right;
+  /* color: gray; */
+}
+code[data-line-numbers-max-digits='2'] > [data-line]::before {
+  width: 2rem;
+}
+
+code[data-line-numbers-max-digits='3'] > [data-line]::before {
+  width: 3rem;
+}
+
+/* Not sure */
+/* code[data-rehype-pretty-code-fragment] > [data-line] {
+  @apply border-l-4 border-red-50;
+} */
+
+/* Don't think it's useful */
 [data-rehype-pretty-code-fragment] [data-line-numbers] > .line::before {
   counter-increment: line;
   content: counter(line);
@@ -117,18 +146,39 @@ table {
   text-align: right;
   color: gray;
 }
-[data-rehype-pretty-code-fragment] .line--highlighted {
-  @apply bg-slate-500 bg-opacity-10;
+
+/* Highlighted lines */
+div[data-rehype-pretty-code-fragment] .line--highlighted {
+  @apply border-cyan-400 bg-cyan-400 bg-opacity-30;
 }
-[data-rehype-pretty-code-fragment] .line-highlighted span {
-  @apply relative;
-}
-[data-rehype-pretty-code-fragment] .word--highlighted {
-  @apply rounded-md bg-slate-500 bg-opacity-10 p-1;
-}
+
+/* Above the code */
 [data-rehype-pretty-code-title] {
-  @apply rounded-t-lg border border-[#333333] bg-[#1c1c1c] px-4 py-3 font-mono text-xs font-medium text-neutral-200;
+  /* @apply rounded-t-lg border border-[#333333] bg-[#1c1c1c] px-4 py-3 font-mono text-xs font-medium text-neutral-200; */
+  @apply rounded-t-lg border-b border-slate-700 bg-slate-900 px-4 py-3 font-mono text-xs font-medium text-neutral-200;
 }
 [data-rehype-pretty-code-title] + pre {
   @apply mt-0 rounded-t-none border-t-0;
+}
+
+/* Caption below the code */
+[data-rehype-pretty-code-caption] {
+  @apply -mt-7 px-1 py-3 font-mono text-sm text-slate-300;
+}
+
+/* Highlight texts */
+[data-chars-id='p'] {
+  @apply rounded-md border-b-2 border-purple-500 bg-purple-800 bg-opacity-50 px-0.5 pt-0.5 font-bold;
+}
+
+[data-chars-id='b'] {
+  @apply rounded-md border-b-2 border-blue-500 bg-blue-800 bg-opacity-50 px-0.5 pt-0.5 font-bold;
+}
+
+[data-chars-id='g'] {
+  @apply rounded-md border-b-2 border-green-500 bg-green-800 bg-opacity-50 px-0.5 pt-0.5 font-bold;
+}
+
+[data-chars-id='r'] {
+  @apply rounded-md border-b-2 border-red-500 bg-red-800 bg-opacity-50 px-0.5 pt-0.5 font-bold;
 }
