@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Blog, allBlogs } from 'contentlayer/generated'
-import ViewCounter from './view-counter'
+// import ViewCounter from './view-counter'
 import { twMerge } from 'tailwind-merge'
 import { parseISO, format } from 'date-fns'
 import { getTimePerPost } from 'helpers/time'
