@@ -6,7 +6,7 @@ function BadgeWrapper(props) {
       {...props}
       target="_blank"
       // className="inline-flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 text-sm leading-4 text-neutral-900 no-underline dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
-      className="inline-flex items-center rounded border border-slate-700 bg-slate-800 p-1 text-sm leading-4 text-slate-100 no-underline transition-all hover:scale-110 hover:border-gradient-purple"
+      className="inline-flex items-center rounded border border-slate-700 bg-slate-800 p-1 text-sm leading-4 text-slate-100 no-underline transition-all hover:scale-110 hover:border-gradient-purple hover:text-purple-300"
     />
   )
 }

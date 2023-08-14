@@ -10,8 +10,6 @@ import React from 'react'
 export interface TestimonialsSectionProps {}
 
 export const TestimonialsSection = ({}: TestimonialsSectionProps) => {
-  const [isMounted, setIsMounted] = React.useState(false)
-
   return testimonials.map(
     (
       { name, paragraphs, position, pic, testimonialLink, authorLink },
