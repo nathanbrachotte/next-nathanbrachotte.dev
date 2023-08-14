@@ -149,7 +149,7 @@ code[data-line-numbers-max-digits='3'] > [data-line]::before {
 
 /* Highlighted lines */
 div[data-rehype-pretty-code-fragment] .line--highlighted {
-  @apply border-cyan-400 bg-cyan-400 bg-opacity-30;
+  @apply border-pink-500 bg-gray-500 bg-opacity-20;
 }
 
 /* Above the code */
