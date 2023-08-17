@@ -102,6 +102,9 @@ export const Project = defineDocumentType(() => ({
     playStoreUrl: {
       type: 'string',
     },
+    isSideProject: {
+      type: 'boolean',
+    },
   },
   computedFields,
 }))

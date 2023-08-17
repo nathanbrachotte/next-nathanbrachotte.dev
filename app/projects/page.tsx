@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 const Project = ({
-  project: { title, summary, image, slug },
+  project: { title, summary, image, slug, isSideProject },
   index,
 }: {
   project: Project
@@ -49,6 +49,11 @@ const Project = ({
             )}
           />
           <div className="relative h-full rounded-lg bg-background p-6">
+            {isSideProject && (
+              <span className="absolute right-6 top-6 text-xs">
+                🪴 Side Project
+              </span>
+            )}
             {image && <ProjectLogo image={image} title={title} />}
             <h2 className="mt-2 text-xl font-bold tracking-tighter">{title}</h2>
             <p className="font-md text-slate-300">{summary}</p>
