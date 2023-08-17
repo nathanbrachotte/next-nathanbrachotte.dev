@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Blog, allBlogs } from 'contentlayer/generated'
+import { allBlogs } from 'contentlayer/generated'
 // import ViewCounter from './view-counter'
 import { twMerge } from 'tailwind-merge'
 import { parseISO, format } from 'date-fns'
@@ -9,8 +9,7 @@ import { getTimePerPost } from 'helpers/time'
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description:
-    'All my blog posts, mostly talking about engineering challenges and things that happened to me',
+  description: 'Commit by commit: My evolution as a Software Engineer',
 }
 
 const formatDate = (date: string) => {
@@ -20,7 +19,13 @@ const formatDate = (date: string) => {
   return readableDate
 }
 
-const BlogPostCard = ({ blog, index }: { blog: Blog; index: number }) => {
+const BlogPostCard = ({
+  blog,
+  index,
+}: {
+  blog: (typeof allBlogs)[number]
+  index: number
+}) => {
   const { title, summary, slug, publishedAt, body } = blog
 
   const borderRadiant = [
@@ -84,8 +89,7 @@ export default async function BlogPage() {
   return (
     <section>
       <h1 className="mb-8 text-2xl font-bold tracking-tighter">
-        All my blog posts, mostly talking about engineering challenges 🧑‍💻 and
-        things that happened to me 🪴
+        Commit by commit: My evolution as a Software Engineer 🚀
       </h1>
       {allBlogs
         .sort((a, b) => {
