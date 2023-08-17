@@ -1,0 +1,87 @@
+---
+title: 'The old nathanbrachotte.dev'
+publishedAt: '2021-01-01'
+summary: 'My first portfolio website. Built with Gatsby, Contentful, and Styled Component. They were cool at the time.'
+image: '/images/projects/nathanbrachotte.dev/logo.png'
+missions:
+  - Design
+  - Web
+tools:
+  - React
+  - Gatsby
+  - GraphQL
+  - Contentful
+  - StyledComponents
+  - Netlify
+projectUrl: 'https://nathanbrachotte.dev/'
+repoUrl: 'https://github.com/nathanbrachotte/nathanbrachotte-dev'
+isSideProject: true
+---
+
+The goal was to give me a platform to share the things I do, the projects I've worked on, the blog posts or videos I appear in, or the endorsements I've received from my peers during my career.
+I've designed the website and my logo to play with the pink/blue duality, with different shades of each.
+
+### Challenge
+
+My goal was to keep the website clean and tidy while also interactive. That's why most elements move or reach to mouse hover to reach this "touch and feel" sensation.
+It also needed to be fully responsive and handle many different data structures.
+My top priorities were:
+
+- Design a cool logo that stands out.
+- Build a colorful website demonstrating what I can do on the web, while remaining easily browsable and interactive.
+- Fully responsive.
+- Good SEO and instant loading times.
+
+### Solution
+
+<Image
+  alt={`nathanbrachotte.dev overview`}
+  src={`/images/projects/nathanbrachotte.dev/overview.png`}
+  priority
+  width={3456}
+  height={2158}
+/>
+
+The website uses <Badges.Gatsby /> to generate static HTML pages (SSG), the data is generated on build time by using <Badges.Contentful />'s <Badges.GraphQL /> API, to host the data.
+
+<Badges.Contentful /> allows me to update assets and content on the fly: I'm
+hosting the website on Netlify and using
+[Webhooks](https://hookdeck.com/webhooks/guides/what-are-webhooks-how-they-work#what-is-a-webhook),
+the data is automatically downloaded and static pages built and deployed on each
+change from the <Badges.Github /> repo or CMS.{' '}
+
+Styling is done with <Badges.StyledComponents />
+ and [rebass](https://rebassjs.org), which provides a set of primitive
+components from which you can build from. I was happy to
+try <Badges.StyledComponents /> for the first time as it is pretty popular in the industry. I found
+it to be powerful yet very lengthy when you want to write a fully responsive and
+complex styling. It makes the number of components you write proliferate, and naming things becomes a real challenge.
+
+Therefore, I've started migrating to <Badges.Tailwind />. It is a total blast to use, super-efficient in how much CSS
+is sent to the browser and helps keep the code much more colocated.
+
+### Feature Highlights
+
+- My own brand, my own color scheme 😁.
+- Animations for a "lively" feeling.
+- I can update assets and texts and trigger a new version on the fly by changing data in Contentful.
+- It gives a good overview of all the things I do.
+
+<Image
+  alt={`nathanbrachotte.dev overview`}
+  src={`/images/projects/nathanbrachotte.dev/projects.png`}
+  width={2266}
+  height={1772}
+/>
+
+### Death
+
+In 2023, I've decided to move away from this tech stack:
+
+- Gatsby lost in popularity and its ecosystem is struggling to compete with the new sherrifs in town <Badges.Next /> and [Remix](https://remix.run/).
+- <Badges.Contentful /> is a great CMS, but having to deal with an extra layer
+  of abstraction (GraphQL) to get my data was a bit cumbersome. I've decided to
+  move to using MDX files and generate the pages using <Badges.Next /> and
+  [Contentlayer](https://www.contentlayer.dev/)
+
+More info on the devoted page for my new website: [nathanbrachotte.dev](/projects/nathanbrachotte.dev).
