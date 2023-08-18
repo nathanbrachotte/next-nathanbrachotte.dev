@@ -4,16 +4,16 @@ import { queryBuilder } from 'lib/planetscale'
 import { SignIn, SignOut } from './buttons'
 import Form from './form'
 
-async function getGuestbook() {
-  const data = await queryBuilder
-    .selectFrom('guestbook')
-    .select(['id', 'body', 'created_by', 'updated_at'])
-    .orderBy('updated_at', 'desc')
-    .limit(100)
-    .execute()
+// async function getGuestbook() {
+//   const data = await queryBuilder
+//     .selectFrom('guestbook')
+//     .select(['id', 'body', 'created_by', 'updated_at'])
+//     .orderBy('updated_at', 'desc')
+//     .limit(100)
+//     .execute()
 
-  return data
-}
+//   return data
+// }
 
 export const metadata: Metadata = {
   title: 'Guestbook',
@@ -50,7 +50,7 @@ export default async function GuestbookPage() {
 
   return (
     <section>
-      <h1 className="font-bold text-2xl mb-8 tracking-tighter">
+      <h1 className="mb-8 text-2xl font-bold tracking-tighter">
         sign my guestbook
       </h1>
       {session?.user ? (
@@ -62,9 +62,9 @@ export default async function GuestbookPage() {
         <SignIn />
       )}
       {entries?.map((entry) => (
-        <div key={entry.id} className="flex flex-col space-y-1 mb-4">
-          <div className="w-full text-sm break-words">
-            <span className="text-neutral-600 dark:text-neutral-400 mr-1">
+        <div key={entry.id} className="mb-4 flex flex-col space-y-1">
+          <div className="w-full break-words text-sm">
+            <span className="mr-1 text-neutral-600 dark:text-neutral-400">
               {entry.created_by}:
             </span>
             {entry.body}
