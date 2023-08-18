@@ -33,6 +33,7 @@ const CustomLink = (props) => {
   )
 }
 
+// TODO: Create a script that read height and width of an image and outputs the corrected width & height for the blog
 function RoundedImage(props) {
   const { wrapperClassName, className, ...restProps } = props
 
@@ -63,8 +64,8 @@ function Video(props) {
 
 function Callout(props) {
   return (
-    <div className="mb-8 flex items-center rounded border border-neutral-200 bg-neutral-50 p-1 px-4 py-3 text-sm text-neutral-900 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100">
-      <div className="mr-4 flex w-4 items-center">{props.emoji}</div>
+    <div className="mb-8 flex items-center rounded border border-cyan-900 bg-slate-800 p-1 px-4 py-3">
+      <div className="mr-4 flex w-4 text-lg">{props.emoji}</div>
       <div className="callout w-full">{props.children}</div>
     </div>
   )
