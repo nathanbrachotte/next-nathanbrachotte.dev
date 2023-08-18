@@ -5,6 +5,8 @@ import { allBlogs } from 'contentlayer/generated'
 import { twMerge } from 'tailwind-merge'
 import { parseISO, format } from 'date-fns'
 import { getTimePerPost } from 'helpers/time'
+import { getViewsCount } from 'lib/metrics'
+import ViewCounter from 'app/blog/view-counter'
 // import { getViewsCount } from 'lib/metrics'
 
 export const metadata: Metadata = {
@@ -22,9 +24,11 @@ const formatDate = (date: string) => {
 const BlogPostCard = ({
   blog,
   index,
+  allViews,
 }: {
   blog: (typeof allBlogs)[number]
   index: number
+  allViews: Awaited<ReturnType<typeof getViewsCount>>
 }) => {
   const { title, summary, slug, publishedAt, body } = blog
 
@@ -63,28 +67,29 @@ const BlogPostCard = ({
           <div className="relative h-full rounded-lg bg-background p-6">
             <div className="mt-2 flex items-center justify-between">
               <div>
-                <h2 className=" text-xl font-bold tracking-tighter">{title}</h2>
-                <p className="font-md text-slate-300">{summary}</p>
+                <h2 className="text-xl font-bold tracking-tighter">{title}</h2>
+                <p className="font-md text-neutral-300">{summary}</p>
               </div>
               <div className="ml-2 min-w-fit">
                 <p>{formatDate(publishedAt)}</p>
-                <p className="text-slate-300">{getTimePerPost(body.raw)}</p>
+                <p className="text-neutral-400">{getTimePerPost(body.raw)}</p>
+                <ViewCounter
+                  allViews={allViews}
+                  slug={slug}
+                  trackView={false}
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
-      {/* <ViewCounter
-                allViews={allViews}
-                slug={post.slug}
-                trackView={false}
-              /> */}
     </Link>
   )
 }
 
+// TODO: Vercel analytics
 export default async function BlogPage() {
-  // const allViews = await getViewsCount();
+  const allViews = await getViewsCount()
 
   return (
     <section>
@@ -99,7 +104,12 @@ export default async function BlogPage() {
           return 1
         })
         .map((post, index) => (
-          <BlogPostCard key={post.slug} index={index} blog={post} />
+          <BlogPostCard
+            key={post.slug}
+            index={index}
+            blog={post}
+            allViews={allViews}
+          />
         ))}
     </section>
   )

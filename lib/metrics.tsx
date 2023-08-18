@@ -38,6 +38,7 @@ export const getViewsCount = cache(async () => {
       .execute()
   } catch (error) {
     console.log({ error })
+    return []
   }
 })
 

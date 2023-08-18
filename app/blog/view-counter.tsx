@@ -25,8 +25,6 @@ export default function ViewCounter({
   }, [])
 
   return (
-    <div className="h-12 w-full bg-blue-500">
-      <p className="bg-red-400 text-neutral-400">{`${number.toLocaleString()} views`}</p>
-    </div>
+    <p className="text-neutral-400">{`👀 ${number.toLocaleString()} views`}</p>
   )
 }
