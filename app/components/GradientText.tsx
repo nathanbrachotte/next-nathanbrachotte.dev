@@ -8,7 +8,7 @@ export const GradientText = ({ children }: PropsWithChildren) => {
         'mb-0 mt-0',
         'transition-all duration-300 ease-out',
         'text-transparent',
-        'bg-gradient-to-r from-gradient-purple to-gradient-pink bg-clip-text',
+        'bg-gradient-to-r from-gradient-pink via-gradient-purple to-gradient-cyan bg-clip-text',
         'animate-text-gradient-background',
       )}
     >
