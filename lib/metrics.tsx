@@ -1,21 +1,21 @@
 import 'server-only'
 
-import { google } from 'googleapis'
+// import { google } from 'googleapis'
 import { queryBuilder } from 'lib/planetscale'
 import { cache } from 'react'
 
-const googleAuth = new google.auth.GoogleAuth({
-  credentials: {
-    client_email: process.env.GOOGLE_CLIENT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY,
-  },
-  scopes: ['https://www.googleapis.com/auth/youtube.readonly'],
-})
+// const googleAuth = new google.auth.GoogleAuth({
+//   credentials: {
+//     client_email: process.env.GOOGLE_CLIENT_EMAIL,
+//     private_key: process.env.GOOGLE_PRIVATE_KEY,
+//   },
+//   scopes: ['https://www.googleapis.com/auth/youtube.readonly'],
+// })
 
-const youtube = google.youtube({
-  version: 'v3',
-  auth: googleAuth,
-})
+// const youtube = google.youtube({
+//   version: 'v3',
+//   auth: googleAuth,
+// })
 
 export const getBlogViews = cache(async () => {
   if (!process.env.DATABASE_HOST) {
@@ -31,25 +31,32 @@ export const getBlogViews = cache(async () => {
 })
 
 export const getViewsCount = cache(async () => {
-  return queryBuilder.selectFrom('views').select(['slug', 'count']).execute()
+  try {
+    return await queryBuilder
+      .selectFrom('views')
+      .select(['slug', 'count'])
+      .execute()
+  } catch (error) {
+    console.log({ error })
+  }
 })
 
-export const getLeeYouTubeSubs = cache(async () => {
-  const response = await youtube.channels.list({
-    id: ['UCZMli3czZnd1uoc1ShTouQw'],
-    part: ['statistics'],
-  })
+// export const getLeeYouTubeSubs = cache(async () => {
+//   const response = await youtube.channels.list({
+//     id: ['UCZMli3czZnd1uoc1ShTouQw'],
+//     part: ['statistics'],
+//   })
 
-  let channel = response.data.items![0]
-  return Number(channel?.statistics?.subscriberCount)
-})
+//   let channel = response.data.items![0]
+//   return Number(channel?.statistics?.subscriberCount)
+// })
 
-export const getVercelYouTubeSubs = cache(async () => {
-  const response = await youtube.channels.list({
-    id: ['UCLq8gNoee7oXM7MvTdjyQvA'],
-    part: ['statistics'],
-  })
+// export const getVercelYouTubeSubs = cache(async () => {
+//   const response = await youtube.channels.list({
+//     id: ['UCLq8gNoee7oXM7MvTdjyQvA'],
+//     part: ['statistics'],
+//   })
 
-  let channel = response.data.items![0]
-  return Number(channel?.statistics?.subscriberCount)
-})
+//   let channel = response.data.items![0]
+//   return Number(channel?.statistics?.subscriberCount)
+// })

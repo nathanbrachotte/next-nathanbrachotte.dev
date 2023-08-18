@@ -2,12 +2,11 @@
 import { Generated, Kysely } from 'kysely'
 import { PlanetScaleDialect } from 'kysely-planetscale'
 
-interface GuestbookTable {
+interface CommentsTable {
   id: Generated<number>
-  email: string
+  name: string
   body: string
   created_by: string
-  updated_at?: string
 }
 
 interface ViewsTable {
@@ -16,10 +15,11 @@ interface ViewsTable {
 }
 
 interface Database {
-  guestbook: GuestbookTable
+  comments: CommentsTable
   views: ViewsTable
 }
 
+console.log({ url: process.env.DATABASE_URL })
 export const queryBuilder = new Kysely<Database>({
   dialect: new PlanetScaleDialect({
     url: process.env.DATABASE_URL,
