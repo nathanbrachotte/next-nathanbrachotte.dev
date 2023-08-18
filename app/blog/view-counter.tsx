@@ -25,6 +25,6 @@ export default function ViewCounter({
   }, [])
 
   return (
-    <p className="text-neutral-400">{`👀 ${number.toLocaleString()} views`}</p>
+    <span className="text-neutral-400">{`👀 ${number.toLocaleString()} views`}</span>
   )
 }
