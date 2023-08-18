@@ -27,14 +27,13 @@ The device was already usable using a web app but was limited in features and UX
 
 - Working in IoT means you're always dependent on another system for the app to function, making testing much harder.
 - This device was precisely about connecting to a Wi-Fi network and activating data to go online. That required the app to fully handle an offline mode, despite needing some network to log in/sign up and buy data packages. Since most of our users use the app while traveling, they can't be left without any internet in the middle of nowhere.
+- We had no control over the backend, and it being built and hosted in China made it particularly unreliable and slow (we are talking 1-5s to resolve simple REST API calls from europe)
 
 ### Key Achievements
 
-- Built the app from the ground up that helps set up and control the Solis device.
+- Built the app from the ground up with React Native that helps set up and control the Solis device. Handling ~10-20k MAU.
 - Handling of online/offline state.
-- Implemented an in-app store with [Braintree](https://www.braintreepayments.com/de), **bringing a new revenue stream to the company**.
-- Integration of [Firebase Analytics](https://firebase.google.com/docs/analytics) (RIP).
-- Set up with a Wi-Fi connection and QR Code scanning.
-- Migration to TypeScript in the second year.
+- Implemented an in-app store with [Braintree](https://www.braintreepayments.com/de), **bringing a new revenue stream to the company, handling thousands to tens of thousands of $ a day**.
+- [Firebase Analytics](https://firebase.google.com/docs/analytics) integration.
 - Managed releases in the App Store and Play Store.
 - Onboarding of interns and other engineers in the project.
