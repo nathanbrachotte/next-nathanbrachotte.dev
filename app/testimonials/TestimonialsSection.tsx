@@ -10,6 +10,13 @@ import React from 'react'
 export interface TestimonialsSectionProps {}
 
 export const TestimonialsSection = ({}: TestimonialsSectionProps) => {
+  // Otherwise Tailwind purges bgs that aren't used anywhere else
+  const possibleBlockquoteBg = [
+    'bg-gradient-purple',
+    'bg-gradient-orange',
+    'bg-gradient-blue',
+  ]
+
   return testimonials.map(
     (
       { name, paragraphs, position, pic, testimonialLink, authorLink },
