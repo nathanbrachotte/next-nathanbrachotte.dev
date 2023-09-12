@@ -25,8 +25,8 @@ const graphik = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://nathanbrachotte.dev'),
   title: {
-    default: 'N8 - Nathan Brachotte',
-    template: '%s | N8 - Nathan Brachotte',
+    default: 'Nathan Brachotte',
+    template: '%s | Nathan Brachotte',
   },
   description: 'Senior Software Engineer - Full Stack',
   openGraph: {
