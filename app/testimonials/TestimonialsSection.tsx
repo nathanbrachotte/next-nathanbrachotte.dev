@@ -34,7 +34,7 @@ export const TestimonialsSection = ({}: TestimonialsSectionProps) => {
             )}
           />
           {paragraphs.map((paragraph) => (
-            <p className="text-lg">{paragraph}</p>
+            <p className="text-md">{paragraph}</p>
           ))}
         </blockquote>
         <div className="-mt-2 mb-4 flex flex-row justify-start sm:hidden">
