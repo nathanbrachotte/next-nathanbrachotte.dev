@@ -34,11 +34,10 @@ export default function Page() {
           />
         </div>
         <p>
-          My main focus is to consistently deliver the best value to my clients
+          My main focus is consistently delivering the best value to my clients
           while delivering high-quality, scalable software.{' '}
-          <span className="font-bold">I'm now working as a contractor</span>,
-          helping companies and teams elevate their web and mobile apps to the
-          next level.
+          <span className="font-bold">I'm a contractor</span>, helping companies
+          and teams elevate their web and mobile apps to the next level.
           <br /> ✨{' '}
           <GradientText>
             Always with a touch of extra delightful UI & UX.

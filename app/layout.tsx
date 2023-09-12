@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     default: 'N8 - Nathan Brachotte',
     template: '%s | N8 - Nathan Brachotte',
   },
-  description: 'Developer, writer, and creator.',
+  description: 'Senior Software Engineer - Full Stack',
   openGraph: {
     title: 'Nathan Brachotte',
     description: 'Senior Software Engineer',
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     title: 'Nathan Brachotte',
-    card: 'summary_large_image',
+    // card: 'summary_large_image',
   },
   verification: {
     google: 'eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw',
