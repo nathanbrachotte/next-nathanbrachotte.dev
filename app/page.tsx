@@ -24,20 +24,24 @@ export default function Page() {
         </Link>
         ), a Senior Software Engineer specializing in <Badges.React />
         , <Badges.ReactNative /> & <Badges.Node /> frameworks.
-        <div className="pt-8">
+        <div className="mt-8">
           <Image
             alt="A photo of me"
             src={'/images/avatar.png'}
-            className="mb-8 flex-grow-0 rounded-full bg-gradient-pink bg-gradient-to-tr from-transparent to-gradient-purple"
+            className="mb-8 flex-grow-0 rounded-full"
             width={128}
             height={128}
           />
         </div>
         <p>
           My main focus is consistently delivering the best value to my clients
-          while delivering high-quality, scalable software.{' '}
-          <span className="font-bold">I'm a contractor</span>, helping companies
-          and teams elevate their web and mobile apps to the next level.
+          new challenges and am always keen to learn new technologies.
+          <span className="font-bold">
+            <br />
+            <br /> I'm currently working as a contractor
+          </span>
+          , helping companies and teams elevate their web and mobile apps to the
+          next level.
           <br /> ✨{' '}
           <GradientText>
             Always with a touch of extra delightful UI & UX.
