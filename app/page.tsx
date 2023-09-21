@@ -10,7 +10,7 @@ export default function Page() {
     <section>
       <h1 className="mb-8 text-2xl font-bold tracking-tighter">Hey there 👋</h1>
       <div className="prose prose-invert">
-        I'm Nate (
+        I'm Nathan (
         <Link
           href={'https://github.com/nathanbrachotte'}
           className={twMerge(
@@ -22,7 +22,8 @@ export default function Page() {
         >
           @N8
         </Link>
-        ), a Senior Software Engineer specializing in <Badges.React />
+        ), Senior Full Stack Software Engineer with 5+ years of experience, I
+        specialize in <Badges.React />
         , <Badges.ReactNative /> & <Badges.Node /> frameworks.
         <div className="mt-8">
           <Image
@@ -34,27 +35,28 @@ export default function Page() {
           />
         </div>
         <p>
-          My main focus is consistently delivering the best value to my clients
-          new challenges and am always keen to learn new technologies.
-          <span className="font-bold">
-            <br />
-            <br /> I'm currently working as a contractor
-          </span>
-          , helping companies and teams elevate their web and mobile apps to the
-          next level.
-          <br /> ✨{' '}
-          <GradientText>
-            Always with a touch of extra delightful UI & UX.
-          </GradientText>{' '}
-          ✨
+          At heart, I'm a{' '}
+          <Link
+            href={'https://posthog.com/blog/what-is-a-product-engineer'}
+            className={twMerge(
+              'mb-0 mt-0 font-bold underline hover:text-transparent',
+              'animate-text-gradient-background cursor-pointer bg-gradient-to-r from-gradient-cyan to-gradient-blue bg-clip-text text-gradient-blue decoration-gradient-blue decoration-[0.1em] underline-offset-2 transition-all visited:text-cyan-300 visited:decoration-cyan-300 hover:text-transparent hover:decoration-gradient-cyan',
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Product Engineer
+          </Link>{' '}
+          committed to building customer-centric, scalable, and maintainable
+          solutions. I've helped build teams and craft high-performance,
+          well-architected apps, always aiming for that ✨{' '}
+          <GradientText>extra touch in UI & UX</GradientText> ✨
         </p>
-        <p>
-          {/* // TODO: Scroll animation (https://www.framer.com/motion/scroll-animations/) */}
-        </p>
+        {/* // TODO: Scroll animation (https://www.framer.com/motion/scroll-animations/) */}
         <p>
           Want to work with me? Please{' '}
           <Link
-            href={'mailto:hey@nathanbrachotte.dev'}
+            href={'mailto:hey+nate@nathanbrachotte.dev'}
             className={twMerge(
               'mb-0 mt-0 font-bold underline hover:text-transparent',
               'animate-text-gradient-background cursor-pointer bg-gradient-to-r from-gradient-cyan to-gradient-blue bg-clip-text text-gradient-blue decoration-gradient-blue decoration-[0.1em] underline-offset-2 transition-all visited:text-cyan-300 visited:decoration-cyan-300 hover:text-transparent hover:decoration-gradient-cyan',
