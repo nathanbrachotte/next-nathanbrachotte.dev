@@ -52,6 +52,26 @@ export default function Page() {
           well-architected apps, always aiming for that ✨{' '}
           <GradientText>extra touch in UI & UX</GradientText> ✨
         </p>
+        <ul>
+          <li>
+            <div className="ml-0 flex flex-wrap space-x-2">
+              🛠 Tech Stack: <Badges.TypeScript /> <Badges.JavaScript />
+              <Badges.React /> <Badges.ReactNative /> <Badges.Next />
+              <Badges.Node />
+              <Badges.Nest /> <Badges.Express /> <Badges.Prisma />
+              <Badges.Postgre />
+              <Badges.Tailwind />
+            </div>
+          </li>
+          <li>
+            🚀 Passionate about building world-class products and always looking
+            to learn from others.
+          </li>
+          <li>
+            ✨ Actively seeking contracting roles and open to startup
+            collaborations.
+          </li>
+        </ul>
         {/* // TODO: Scroll animation (https://www.framer.com/motion/scroll-animations/) */}
         <p>
           Want to work with me? Please{' '}
