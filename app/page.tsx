@@ -25,15 +25,6 @@ export default function Page() {
         ), Senior Full Stack Software Engineer with 5+ years of experience, I
         specialize in <Badges.React />
         , <Badges.ReactNative /> & <Badges.Node /> frameworks.
-        <div className="mt-8">
-          <Image
-            alt="A photo of me"
-            src={'/images/avatar.png'}
-            className="mb-8 flex-grow-0 rounded-full"
-            width={128}
-            height={128}
-          />
-        </div>
         <p>
           At heart, I'm a{' '}
           <Link
