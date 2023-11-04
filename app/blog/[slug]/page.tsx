@@ -109,15 +109,17 @@ export default async function Blog({ params }) {
       <script type="application/ld+json" suppressHydrationWarning>
         {JSON.stringify(post.structuredData)}
       </script>
-      <div className="relative h-80 w-full">
-        {post.image ? (
-          <Image
-            src={post.image}
-            alt={post.title}
-            fill={true}
-            className="object-cover object-center py-8"
-          />
-        ) : null}
+      <div className="pb-8">
+        <div className="relative h-80 w-full overflow-auto rounded-lg">
+          {post.image ? (
+            <Image
+              src={post.image}
+              alt={post.title}
+              fill={true}
+              className="rounded-lg object-cover object-center"
+            />
+          ) : null}
+        </div>
       </div>
       <h1 className="max-w-[650px] text-2xl font-bold tracking-tighter">
         <Balancer>{post.title}</Balancer>
