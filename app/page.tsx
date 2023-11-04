@@ -45,11 +45,17 @@ export default function Page() {
         </p>
         <ul>
           <li>
-            <div className="ml-0 flex flex-wrap space-x-2">
-              🛠 Tech Stack: <Badges.TypeScript /> <Badges.JavaScript />
-              <Badges.React /> <Badges.ReactNative /> <Badges.Next />
+            <div className="mb-2 flex flex-wrap space-x-2">
+              <span className="mb-1">🛠 Tech Stack:</span>
+              <Badges.TypeScript />
+              <Badges.JavaScript />
+              <Badges.React />
+              <Badges.ReactNative />
+              <Badges.Next />
               <Badges.Node />
-              <Badges.Nest /> <Badges.Express /> <Badges.Prisma />
+              <Badges.Nest />
+              <Badges.Express />
+              <Badges.Prisma />
               <Badges.Postgre />
               <Badges.Tailwind />
             </div>
