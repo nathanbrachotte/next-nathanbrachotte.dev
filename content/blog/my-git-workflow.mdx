@@ -1,7 +1,7 @@
 ---
-title: 'How I became faster than you using Git with this simple trick'
+title: 'How I became the fastest Git user in the West'
 publishedAt: '2023-08-18'
-summary: 'Git is a powerful tool but can be hard and cumbersome. Here is how I use it to make my life easier.'
+summary: 'How I stopped Git from getting in the way'
 image: '/images/blog/my-git-workflow/cover.webp'
 ---
 
@@ -34,15 +34,10 @@ Assuming you're working with Rebase and Squash commits, your tree should look li
   width={672}
   height={279}
 />
-### Initial commit Knowing this, we usually don't have to care about any other commit
-other than the first initial commit on our branches. This will be the main commit's
-name.
 
 ### Initial commit
 
-When we merge our PR, all of the commits on the branch we worked
-
-on will be squashed together into one. Whether we have 1 or 20 commits on our branch
+When we merge our PR, all of the commits on the branch we worked on will be squashed together into one. Whether we have 1 or 20 commits on our branch
 doesn't matter, the result will anyway be the same once merged.{' '}
 
 Let's push a nice initial commit that will describe what the PR will be about:
@@ -61,7 +56,7 @@ git commit -m "feat: 🎸 Create new chat components"
 git push
 ```
 
-(BTW, I always have a list of commitizen-formatted commit messages in Paste, so I can paste a template on the fly without typing the whole commit message.)
+(Also, to write commit messages even faster, I always have a list of commitizen-formatted commit messages in my clipboard manager)
 
 Now we have one single commit on our branch:
 
