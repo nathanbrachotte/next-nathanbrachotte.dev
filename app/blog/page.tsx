@@ -66,15 +66,16 @@ const BlogPostCard = ({
             )}
           />
           <div className="relative flex h-full flex-col rounded-lg bg-background hover:rounded-md md:flex-row">
-            {image ? (
-              <Image
-                src={image}
-                alt={title}
-                width={250}
-                height={250}
-                className="max-h-64 w-full rounded-lg object-cover md:w-1/3"
-              />
-            ) : null}
+            <div className="relative h-36 w-full md:h-auto md:w-2/5">
+              {image ? (
+                <Image
+                  src={image}
+                  alt={title}
+                  fill
+                  className="max-h-64 rounded-lg object-cover"
+                />
+              ) : null}
+            </div>
             <div className="w-full p-4">
               <div className="flex flex-col justify-between space-y-2">
                 <h2 className="text-xl font-bold tracking-tighter">{title}</h2>
