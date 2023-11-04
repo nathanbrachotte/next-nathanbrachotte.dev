@@ -5,18 +5,18 @@ summary: 'Git is a powerful tool but can be hard and cumbersome. Here is how I u
 image: '/images/blog/my-git-workflow/cover.webp'
 ---
 
-I have a couple of problems with how we use Git:
+I've always had a couple of issues with Git:
 
-1. We often fear diving deeper than the basics (`push/pull/rebase`) because it can be a scary tool, with potential painful consequences when mistakes are made. (I have been for years dreading this moment when a new Git error shows up, hinting that I messed up somewhere and I'll probably suffer for some time to get back to normal.)
+1. We often fear diving deeper than the basics (`push/pull/rebase`) because it can be a scary tool, as messing up your Git state might make you lose your work and/or time. (I have been for years dreading this moment when a new Git error shows up, hinting that I messed up somewhere and I'll probably suffer for some time to get back to normal.)
 1. The average speed and brain power required to commit each commit and merge PRs is IMO too high
 
-The methodology I'll show you has allowed me to move faster and work more confidently with Git for years now.
+The methodology I'll show you has allowed me to move faster and work more confidently with Git for years.
 
 ## The basics
 
 ### Merging strategies
 
-As ByteByteGo explained so well in [their video about git strategies](https://www.youtube.com/watch?v=0chZFIZLR_0), there are various ways to get your changes into main. This article assumes that, like most companies I've worked at, you use **Rebase** with squash commits, not **Merge**.
+As ByteByteGo explained so well in [their video about git strategies](https://www.youtube.com/watch?v=0chZFIZLR_0), there are various ways to get your changes into main. This article assumes that, like most companies I've worked at, you use squash commits to keep a clean tree on your main branch.
 
 ### Shortcuts
 
@@ -38,11 +38,18 @@ Assuming you're working with Rebase and Squash commits, your tree should look li
 other than the first initial commit on our branches. This will be the main commit's
 name.
 
+### Initial commit
+
+When we merge our PR, all of the commits on the branch we worked
+
+on will be squashed together into one. Whether we have 1 or 20 commits on our branch
+doesn't matter, the result will anyway be the same once merged.{' '}
+
 Let's push a nice initial commit that will describe what the PR will be about:
 
 ```bash
 ga .
-gcmsg "feat(Chat): 🎸 Create new chat components"
+gcmsg "feat: 🎸 Build new chat components"
 gp
 ```
 
@@ -50,11 +57,11 @@ Or without the nice shortcuts:
 
 ```bash
 git add .
-git commit -m "feat(Chat): 🎸 Create new chat components"
+git commit -m "feat: 🎸 Create new chat components"
 git push
 ```
 
-(I always have a list of commitizen-formatted commit messages in Paste, so I can paste a template on the fly without typing the whole commit message.)
+(BTW, I always have a list of commitizen-formatted commit messages in Paste, so I can paste a template on the fly without typing the whole commit message.)
 
 Now we have one single commit on our branch:
 
@@ -64,8 +71,11 @@ Now we have one single commit on our branch:
   width={672}
   height={67}
 />
-### Fixups As it turns out, you can, in Git, target new changes to be applied to
-a specific commit with `fixup` ([simple explanation here](https://fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html)).
+### A neat lil' trick: Fixups
+
+As it turns out, you can, in Git, define new commits
+to be target specifically another parent commit with `fixup` ([simple explanation
+here](https://fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html)).
 
 **TL;DR:** When you do that, Git can easily merge the target commit and the `fixup` in one commit when rebasing.
 
@@ -76,7 +86,8 @@ git commit --fixup=$TARGET_COMMIT_ID
 gp
 ```
 
-What's cool about this is that **you don't think of a name every time you commit! 🤩** This new commit will automatically take the target commit's name and prefix it with `fixup!`. Believe me, you'll already save quite some time here.
+What's really cool about this is that **you don't think of a name every time you commit!** This new commit will automatically take the target commit's name and prefix it with `fixup!`.
+Believe me, **you'll already save quite some time here**.
 
 <Image
   alt={`Commits during interactive rebasing`}
@@ -86,9 +97,9 @@ What's cool about this is that **you don't think of a name every time you commit
   height={363}
 />
 
-As you can see, by constantly targeting the initial commit in your branch and consistently applying fixups to it, you end up with an unusual tree.
+As you can see, by constantly targeting the initial commit in your branch and consistently applying fixups to it, you end up with quite the unusual tree.
 
-Now let's squash all of these commits together:
+Now, let's squash all of these commits together:
 
 ```bash /-i --autosquash/#b
 gfa # git fetch --all
@@ -96,7 +107,7 @@ git rebase -i --autosquash origin/main
 gpf # git push --force
 ```
 
-Using `-i` will trigger an interactive rebase, allowing you to see what will happen to each commit, and `--autosquash`will automatically set all `fixup` commits to be merged with the first commit.
+Using `-i` will trigger an interactive rebase, allowing you to see what will happen to each commit, and `--autosquash` will automatically set all `fixup` commits to be merged with the first commit when you rebase.
 
 <Image
   alt={`Commits during interactive rebasing`}
@@ -105,29 +116,29 @@ Using `-i` will trigger an interactive rebase, allowing you to see what will hap
   height={251}
 />
 
-Press `enter` in VSCode (or complete the merge with `git merge --continue`), and you get a clean tree, ready to be pushed on your branch and merged into main.
+Press `enter` in VSCode, and the rebase will git you a final clean tree with one single commit ready to be pushed on your branch and merged into main.
 
 ### Where the magic happens 🪄
 
 You now might wonder, "What's the point of all this?".
-Here comes the magic: After committing once in your branch, all your subsequent commits will take less than a second if you use this alias:
+Here it comes: After committing once in your branch, all your subsequent commits will take less than a second if you use this alias:
 
-```bash caption=" Add this to your favorite terminal config (~/.zshrc in my case), and you're good."
-alias gcfixup='git commit --fixup="$(git log --oneline | grep -v '\''fixup!'\'' | head -n 1 | awk '\''{print $1}'\'')" --no-verify' # Automatically fix up the last commit
+```bash caption=" Add this to your favorite terminal config (~/.zshrc in my case), reload, and you can use it."
+alias gcfixup='git commit --fixup="$(git log --oneline | grep -v '\''fixup!'\'' | head -n 1 | awk '\''{print $1}'\'')" --no-verify' # Automatically commit a fixup targeting the last commit that's not a fixup
 ```
 
 Explanation of what this does:
 
-1. `grep -v '\''fixup!'\'' | head -n 1 | awk '\''{print $1}'\'')` - Looks up the last commit in your tree which isn't a fixup (guess what, that should be your first commit)
+1. `grep -v '\''fixup!'\'' | head -n 1 | awk '\''{print $1}'\'')` - Looks up the last commit in your tree, which isn't a fixup (guess what, that should be your first commit)
 1. `git log --oneline` - Gets its ID
-1. `git commit --fixup=$TARGET_COMMIT` - Creates a fixup targetting this ID
-1. `--no-verify` - In a nutshell: Override git hooks. In general, we should aim at preventing harmful code from ever reaching main, and that's what CI is for, but nothing should disturb our creation process and make us lose focus, especially when pushing WIP code.
+1. `git commit --fixup=` - Creates a fixup targetting this ID
+1. `--no-verify` - In a nutshell: Override git hooks. In general, we should aim at preventing harmful code from ever reaching main, and that's what CI is for, but nothing should disturb us during our creation process and force us to lose focus when pushing WIP code.
 
-With this alias, here is how I push my code after the first commit:
+With this alias, here is how I usually work on a branch:
 
 ```bash
 # Do some work...
-gcmsg "feat(Chat): 🎸 Create new chat components" --no-verify # First commit
+gcmsg "feat: 🎸 Create new chat components" --no-verify # First commit
 gp
 # Do some more work...
 gcfixup # Second commit, instantaneous
@@ -135,16 +146,19 @@ gp
 # Do some more work...
 gcfixup # Third commit, instantaneous
 gp
+# Done working!
 git rebase -i --autosquash origin/main # Squash all commits, instantaneous
 gpf
+# Raise a PR 🎉
 ```
 
 💥 **BOOM**. _Simple and fast_. ヽ(｀Д´)⊃━☆\* **_MAGIC_**
 
-### Other useful shortcuts you might want to use in your daily life
+## Other Oh-my-Zsh shortcuts I use
 
 ```bash
 glog # See tree
 grba # Abort rebase
 grbc # Continue rebase
+gco $BRANCH_NAME # Git checkout to branch
 ```
