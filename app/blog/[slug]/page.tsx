@@ -7,6 +7,7 @@ import Balancer from 'react-wrap-balancer'
 import ViewCounter from '../view-counter'
 import { getTimePerPost } from 'helpers/time'
 import { getViewsCount } from 'lib/metrics'
+import Image from 'next/image'
 // import { getViewsCount } from 'lib/metrics'
 
 const findBlogPost = (slug: string) => {
@@ -108,6 +109,16 @@ export default async function Blog({ params }) {
       <script type="application/ld+json" suppressHydrationWarning>
         {JSON.stringify(post.structuredData)}
       </script>
+      <div className="relative h-80 w-full">
+        {post.image ? (
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill={true}
+            className="object-cover object-center py-8"
+          />
+        ) : null}
+      </div>
       <h1 className="max-w-[650px] text-2xl font-bold tracking-tighter">
         <Balancer>{post.title}</Balancer>
       </h1>

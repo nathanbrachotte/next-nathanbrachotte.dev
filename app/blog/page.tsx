@@ -7,6 +7,7 @@ import { parseISO, format } from 'date-fns'
 import { getTimePerPost } from 'helpers/time'
 import { getViewsCount } from 'lib/metrics'
 import ViewCounter from 'app/blog/view-counter'
+import Image from 'next/image'
 // import { getViewsCount } from 'lib/metrics'
 
 export const metadata: Metadata = {
@@ -30,7 +31,7 @@ const BlogPostCard = ({
   index: number
   allViews: Awaited<ReturnType<typeof getViewsCount>>
 }) => {
-  const { title, summary, slug, publishedAt, body } = blog
+  const { title, summary, slug, publishedAt, body, image } = blog
 
   const borderRadiant = [
     'from-gradient-purple via-transparent to-gradient-pink',
@@ -52,7 +53,7 @@ const BlogPostCard = ({
       <div className="group mb-8 flex w-full cursor-pointer flex-col justify-between transition-all hover:scale-105 active:scale-95">
         <div
           className={twMerge(
-            'relative mx-auto w-full overflow-hidden rounded-lg bg-gradient-to-r p-[1px] transition-all duration-300 ease-in-out',
+            'relative mx-auto w-full overflow-hidden rounded-lg bg-gradient-to-r p-[1px] transition-all duration-300 ease-in-out hover:p-[2px]',
             borderRadiant[index % borderRadiant.length],
           )}
         >
@@ -64,20 +65,29 @@ const BlogPostCard = ({
               } to-transparent`,
             )}
           />
-          <div className="relative h-full rounded-lg bg-background p-6">
-            <div className="mt-2 flex items-center justify-between">
-              <div>
+          <div className="relative flex h-full flex-col rounded-lg bg-background hover:rounded-md md:flex-row">
+            {image ? (
+              <Image
+                src={image}
+                alt={title}
+                width={250}
+                height={250}
+                className="max-h-64 w-full rounded-lg object-cover md:w-1/3"
+              />
+            ) : null}
+            <div className="w-full p-4">
+              <div className="flex flex-col justify-between space-y-2">
                 <h2 className="text-xl font-bold tracking-tighter">{title}</h2>
                 <p className="font-md text-neutral-300">{summary}</p>
-              </div>
-              <div className="ml-2 min-w-fit">
-                <p>{formatDate(publishedAt)}</p>
-                <p className="text-neutral-400">{getTimePerPost(body.raw)}</p>
-                <ViewCounter
-                  allViews={allViews}
-                  slug={slug}
-                  trackView={false}
-                />
+                <div className="flex min-w-fit flex-row justify-between pt-2 text-neutral-400">
+                  <p>📅 {formatDate(publishedAt)}</p>
+                  <p className="text-neutral-400">{getTimePerPost(body.raw)}</p>
+                  <ViewCounter
+                    allViews={allViews}
+                    slug={slug}
+                    trackView={false}
+                  />
+                </div>
               </div>
             </div>
           </div>
