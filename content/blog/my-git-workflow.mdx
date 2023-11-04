@@ -5,25 +5,22 @@ summary: 'Git is a powerful tool but can be hard and cumbersome. Here is how I u
 image: '/images/blog/my-git-workflow/cover.webp'
 ---
 
-I've noticed some common patterns when it comes to Git:
+I have a couple of problems with how we use Git:
 
-1. People don't necessarily use any other feature than `git commit/push` basics
-1. People are sometimes afraid of it
+1. We often fear diving deeper than the basics (`push/pull/rebase`) because it can be a scary tool, with potential painful consequences when mistakes are made. (I have been for years dreading this moment when a new Git error shows up, hinting that I messed up somewhere and I'll probably suffer for some time to get back to normal.)
 1. The average speed and brain power required to commit each commit and merge PRs is IMO too high
 
-I will share an easy-to-use methodology to increase your speed and confidence using Git.
+The methodology I'll show you has allowed me to move faster and work more confidently with Git for years now.
 
 ## The basics
 
 ### Merging strategies
 
-As ByteByteGo explained so well in [their video about git strategies](https://www.youtube.com/watch?v=0chZFIZLR_0), there are various ways to get your changes into main.
-We're going to assume, like a majority of the companies I've worked at, we use **Rebase** and not **Merge**. We are also going to be using Squash commits.
-This setup is by far the easiest to work with, assuming you keep your team does it well and keep its PRs small.
+As ByteByteGo explained so well in [their video about git strategies](https://www.youtube.com/watch?v=0chZFIZLR_0), there are various ways to get your changes into main. This article assumes that, like most companies I've worked at, you use **Rebase** with squash commits, not **Merge**.
 
 ### Shortcuts
 
-I use [Oh-My-Zsh shortcuts](https://kapeli.com/cheat_sheets/Oh-My-Zsh_Git.docset/Contents/Resources/Documents/index) for most of the git commands because life is short, and so should your time spent writing Git commands.
+I use [Oh-My-Zsh shortcuts](https://kapeli.com/cheat_sheets/Oh-My-Zsh_Git.docset/Contents/Resources/Documents/index) for most of the Git commands because life is short, and so should your time spent writing Git commands.
 Visit [Zsh wiki](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH) to learn how to install it if you don't already have it.
 
 ## Let's start
@@ -37,13 +34,11 @@ Assuming you're working with Rebase and Squash commits, your tree should look li
   width={672}
   height={279}
 />
+### Initial commit Knowing this, we usually don't have to care about any other commit
+other than the first initial commit on our branches. This will be the main commit's
+name.
 
-### Initial commit
-
-Knowing this, we usually don't have to care about any other commit
-other than the first initial commit on our branches, this will be the main commit's name.
-
-So let's push a nice initial commit that will describe what the PR will be about:
+Let's push a nice initial commit that will describe what the PR will be about:
 
 ```bash
 ga .
@@ -59,7 +54,7 @@ git commit -m "feat(Chat): 🎸 Create new chat components"
 git push
 ```
 
-(Btw, I always have a list of commitizen-formatted commit messages in Paste, so I can paste them on the fly without typing the whole commit message. I might share this list in another article.)
+(I always have a list of commitizen-formatted commit messages in Paste, so I can paste a template on the fly without typing the whole commit message.)
 
 Now we have one single commit on our branch:
 
@@ -69,10 +64,8 @@ Now we have one single commit on our branch:
   width={672}
   height={67}
 />
-
-### Fixups
-
-As it turns out, you can, in Git, target new changes to be applied to a specific commit with `fixup` ([simple explanation here](https://fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html)).
+### Fixups As it turns out, you can, in Git, target new changes to be applied to
+a specific commit with `fixup` ([simple explanation here](https://fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html)).
 
 **TL;DR:** When you do that, Git can easily merge the target commit and the `fixup` in one commit when rebasing.
 
@@ -120,7 +113,7 @@ You now might wonder, "What's the point of all this?".
 Here comes the magic: After committing once in your branch, all your subsequent commits will take less than a second if you use this alias:
 
 ```bash caption=" Add this to your favorite terminal config (~/.zshrc in my case), and you're good."
-alias glfixup='git commit --fixup="$(git log --oneline | grep -v '\''fixup!'\'' | head -n 1 | awk '\''{print $1}'\'')" --no-verify' # Automatically fix up the last commit
+alias gcfixup='git commit --fixup="$(git log --oneline | grep -v '\''fixup!'\'' | head -n 1 | awk '\''{print $1}'\'')" --no-verify' # Automatically fix up the last commit
 ```
 
 Explanation of what this does:
@@ -133,20 +126,22 @@ Explanation of what this does:
 With this alias, here is how I push my code after the first commit:
 
 ```bash
+# Do some work...
 gcmsg "feat(Chat): 🎸 Create new chat components" --no-verify # First commit
 gp
-glfixup # Second commit, instantaneous
+# Do some more work...
+gcfixup # Second commit, instantaneous
 gp
-glfixup # Third commit, instantaneous
+# Do some more work...
+gcfixup # Third commit, instantaneous
 gp
-gfa
 git rebase -i --autosquash origin/main # Squash all commits, instantaneous
 gpf
 ```
 
 💥 **BOOM**. _Simple and fast_. ヽ(｀Д´)⊃━☆\* **_MAGIC_**
 
-### Other useful shortcuts you might wanna use in your daily life
+### Other useful shortcuts you might want to use in your daily life
 
 ```bash
 glog # See tree

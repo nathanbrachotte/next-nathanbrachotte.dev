@@ -126,7 +126,7 @@ export default async function Blog({ params }) {
       </h1>
       <div className="mb-8 mt-2 flex max-w-[650px] items-center justify-between text-sm">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          {formatDate(post.publishedAt)} - {getTimePerPost(post.body.raw)}
+          📅 {formatDate(post.publishedAt)} - {getTimePerPost(post.body.raw)}
           {' - '}
           <ViewCounter allViews={allViews ?? []} slug={post.slug} trackView />
         </p>
