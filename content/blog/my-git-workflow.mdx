@@ -20,12 +20,12 @@ As ByteByteGo explained so well in [their video about git strategies](https://ww
 
 ### Shortcuts
 
-I use [Oh-My-Zsh shortcuts](https://kapeli.com/cheat_sheets/Oh-My-Zsh_Git.docset/Contents/Resources/Documents/index) for most of the Git commands because life is short, and so should your time spent writing Git commands.
-Visit [Zsh wiki](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH) to learn how to install it if you don't already have it.
+- I use [Oh-My-Zsh shortcuts](https://kapeli.com/cheat_sheets/Oh-My-Zsh_Git.docset/Contents/Resources/Documents/index) for most of the Git commands because life is short, and so should your time spent writing Git commands.
+- Visit [Zsh wiki](https://github.com/ohmyzsh/ohmyzsh/wiki/Installing-ZSH) to learn how to install it.
 
 ## Let's start
 
-Assuming you're working with Rebase and Squash commits, your tree should look like this:
+Assuming you're working with squash commits in your repo, your tree should look like something like this:
 
 <Image
   alt={`Tree example`}
@@ -38,9 +38,9 @@ Assuming you're working with Rebase and Squash commits, your tree should look li
 ### Initial commit
 
 When we merge our PR, all of the commits on the branch we worked on will be squashed together into one. Whether we have 1 or 20 commits on our branch
-doesn't matter, the result will anyway be the same once merged.{' '}
+doesn't matter. The result will anyway be the same once merged.
 
-Let's push a nice initial commit that will describe what the PR will be about:
+Let's push a nice initial commit message that will describe what the PR will be about:
 
 ```bash
 ga .
@@ -69,7 +69,7 @@ Now we have one single commit on our branch:
 ### A neat lil' trick: Fixups
 
 As it turns out, you can, in Git, define new commits
-to be target specifically another parent commit with `fixup` ([simple explanation
+that target another parent commit using `fixup` ([simple explanation
 here](https://fle.github.io/git-tip-keep-your-branch-clean-with-fixup-and-autosquash.html)).
 
 **TL;DR:** When you do that, Git can easily merge the target commit and the `fixup` in one commit when rebasing.
@@ -111,23 +111,25 @@ Using `-i` will trigger an interactive rebase, allowing you to see what will hap
   height={251}
 />
 
-Press `enter` in VSCode, and the rebase will git you a final clean tree with one single commit ready to be pushed on your branch and merged into main.
+Press `enter` in VSCode, and the rebase will get you a final clean tree with one single commit ready to be pushed on your branch and merged into main.
+
+Now imagine you want to rebase your branch onto main, but you run into conflicts. **You will only have to resolve the conflicts on your single commit and not every commit on your branch!**
 
 ### Where the magic happens 🪄
 
-You now might wonder, "What's the point of all this?".
-Here it comes: After committing once in your branch, all your subsequent commits will take less than a second if you use this alias:
+Now fixups are cool, but how can we be even faster?
+Well, here is a pretty neat alias for you:
 
 ```bash caption=" Add this to your favorite terminal config (~/.zshrc in my case), reload, and you can use it."
-alias gcfixup='git commit --fixup="$(git log --oneline | grep -v '\''fixup!'\'' | head -n 1 | awk '\''{print $1}'\'')" --no-verify' # Automatically commit a fixup targeting the last commit that's not a fixup
+alias gcfixup='git commit --fixup="$(git log --oneline | grep -v '\''fixup!'\'' | head -n 1 | awk '\''{print $1}'\'')" --no-verify'
 ```
 
-Explanation of what this does:
+Step-by-step explanation:
 
 1. `grep -v '\''fixup!'\'' | head -n 1 | awk '\''{print $1}'\'')` - Looks up the last commit in your tree, which isn't a fixup (guess what, that should be your first commit)
 1. `git log --oneline` - Gets its ID
 1. `git commit --fixup=` - Creates a fixup targetting this ID
-1. `--no-verify` - In a nutshell: Override git hooks. In general, we should aim at preventing harmful code from ever reaching main, and that's what CI is for, but nothing should disturb us during our creation process and force us to lose focus when pushing WIP code.
+1. `--no-verify` - Override git hooks. In general, we should aim at preventing harmful code from ever reaching main, and that's what CI is for, but nothing should disturb us during our creation process and force us to lose focus when pushing WIP code.
 
 With this alias, here is how I usually work on a branch:
 
@@ -149,7 +151,7 @@ gpf
 
 💥 **BOOM**. _Simple and fast_. ヽ(｀Д´)⊃━☆\* **_MAGIC_**
 
-## Other Oh-my-Zsh shortcuts I use
+## Bonus: other Oh-my-Zsh shortcuts I use
 
 ```bash
 glog # See tree
