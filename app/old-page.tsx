@@ -1,12 +1,12 @@
 // import Image from "next/image";
-// import smashing from "public/images/home/smashing.jpg";
-// import summit from "public/images/home/summit.jpg";
-// import reactathon from "public/images/home/reactathon.jpg";
-// import ship from "public/images/home/ship.jpg";
-// import filming from "public/images/home/filming.jpg";
-// import meetups from "public/images/home/meetups.jpg";
-// import vercel from "public/images/home/vercel.jpg";
-// import avatar from "app/avatar.jpg";
+// import smashing from "public/images/home/smashing.webp";
+// import summit from "public/images/home/summit.webp";
+// import reactathon from "public/images/home/reactathon.webp";
+// import ship from "public/images/home/ship.webp";
+// import filming from "public/images/home/filming.webp";
+// import meetups from "public/images/home/meetups.webp";
+// import vercel from "public/images/home/vercel.webp";
+// import avatar from "app/avatar.webp";
 // import ViewCounter from "app/blog/view-counter";
 // import {
 //   getLeeYouTubeSubs,
