@@ -19,7 +19,6 @@ interface Database {
   views: ViewsTable
 }
 
-console.log({ url: process.env.DATABASE_URL })
 export const queryBuilder = new Kysely<Database>({
   dialect: new PlanetScaleDialect({
     url: process.env.DATABASE_URL,
