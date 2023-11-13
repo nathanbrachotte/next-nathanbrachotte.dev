@@ -1,6 +1,6 @@
 ---
 title: 'How I stopped Git from getting in the way'
-publishedAt: '2023-11-04'
+publishedAt: '2023-11-13'
 summary: 'Git is a powerful tool but can be hard and cumbersome to use. Here is the ultimate workflow that will make you work faster and more confidently with Git.'
 image: '/images/blog/stopped-git-getting-in-the-way/cover.webp'
 ---
@@ -103,7 +103,7 @@ git rebase -i --autosquash origin/main
 gpf # git push --force
 ```
 
-Using `-i` will trigger an interactive rebase, allowing you to see what will happen to each commit, and `--autosquash` will automatically set all `fixup` commits to be merged with the first commit when you rebase.
+Using `-i` will trigger an interactive rebase, allowing you to see what will happen to each commit and `--autosquash` will automatically set all `fixup` commits to be merged with the first commit when you rebase.
 
 <Image
   alt={`Commits during interactive rebasing`}
@@ -112,16 +112,16 @@ Using `-i` will trigger an interactive rebase, allowing you to see what will hap
   height={251}
 />
 
-Press `enter` in VSCode, and the rebase will get you a final clean tree with one single commit ready to be pushed on your branch and merged into main.
+Press `CMD + enter` in VSCode, and the rebase will get you a final clean tree with one single commit ready to be pushed on your branch and merged into main.
 
-Now imagine you want to rebase your branch onto main, but you run into conflicts. **You will only have to resolve the conflicts on your single commit and not every commit on your branch!**
+Imagine you want to rebase your branch onto main, but you run into conflicts. **You will only have to resolve the conflicts on your single commit and not every commit on your branch!**
 
 ### Where the magic happens 🪄
 
-Now fixups are cool, but how can we be even faster?
+Now, fixups are cool, but how can we be even faster?
 Well, here is a pretty neat alias for you:
 
-```bash caption=" Add this to your favorite terminal config (~/.zshrc in my case), reload, and you can use it."
+```bash caption="Add this to your favorite terminal config (~/.zshrc in my case), reload, and you can use it."
 alias gcfixup='git commit --fixup="$(git log --oneline | grep -v '\''fixup!'\'' | head -n 1 | awk '\''{print $1}'\'')" --no-verify'
 ```
 
