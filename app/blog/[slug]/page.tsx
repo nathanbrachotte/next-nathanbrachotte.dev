@@ -2,13 +2,11 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { Mdx } from 'app/components/mdx'
 import { allBlogs } from 'contentlayer/generated'
-// import { getTweets } from 'lib/twitter'
 import Balancer from 'react-wrap-balancer'
 import ViewCounter from '../view-counter'
 import { getTimePerPost } from 'helpers/time'
 import { getViewsCount } from 'lib/metrics'
 import Image from 'next/image'
-// import { getViewsCount } from 'lib/metrics'
 
 const findBlogPost = (slug: string) => {
   return allBlogs.find((post) => post.slug.includes(slug))
@@ -30,9 +28,6 @@ export async function generateMetadata({
     image,
     slug,
   } = post
-  // const ogImage = image
-  //   ? `https://leerob.io${image}`
-  //   : `https://leerob.io/og?title=${title}`;
 
   return {
     title,
@@ -43,17 +38,25 @@ export async function generateMetadata({
       type: 'article',
       publishedTime,
       url: `https://nathanbrachotte.dev/blog/${slug}`,
-      // images: [
-      //   {
-      //     url: ogImage,
-      //   },
-      // ],
+      ...(image && {
+        images: [
+          {
+            url: image,
+          },
+        ],
+      }),
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      // images: [ogImage],
+      ...(image && {
+        images: [
+          {
+            url: image,
+          },
+        ],
+      }),
     },
   }
 }
@@ -89,7 +92,7 @@ function formatDate(date: string) {
 
 export default async function Blog({ params }) {
   const post = findBlogPost(params.slug)
-
+  console.log({ post })
   if (!post) {
     notFound()
   }
@@ -131,7 +134,6 @@ export default async function Blog({ params }) {
           <ViewCounter allViews={allViews ?? []} slug={post.slug} trackView />
         </p>
       </div>
-
       <Mdx
         code={post.body.code}
         // tweets={tweets}
