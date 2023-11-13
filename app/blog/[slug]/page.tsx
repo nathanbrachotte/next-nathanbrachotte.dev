@@ -92,7 +92,7 @@ function formatDate(date: string) {
 
 export default async function Blog({ params }) {
   const post = findBlogPost(params.slug)
-  console.log({ post })
+
   if (!post) {
     notFound()
   }
