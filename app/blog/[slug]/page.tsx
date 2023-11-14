@@ -55,6 +55,9 @@ export async function generateMetadata({
           {
             url: image,
           },
+          {
+            url: image.replace('cover', 'cover-fallback'),
+          },
         ],
       }),
     },
