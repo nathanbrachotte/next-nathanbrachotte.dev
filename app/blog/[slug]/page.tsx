@@ -29,6 +29,10 @@ export async function generateMetadata({
     slug,
   } = post
 
+  const coverFallback = image
+    ? image.replace('cover.webp', 'cover-fallback.png')
+    : ''
+
   return {
     title,
     description,
@@ -43,20 +47,25 @@ export async function generateMetadata({
           {
             url: image,
           },
+          {
+            url: coverFallback,
+          },
         ],
       }),
     },
     twitter: {
       card: 'summary_large_image',
       title,
+      creator: '@nathanbrachotte',
       description,
       ...(image && {
         images: [
+          { url: image, width: 1200, height: 630, alt: 'Your alt text' },
           {
-            url: image,
-          },
-          {
-            url: image.replace('cover', 'cover-fallback'),
+            url: coverFallback,
+            width: 1200,
+            height: 630,
+            alt: 'Your alt text',
           },
         ],
       }),
