@@ -17,7 +17,7 @@ export const testimonials = [
     ],
     testimonialLink:
       'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
-    pic: '/images/testimonials/gerald.jpeg',
+    pic: '/images/testimonials/gerald.webp',
     authorLink: 'https://www.linkedin.com/in/gkropitz/',
   },
   {
@@ -32,7 +32,7 @@ export const testimonials = [
     ],
     testimonialLink:
       'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
-    pic: '/images/testimonials/seb.jpeg',
+    pic: '/images/testimonials/seb.webp',
     authorLink: 'https://www.linkedin.com/in/sdebrouwere',
     position: 'CEO at Genie',
   },
@@ -46,7 +46,7 @@ export const testimonials = [
     ],
     testimonialLink:
       'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
-    pic: '/images/testimonials/lucas.jpeg',
+    pic: '/images/testimonials/lucas.webp',
     authorLink: 'https://www.linkedin.com/in/lucasmichot',
   },
   {
@@ -58,7 +58,7 @@ export const testimonials = [
     ],
     testimonialLink:
       'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
-    pic: '/images/testimonials/jimin.jpeg',
+    pic: '/images/testimonials/jimin.webp',
     authorLink: 'https://www.linkedin.com/in/jimin-park-51470110/',
   },
   {
@@ -71,7 +71,7 @@ export const testimonials = [
     ],
     testimonialLink:
       'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
-    pic: '/images/testimonials/vitali.jpeg',
+    pic: '/images/testimonials/vitali.webp',
     authorLink: 'https://www.linkedin.com/in/vitaliyazvinski',
   },
   {
@@ -83,7 +83,7 @@ export const testimonials = [
     ],
     testimonialLink:
       'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
-    pic: '/images/testimonials/roney.jpeg',
+    pic: '/images/testimonials/roney.webp',
     authorLink: 'https://www.linkedin.com/in/roneycastro',
   },
   {
@@ -94,7 +94,7 @@ export const testimonials = [
     ],
     testimonialLink:
       'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
-    pic: '/images/testimonials/varun.jpeg',
+    pic: '/images/testimonials/varun.webp',
     authorLink: 'https://www.linkedin.com/in/palvarun',
   },
   {
@@ -122,7 +122,7 @@ development in general.`,
     ],
     testimonialLink:
       'https://drive.google.com/file/d/1OBdJPIpDbbQxoLmfAxmL_A7vHCMPwEJJ/view?usp=sharing',
-    pic: '/images/testimonials/erik.jpeg',
+    pic: '/images/testimonials/erik.webp',
     authorLink: 'https://www.linkedin.com/in/erik-waterloo',
   },
   {
@@ -147,7 +147,7 @@ development in general.`,
     ],
     testimonialLink:
       'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
-    pic: '/images/testimonials/hemang.jpeg',
+    pic: '/images/testimonials/hemang.webp',
     authorLink: 'https://www.linkedin.com/in/hemang-t-pandya',
   },
 ] satisfies Testimonial[]
