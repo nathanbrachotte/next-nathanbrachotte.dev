@@ -1,17 +1,23 @@
-import { ImageResponse } from 'next/og'
+import { ImageResponse } from '@vercel/og'
 
+// Route segment config
 export const runtime = 'edge'
 
-// TODO: Fix the doc
-export async function GET(request: Request) {
-  try {
-    const { searchParams } = new URL(request.url)
+// Image metadata
+export const alt = 'About Acme'
+export const size = {
+  width: 1200,
+  height: 630,
+}
 
-    // ?title=<title>
-    const hasTitle = searchParams.has('title')
-    const title = hasTitle
-      ? searchParams.get('title')?.slice(0, 100)
-      : 'Nathan Brachotte'
+// @see https://nextjs.org/docs/app/api-reference/file-conventions/metadata/opengraph-image#generate-images-using-code-js-ts-tsx
+export async function Image({ params }: { params: { slug: string } }) {
+  try {
+    const post = await fetch(`https://.../posts/${params.slug}`).then((res) =>
+      res.json(),
+    )
+
+    console.log({ post })
 
     return new ImageResponse(
       (
@@ -28,7 +34,7 @@ export async function GET(request: Request) {
             ></img>
             <div tw="flex mx-[15%] justify-center items-center">
               <p tw="text-6xl tracking-tight font-bold leading-tight my-0 text-center">
-                {title}
+                {post}
               </p>
             </div>
             <div tw="flex items-center">
@@ -38,8 +44,7 @@ export async function GET(request: Request) {
         </div>
       ),
       {
-        width: 1200,
-        height: 630,
+        ...size,
       },
     )
   } catch (error) {
