@@ -46,12 +46,12 @@ export default {
       },
       colors: {
         // with-alpha: 'oklch(66.35% 0.299 7.04 / 0.2)',
-        'gradient-purple': 'oklch(49.07% 0.272 300.45)', // #7d00d9
-        'gradient-pink': 'oklch(64.53% 0.292 2.47)', // #ff0080
-        'gradient-orange': 'oklch(67.3% 0.266 25.039656026515278)', // #ff4d4d
-        'gradient-yellow': 'oklch(85.82% 0.201 91.19)', // #fbca00
-        'gradient-blue': 'oklch(59.59% 0.24 255.09156059071347)', // #007cf0
-        'gradient-cyan': 'oklch(81.58% 0.189 190.74037768509325)', // #01dfd8
+        'gradient-purple': 'oklch(49.07% 0.272 300.45)', // #7d00d9 - French Violet
+        'gradient-pink': 'oklch(64.53% 0.292 2.47)', // #ff0080 - Bright Pink
+        'gradient-orange': 'oklch(67.3% 0.266 25.039656026515278)', // #ff4d4d - Orange-Red (Crayola)
+        'gradient-yellow': 'oklch(85.82% 0.201 91.19)', // #fbca00 - Philippine Yellow
+        'gradient-blue': 'oklch(59.59% 0.24 255.09156059071347)', // #007cf0 - Azure
+        'gradient-cyan': 'oklch(81.58% 0.189 190.74037768509325)', // #01dfd8 - Bright Turquoise
         'gradient-green': '#15c064', // TODO: Make this oklch
         'gradient-turquoise': '#80FF72',
         background: '#0B0F1A',
