@@ -9,18 +9,6 @@ interface Testimonial {
 
 export const testimonials = [
   {
-    name: 'Gerald Kropitz',
-    position: 'Co-Founder & CTO at MEMBER',
-    paragraphs: [
-      "I had the pleasure of working closely with Nathan during his time as freelancer at MEMBER and his contributions to MEMBER's mobile application had a big impact immediately.",
-      'I can therefore highly recommend Nathan for any software development or freelancing opportunity. He is not only a talented engineer but also a reliable and collaborative team member who consistently exceeds expectations. I am confident that he will continue to excel in all his future endeavors.',
-    ],
-    testimonialLink:
-      'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
-    pic: '/images/testimonials/gerald.webp',
-    authorLink: 'https://www.linkedin.com/in/gkropitz/',
-  },
-  {
     name: 'Sebastiaan Debrouwere',
     paragraphs: [
       'Nathan joined our team at Genie as one of the first engineers. He played an instrumental role in laying the technical foundations of building our software, and our engineering culture. In the year we worked together he consistently delivered high quality work at a rapid pace, exhibited tremendous ownership and pragmatism.',
@@ -48,6 +36,18 @@ export const testimonials = [
       'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
     pic: '/images/testimonials/lucas.webp',
     authorLink: 'https://www.linkedin.com/in/lucasmichot',
+  },
+  {
+    name: 'Gerald Kropitz',
+    position: 'Co-Founder & CTO at MEMBER',
+    paragraphs: [
+      "I had the pleasure of working closely with Nathan during his time as freelancer at MEMBER and his contributions to MEMBER's mobile application had a big impact immediately.",
+      'I can therefore highly recommend Nathan for any software development or freelancing opportunity. He is not only a talented engineer but also a reliable and collaborative team member who consistently exceeds expectations. I am confident that he will continue to excel in all his future endeavors.',
+    ],
+    testimonialLink:
+      'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
+    pic: '/images/testimonials/gerald.webp',
+    authorLink: 'https://www.linkedin.com/in/gkropitz/',
   },
   {
     name: 'Jimin Park',
