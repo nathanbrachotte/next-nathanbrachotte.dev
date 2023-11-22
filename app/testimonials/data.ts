@@ -18,8 +18,7 @@ export const testimonials = [
       '- his challenges and thinking on user centricity in product design.',
       "Nathan would be an invaluable asset to any team, and I couldn't recommend him enough.",
     ],
-    testimonialLink:
-      'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/seb.webp',
     authorLink: 'https://www.linkedin.com/in/sdebrouwere',
     position: 'CEO at Genie',
@@ -32,8 +31,7 @@ export const testimonials = [
       `In addition to his technical experience, Nathan consistently demonstrated excellent communication skills and a collaborative spirit. His mentorship and guidance have been invaluable to our team, especially to junior developers and other peers, fostering a positive and productive work environment.`,
       `Nathan is a highly skilled Senior Developer and a genuine team player. I wholeheartedly endorse him for any software development role he chooses to pursue in the future.`,
     ],
-    testimonialLink:
-      'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/lucas.webp',
     authorLink: 'https://www.linkedin.com/in/lucasmichot',
   },
@@ -44,8 +42,7 @@ export const testimonials = [
       "I had the pleasure of working closely with Nathan during his time as freelancer at MEMBER and his contributions to MEMBER's mobile application had a big impact immediately.",
       'I can therefore highly recommend Nathan for any software development or freelancing opportunity. He is not only a talented engineer but also a reliable and collaborative team member who consistently exceeds expectations. I am confident that he will continue to excel in all his future endeavors.',
     ],
-    testimonialLink:
-      'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/gerald.webp',
     authorLink: 'https://www.linkedin.com/in/gkropitz/',
   },
@@ -56,8 +53,7 @@ export const testimonials = [
       'I highly recommend Nathan for any software development position.',
       "During our time at a start-up where we built the codebase from scratch, Nathan proved himself to be a proactive problem-solver who quickly tackled complex tasks. He's an excellent communicator with a good grasp of best software practices. Nathan's positive attitude and dedication to team culture also made him a valuable asset to our team.",
     ],
-    testimonialLink:
-      'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/jimin.webp',
     authorLink: 'https://www.linkedin.com/in/jimin-park-51470110/',
   },
@@ -69,8 +65,7 @@ export const testimonials = [
       "He has awesome skills in web and for me there were plenty of things to learn from him, especially in organizing ideas and brainstorming them. In addition, it's easy and it's a fun to work with him, which I believe is very important too.",
       'I would not hesitate to hire him if you want to build a team with healthy relationships in it and build an exceptional product.',
     ],
-    testimonialLink:
-      'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/vitali.webp',
     authorLink: 'https://www.linkedin.com/in/vitaliyazvinski',
   },
@@ -81,8 +76,7 @@ export const testimonials = [
       'I had the pleasure of working with Nathan for almost one year. He always demonstrated a significant ability to think about the entire user journey beyond the "happy path", proposing solutions and ensuring that the end user experience will always be consistent and optimal.',
       'This is also reflected on his behavior as a team member, where he was always very active discussing and proposing solutions and engaging other engineers and designers with the goal of providing the best possible experience for the users.',
     ],
-    testimonialLink:
-      'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/roney.webp',
     authorLink: 'https://www.linkedin.com/in/roneycastro',
   },
@@ -92,8 +86,7 @@ export const testimonials = [
     paragraphs: [
       'Nathan and I worked in Klarna for 1.5 years. Nathan is a unique engineer who makes everything better for the end customer. He goes beyond the task requirements and adds customer wow features like Accessibility, animations and an improved UX. He continuously aligns with designers and improves the designs so that end users get the best experience. Nathan is very thorough in his work and holds discussions with stakeholders, documents everything properly and presents his work to a wider audience through engaging demos. I was very lucky to have Nathan in my team and I wish him the best for his future.',
     ],
-    testimonialLink:
-      'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/varun.webp',
     authorLink: 'https://www.linkedin.com/in/palvarun',
   },
@@ -120,8 +113,7 @@ frameworks within the React Native world but is also working on other
 technologies in his spare time which shows his commitment to software
 development in general.`,
     ],
-    testimonialLink:
-      'https://drive.google.com/file/d/1OBdJPIpDbbQxoLmfAxmL_A7vHCMPwEJJ/view?usp=sharing',
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/erik.webp',
     authorLink: 'https://www.linkedin.com/in/erik-waterloo',
   },
@@ -133,8 +125,7 @@ development in general.`,
       "He was very supportive and helped me get onboarded on one of the company's most important projects. He always made sure to share his experience with me and guide me in the right direction. Working with him was a huge learning experience, he was a great part of my professional growth. At such a young age, he's already a great mentor.",
       'I am very thankful that I got the chance to work closely with him. ',
     ],
-    testimonialLink:
-      'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     authorLink: 'https://www.linkedin.com/in/olfakaroui',
   },
   {
@@ -145,8 +136,7 @@ development in general.`,
       'He will always go that extra mile to look after and deliver for his clients whilst spending as much time in the office as he needs to finish the job and meet his targets. He is always a very good communicator, also when the pressure is rising, calling for clear communication about goals, responsibility, performance, expectations and feedback for every member involved in the project he’s managing. No matter how tense a meeting, Nathan made sure everyone left with a smile.',
       "I couldn't recommend Nathan any higher in a professional environment and consider him to be top of my value add list.",
     ],
-    testimonialLink:
-      'https://www.linkedin.com/in/nathan-brachotte/details/recommendations',
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/hemang.webp',
     authorLink: 'https://www.linkedin.com/in/hemang-t-pandya',
   },
