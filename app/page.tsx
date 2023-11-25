@@ -52,7 +52,27 @@ export default function Page() {
           high-performance, customer-centric, well-architected apps. Always
           aiming for that ✨ <GradientText>UI & UX extra touch</GradientText> ✨
         </p>
+        <p>Some facts about me:</p>
         <ul>
+          <li>
+            🚀 Passionate about building world-class products and learning on
+            the way.
+          </li>
+          <li>
+            ✍️ Love to share my passion for engineering through{' '}
+            <GradientLink href={'/blog'}>my blog</GradientLink>, also{' '}
+            <GradientLink href="/blog/put-a-cherry-on-top">
+              gave a talk
+            </GradientLink>{' '}
+            at Klarna KonferenSE20.
+          </li>
+          <li>
+            ☁️ I'm an{' '}
+            <GradientLink href="https://www.credly.com/badges/91e5da96-297c-418a-a8a4-789df7fecdbf/public_url">
+              AWS Certified Cloud Practitioner
+            </GradientLink>
+          </li>
+          <li>✨ Actively seeking contracting roles.</li>
           <li>
             <div className="mb-2 flex flex-wrap space-x-2">
               <span className="mb-1">🛠 Tech Stack:</span>
@@ -60,38 +80,28 @@ export default function Page() {
               <Badges.JavaScript />
               <Badges.React />
               <Badges.ReactNative />
+              <Badges.AWS />
               <Badges.Next />
-              <Badges.Node />
+              <span className="mb-1">
+                <Badges.Node />
+              </span>
               <Badges.Nest />
               <Badges.Express />
               <Badges.Prisma />
               <Badges.Postgre />
               <Badges.Tailwind />
+              <span>& much more!</span>
             </div>
           </li>
-          <li>
-            🚀 Passionate about building world-class products and learning on
-            the way.
-          </li>
-          <li>
-            🎤 Love to share my passion for engineering through{' '}
-            <GradientLink href={'/blog'}>my blog</GradientLink>, also{' '}
-            <GradientLink href="/blog/put-a-cherry-on-top">
-              gave a talk
-            </GradientLink>{' '}
-            at Klarna KonferenSE20.
-          </li>
-          <li>✨ Actively seeking contracting roles.</li>
         </ul>
         {/* // TODO: Scroll animation (https://www.framer.com/motion/scroll-animations/) */}
         <p>
-          Want to know more about me? 🤔 Check out{' '}
+          <span className="font-bold">Want to know more about me?</span> Here is
+          my{' '}
           <GradientLink href="https://docs.google.com/document/d/1_bO2q6WnJVjbryx6EF0J4qjppmmwAWXUYl1kryGPpiY">
             my resume
           </GradientLink>
-        </p>
-        <p>
-          Want to work with me? 🤝 Please{' '}
+          . <span className="font-bold">Want to work with me?</span> 🤝 Please{' '}
           <Link
             href={'mailto:hey+nate@nathanbrachotte.dev'}
             className={twMerge(
@@ -112,8 +122,9 @@ export default function Page() {
             Linkedin
           </Link>
         </p>
+        <p></p>
         <p>
-          Still unsure? Maybe these{' '}
+          <span className="font-bold">Still unsure?</span> Maybe these{' '}
           <Link
             href={'/testimonials'}
             className={twMerge(
