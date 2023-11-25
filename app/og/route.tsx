@@ -49,3 +49,22 @@ export async function GET(request: Request) {
     })
   }
 }
+
+/*
+<div
+          tw="flex w-full text-white items-center h-full pl-16 justify-center"
+          style={{
+            backgroundImage: 'url(https://www.nathanbrachotte.dev/images/og.png)',
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: '100% 100%',
+            height: '100%',
+            width: '100%',
+          }}
+        >
+        <div tw="flex mx-[20%] text-center">
+          <p tw="text-6xl">
+          The dangers of NestJS
+          </p>
+        </div>
+        </div>
+        */

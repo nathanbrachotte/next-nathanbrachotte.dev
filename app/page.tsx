@@ -1,4 +1,5 @@
 import { Badges } from 'app/components/Badges'
+import { GradientLink } from 'app/components/GradientLink'
 import { GradientText } from 'app/components/GradientText'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -25,8 +26,17 @@ export default function Page() {
         ), Senior Full Stack Software Engineer with 5+ years of experience, I
         specialize in <Badges.React />
         , <Badges.ReactNative /> & <Badges.Node /> frameworks.
+        <div className="pt-4">
+          <Image
+            alt="picture of me"
+            src="/images/nate.webp"
+            className="rounded-full"
+            width={200}
+            height={200}
+          />
+        </div>
         <p>
-          At heart, I'm a{' '}
+          I'm a{' '}
           <Link
             href={'https://posthog.com/blog/what-is-a-product-engineer'}
             className={twMerge(
@@ -38,10 +48,9 @@ export default function Page() {
           >
             Product Engineer
           </Link>{' '}
-          committed to building customer-centric, scalable, and maintainable
-          solutions. I've helped build teams and craft high-performance,
-          well-architected apps, always aiming for that ✨{' '}
-          <GradientText>extra touch in UI & UX</GradientText> ✨
+          at heart,I've helped many companies build great team culture and craft
+          high-performance, customer-centric, well-architected apps. Always
+          aiming for that ✨ <GradientText>UI & UX extra touch</GradientText> ✨
         </p>
         <ul>
           <li>
@@ -61,17 +70,28 @@ export default function Page() {
             </div>
           </li>
           <li>
-            🚀 Passionate about building world-class products and always looking
-            to learn from others.
+            🚀 Passionate about building world-class products and learning on
+            the way.
           </li>
           <li>
-            ✨ Actively seeking contracting roles and open to startup
-            collaborations.
+            🎤 Love to share my passion for engineering through{' '}
+            <GradientLink href={'/blog'}>my blog</GradientLink>, also{' '}
+            <GradientLink href="/blog/put-a-cherry-on-top">
+              gave a talk
+            </GradientLink>{' '}
+            at Klarna KonferenSE20.
           </li>
+          <li>✨ Actively seeking contracting roles.</li>
         </ul>
         {/* // TODO: Scroll animation (https://www.framer.com/motion/scroll-animations/) */}
         <p>
-          Want to work with me? Please{' '}
+          Want to know more about me? 🤔 Check out{' '}
+          <GradientLink href="https://docs.google.com/document/d/1_bO2q6WnJVjbryx6EF0J4qjppmmwAWXUYl1kryGPpiY">
+            my resume
+          </GradientLink>
+        </p>
+        <p>
+          Want to work with me? 🤝 Please{' '}
           <Link
             href={'mailto:hey+nate@nathanbrachotte.dev'}
             className={twMerge(
