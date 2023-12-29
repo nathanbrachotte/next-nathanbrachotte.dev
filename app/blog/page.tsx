@@ -8,11 +8,12 @@ import { getTimePerPost } from 'helpers/time'
 import { getViewsCount } from 'lib/metrics'
 import ViewCounter from 'app/blog/view-counter'
 import Image from 'next/image'
+import { PageTitle } from 'app/components/PageTitle'
 // import { getViewsCount } from 'lib/metrics'
 
 export const metadata: Metadata = {
   title: 'Blog',
-  description: 'Commit by commit: My evolution as a Software Engineer',
+  description: 'Commit by commit: My evolution as a Software Engineer 🚀',
 }
 
 const formatDate = (date: string) => {
@@ -104,9 +105,7 @@ export default async function BlogPage() {
 
   return (
     <section>
-      <h1 className="mb-8 text-2xl font-bold tracking-tighter">
-        Commit by commit: My evolution as a Software Engineer 🚀
-      </h1>
+      <PageTitle>{metadata.description}</PageTitle>
       {allBlogs
         .sort((a, b) => {
           if (new Date(a.publishedAt) > new Date(b.publishedAt)) {

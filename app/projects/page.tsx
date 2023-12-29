@@ -1,3 +1,4 @@
+import { PageTitle } from 'app/components/PageTitle'
 import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
 import clsx from 'clsx'
 import { Project, allProjects } from 'contentlayer/generated'
@@ -6,7 +7,8 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Projects',
-  description: "A curated list of some of projects I've worked on in the past",
+  description:
+    "A curated list of some of projects I've worked on in the past 👇",
 }
 
 const Project = ({
@@ -67,9 +69,7 @@ const Project = ({
 export default function ProjectsPage() {
   return (
     <section>
-      <h1 className="mb-8 text-2xl font-bold tracking-tighter">
-        A curated list of some of projects I've worked on in the past 👇
-      </h1>
+      <PageTitle>{metadata.description}</PageTitle>
       <div className="grid grid-cols-1 grid-rows-1 gap-8 md:grid-cols-2">
         {allProjects
           .sort((a, b) => {

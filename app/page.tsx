@@ -1,6 +1,7 @@
 import { Badges } from 'app/components/Badges'
 import { GradientLink } from 'app/components/GradientLink'
 import { GradientText } from 'app/components/GradientText'
+import { PageTitle } from 'app/components/PageTitle'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -9,7 +10,7 @@ import { twMerge } from 'tailwind-merge'
 export default function Page() {
   return (
     <section>
-      <h1 className="mb-8 text-2xl font-bold tracking-tighter">Hey there 👋</h1>
+      <PageTitle>Hey there 👋</PageTitle>
       <div className="prose prose-invert">
         I'm Nathan (
         <Link
