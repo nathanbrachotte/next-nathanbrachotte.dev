@@ -1,0 +1,199 @@
+---
+title: 'NestJS request lifecycle: Who goes first?'
+publishedAt: '2024-01-02'
+summary: 'It can be pretty damn hard to understand what piece of code is going to run first when hitting your NestJS backend. Lets deep-dive into all its elements to clarify it.'
+image: '/images/blog/put-a-cherry-on-top/cover.webp'
+draft: true
+---
+
+<Badges.Nest /> presents itself as an great framework for teams new to the
+<Badges.TypeScript /> ecosystem that hope to quickly get up to speed. Its main weakness
+though, is that before being able to make full use of its power, it took me a while
+to figure out in what order each method/piece of code run and when to use which.
+I'm writing this in hope to clear this up (and so I can get back to this article
+in the future, because it's really not that obvious).
+
+Each section of the article will cover a specific fundamental piece of Nest, while trying to keep the request lifecycle global vision
+
+## Prerequesite
+
+You need to be able to understand the concept of `decorators`, `Modules`, `Controllers` and `Services`.
+Here is a quick intro: [-- add link]()
+
+tldr:
+
+1. **Module**: Use `@Module()` decorator, act as a container that organizes the application structure by grouping related controllers and services.
+2. **Controllers**: Use `@Controller()` decorator, responsible for handling incoming requests and returning responses to the client.
+3. **Services**: Use `@Injectable()` decorator, encapsulate the business logic of the application, and are used by controllers to perform specific tasks and operations.
+   When bootstrap a new NestJS project, we end up with the following:
+
+## Middleware
+
+Middlewares are also common in <Badges.Express />, they are a function that are given `request` and `context` as parameters. You can at any time call the next middleware using `next()`.
+
+Consider this very simple NestJS app:
+
+```ts
+// app.module.ts
+@Module({
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {}
+
+// app.controller.ts
+@Controller()
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @Get('/og')
+  async getFirstUserName(): Promise<string> {
+    return await this.appService.getFirstUserName()
+  }
+}
+
+// app.service.ts
+@Injectable()
+export class AppService {
+  async getFirstUserName() {
+    return 'John Doe'
+  }
+}
+```
+
+--- add github link
+
+Now let's say we want to add, for all our routes, some logic that logs what route is being hit and which `user-agent` used to send the request (this might be useful to send this to your analytics then and track what clients are the most used to hit your server).
+First let's write our Middleware:
+
+```ts
+import { Injectable, NestMiddleware, Logger } from '@nestjs/common'
+// Assuming you're using express, don't forget to add @types/express to your project
+import type { Request, Response, NextFunction } from 'express'
+
+@Injectable()
+export class LoggerMiddleware implements NestMiddleware {
+  use(req: Request, res: Response, next: NextFunction) {
+    Logger.debug('LoggerMiddleware::Received request:')
+    Logger.debug({ userAgent: req.headers['user-agent'] })
+    next()
+  }
+}
+```
+
+Footnote: In our case we log the user agent to keep it simple
+
+Now let's add this to our AppModule:
+
+```ts
+@Module({
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    // For all routes
+    consumer.apply(LoggerMiddleware).forRoutes('*')
+    // OR to target a single controller:
+    consumer.apply(LoggerMiddleware).forRoutes(AppController)
+  }
+}
+```
+
+Note: [You can also exclude routes](https://docs.nestjs.com/middleware#excluding-routes) and [target specific methods](https://docs.nestjs.com/middleware#route-wildcards)
+
+Now what's cool is that at every request our server processes, we're going to see the following:
+![[SCR-20231210-tvq.png]]
+
+## Guards
+
+Guards are Middlewares with extra powers.
+
+- They can be added at app level (in main.ts), at controller level or at method level.
+- They implement a `canActivate` method that is triggered at each request and throws an error if this it returns `false`. Otherwise it continues the same way a Middleware would call `next()`.
+  They usually are used to handle authentication and roles to give access or not to user to specific routes and resources.
+
+Let's take [the guard example](https://docs.nestjs.com/guards#authorization-guard) from the doc and implement it in our app:
+
+```ts
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  Logger,
+} from '@nestjs/common'
+import { Observable } from 'rxjs'
+import { Request } from 'express'
+
+@Injectable()
+export class AuthGuard implements CanActivate {
+  guardLevel: string
+
+  constructor(private level: string) {
+    this.guardLevel = level
+  }
+
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise<boolean> | Observable<boolean> {
+    // Added typesafety by typing the request as `getRequest` returns `any` otherwise
+    const request = context.switchToHttp().getRequest<Request>()
+
+    Logger.debug(`Guard ${this.guardLevel} -- Verifying cookie`)
+    const cookie = request.headers.cookie
+
+    return !!cookie
+  }
+}
+```
+
+For simplicity sake, we're only going to check if a `cookie` header is present, and prevent the request if it isn't present. We also added a way to log the level in which the Guard is being executed, that is useful once we add the Guard into the app:
+
+```ts
+// main.ts
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule)
+  app.useGlobalGuards(new AuthGuard('main'))
+  await app.listen(3000)
+}
+
+// app.controller.ts
+@Controller()
+@UseGuards(new AuthGuard('controller'))
+export class AppController {
+  constructor(private readonly appService: AppService) {}
+
+  @UseGuards(new AuthGuard('method'))
+  @Get('/og')
+  async getFirstUsersNames(): Promise<string> {
+    return await this.appService.getFirstUserName()
+  }
+}
+```
+
+We now added our AuthGuard at the 3 different levels of the app. Let's send a first request without the header and see which is triggered first:
+![[Pasted image 20231210214756.png]]
+The one at `main` level got triggered first, and even without knowing too much about Nest, it feels natural that the control flow goes global -> controller -> method. We also correctly got an error sent back to our client:
+![[Pasted image 20231210214922.png]]
+Let's verify this hypothese by adding a cookie header in our request:
+![[Pasted image 20231210215028.png]]
+Cool, that works. What about the logs?
+![[Pasted image 20231210215128.png]]
+That seems about right. We first had the middleware running, and then all guard going from the most high-level (--- the most global, the most shoot at everything) to the most accurate one. Of course, in a real-life scenario, this would not be necessary and we definitely should have this Guard set only once, either at controller or method level if some of our endpoints can be public, or at global level if we are sure none of our endpoint should be ever reached by a unauthenticated user.
+
+So far, we end up with the following request lifecycle:
+![[Pasted image 20231210220556.png]]
+Note: Since the complexity will grow exponentially from there, I'll be remove more and more details from the previous section as we go to make space, don't hesitate to come back to this diagram as needed.
+
+## Interceptors
+
+Interceptors is basically the answer from Nest to the need we sometimes may have to run logic before AND after the business logic execution. You might want to use it to log how long your business logic took to run, or to implement a caching mecanism on some of your endpoints.
+
+## Validator
+
+## Filter/Pipes
+
+- Unlike most modern frameworks, it feels like it requires you to read the whole doc
+  one big time before you can get started.

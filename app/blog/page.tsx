@@ -99,6 +99,11 @@ const BlogPostCard = ({
   )
 }
 
+const releasedBlogs =
+  process.env.NODE_ENV === 'development'
+    ? allBlogs
+    : allBlogs.filter((blog) => !blog.draft)
+
 // TODO: Vercel analytics
 export default async function BlogPage() {
   const allViews = await getViewsCount()
@@ -106,7 +111,7 @@ export default async function BlogPage() {
   return (
     <section>
       <PageTitle>{metadata.description}</PageTitle>
-      {allBlogs
+      {releasedBlogs
         .sort((a, b) => {
           if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
             return -1
