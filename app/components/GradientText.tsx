@@ -6,7 +6,7 @@ export const GradientText = ({ children }: PropsWithChildren) => {
     <span
       className={cn(
         'mb-0 mt-0',
-        'duration-[1500] transition-all ease-linear',
+        'transition-all ease-linear',
         'text-transparent',
         'bg-gradient-to-r from-gradient-pink via-gradient-purple to-gradient-cyan bg-clip-text',
         'animate-text-gradient-background',

@@ -102,7 +102,6 @@ const BlogPostCard = ({
 // TODO: Vercel analytics
 export default async function BlogPage() {
   const allViews = await getViewsCount()
-  console.log({ allViews })
 
   return (
     <section>
