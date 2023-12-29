@@ -47,7 +47,7 @@ const TestimonialsPage = () => {
   return (
     <section>
       <h1 className="pb-6 text-2xl font-bold tracking-tighter">
-        Some good words from my past clients, leads, coworkers or mentees 🙏
+        Some good words from my past clients, leads and coworkers 🙏
       </h1>
       <div className="flex flex-col items-center justify-center pb-6">
         <ToggleGroup

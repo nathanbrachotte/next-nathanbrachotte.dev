@@ -54,10 +54,7 @@ export default function Page() {
         </p>
         <p>Some facts about me:</p>
         <ul>
-          <li>
-            🚀 Passionate about building world-class products and learning on
-            the way.
-          </li>
+          <li>🚀 Passionate about building world-class products.</li>
           <li>
             ✍️ Love to share my passion for engineering through{' '}
             <GradientLink href={'/blog'}>my blog</GradientLink>, also{' '}
@@ -67,7 +64,7 @@ export default function Page() {
             at Klarna KonferenSE20.
           </li>
           <li>
-            ☁️ I'm an{' '}
+            ☁️{' '}
             <GradientLink href="https://www.credly.com/badges/91e5da96-297c-418a-a8a4-789df7fecdbf/public_url">
               AWS Certified Cloud Practitioner
             </GradientLink>
