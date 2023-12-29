@@ -7,7 +7,7 @@ export const SeeOriginalButton = ({
 }: {
   testimonialLink: string
 }) => {
-  //! FIXME:Button isn't displayed on tablets, add device detection (https://github.com/duskload/react-device-detect)
+  //! FIXME: Button isn't displayed on tablets, add device detection (https://github.com/duskload/react-device-detect)
   return (
     <div
       className={clsx(

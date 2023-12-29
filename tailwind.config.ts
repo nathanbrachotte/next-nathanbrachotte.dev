@@ -57,7 +57,7 @@ export default {
         'spin-surround':
           'rotateHalf 1.5s cubic-bezier(0.64, 0.45, 0.07, 0.44) infinite',
         'text-gradient-background':
-          'text 3s cubic-bezier(0.64, 0.45, 0.07, 0.44) infinite',
+          'text 2.5s cubic-bezier(0.64, 0.45, 0.07, 0.44) infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
       },

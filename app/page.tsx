@@ -72,7 +72,6 @@ export default function Page() {
               AWS Certified Cloud Practitioner
             </GradientLink>
           </li>
-          <li>✨ Actively seeking contracting roles.</li>
           <li>
             <div className="mb-2 flex flex-wrap space-x-2">
               <span className="mb-1">🛠 Tech Stack:</span>

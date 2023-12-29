@@ -1,10 +1,13 @@
-interface Testimonial {
+import { TESTIMONIAL_TYPE } from 'app/constants'
+
+export interface Testimonial {
   name: string
   position: string
   paragraphs: string[]
   testimonialLink: string
   pic?: string
   authorLink: string
+  type: TESTIMONIAL_TYPE
 }
 
 export const testimonials = [
@@ -22,6 +25,7 @@ export const testimonials = [
     pic: '/images/testimonials/seb.webp',
     authorLink: 'https://www.linkedin.com/in/sdebrouwere',
     position: 'CEO at Genie',
+    type: 'clients',
   },
   {
     name: 'Lucas Michot',
@@ -34,6 +38,7 @@ export const testimonials = [
     testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/lucas.webp',
     authorLink: 'https://www.linkedin.com/in/lucasmichot',
+    type: 'leads',
   },
   {
     name: 'Gerald Kropitz',
@@ -45,6 +50,7 @@ export const testimonials = [
     testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/gerald.webp',
     authorLink: 'https://www.linkedin.com/in/gkropitz/',
+    type: 'clients',
   },
   {
     name: 'Jimin Park',
@@ -56,6 +62,7 @@ export const testimonials = [
     testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/jimin.webp',
     authorLink: 'https://www.linkedin.com/in/jimin-park-51470110/',
+    type: 'leads',
   },
   {
     name: 'Vitali Yazvinski',
@@ -68,6 +75,7 @@ export const testimonials = [
     testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/vitali.webp',
     authorLink: 'https://www.linkedin.com/in/vitaliyazvinski',
+    type: 'colleagues',
   },
   {
     name: 'Roney Castro',
@@ -79,6 +87,7 @@ export const testimonials = [
     testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/roney.webp',
     authorLink: 'https://www.linkedin.com/in/roneycastro',
+    type: 'leads',
   },
   {
     name: 'Varun Pal',
@@ -89,6 +98,7 @@ export const testimonials = [
     testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/varun.webp',
     authorLink: 'https://www.linkedin.com/in/palvarun',
+    type: 'leads',
   },
   {
     name: 'Erik Waterloo',
@@ -116,6 +126,7 @@ development in general.`,
     testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/erik.webp',
     authorLink: 'https://www.linkedin.com/in/erik-waterloo',
+    type: 'leads',
   },
   {
     name: 'Olfa Karoui',
@@ -127,6 +138,7 @@ development in general.`,
     ],
     testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     authorLink: 'https://www.linkedin.com/in/olfakaroui',
+    type: 'colleagues',
   },
   {
     name: 'Hemang Pandya',
@@ -139,5 +151,6 @@ development in general.`,
     testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/hemang.webp',
     authorLink: 'https://www.linkedin.com/in/hemang-t-pandya',
+    type: 'leads',
   },
 ] satisfies Testimonial[]

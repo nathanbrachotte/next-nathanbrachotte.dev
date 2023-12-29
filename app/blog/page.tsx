@@ -53,7 +53,7 @@ const BlogPostCard = ({
       <div className="group mb-8 flex w-full cursor-pointer flex-col justify-between transition-all hover:scale-105 active:scale-95">
         <div
           className={twMerge(
-            'relative mx-auto w-full overflow-hidden rounded-lg bg-gradient-to-r p-[1px] transition-all duration-300 ease-in-out hover:p-[2px]',
+            'relative mx-auto w-full overflow-hidden rounded-lg bg-gradient-to-r p-[1px] transition-all duration-300 ease-in-out',
             borderRadiant[index % borderRadiant.length],
           )}
         >
