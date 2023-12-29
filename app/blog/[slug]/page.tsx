@@ -118,6 +118,7 @@ export default async function Blog({ params }) {
   // ])
 
   const allViews = await getViewsCount()
+  const hasFetchedViews = allViews.length > 0
 
   return (
     <section>
@@ -142,8 +143,16 @@ export default async function Blog({ params }) {
       <div className="mb-8 mt-2 flex max-w-[650px] items-center justify-between text-sm">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           📅 {formatDate(post.publishedAt)} - {getTimePerPost(post.body.raw)}
-          {' - '}
-          <ViewCounter allViews={allViews ?? []} slug={post.slug} trackView />
+          {hasFetchedViews ? (
+            <>
+              {' - '}
+              <ViewCounter
+                allViews={allViews ?? []}
+                slug={post.slug}
+                trackView
+              />
+            </>
+          ) : null}
         </p>
       </div>
       <Mdx

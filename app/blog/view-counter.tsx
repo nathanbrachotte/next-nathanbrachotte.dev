@@ -16,6 +16,7 @@ export default function ViewCounter({
   trackView?: boolean
 }) {
   const viewsForSlug = allViews && allViews.find((view) => view.slug === slug)
+
   const number = new Number(viewsForSlug?.count || 0)
 
   useEffect(() => {
@@ -23,6 +24,10 @@ export default function ViewCounter({
       increment(slug)
     }
   }, [])
+
+  if (!viewsForSlug?.count) {
+    return null
+  }
 
   return (
     <span className="text-neutral-400">{`👀 ${number.toLocaleString()} views`}</span>

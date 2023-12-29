@@ -22,12 +22,17 @@ export const getBlogViews = cache(async () => {
     return 0
   }
 
-  const data = await queryBuilder
-    .selectFrom('views')
-    .select(['count'])
-    .execute()
+  try {
+    const data = await queryBuilder
+      .selectFrom('views')
+      .select(['count'])
+      .execute()
 
-  return data.reduce((acc, curr) => acc + Number(curr.count), 0)
+    return data.reduce((acc, curr) => acc + Number(curr.count), 0)
+  } catch (error) {
+    console.error({ error })
+    return null
+  }
 })
 
 export const getViewsCount = cache(async () => {
@@ -37,7 +42,7 @@ export const getViewsCount = cache(async () => {
       .select(['slug', 'count'])
       .execute()
   } catch (error) {
-    console.log({ error })
+    console.error({ error })
     return []
   }
 })
