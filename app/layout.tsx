@@ -1,4 +1,4 @@
-import './global.css'
+import './globals.css'
 import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
