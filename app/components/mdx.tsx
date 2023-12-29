@@ -5,6 +5,7 @@ import { useMDXComponent } from 'next-contentlayer/hooks'
 import Tweet from './tweet'
 import { Badges } from 'app/components/Badges'
 import { twMerge } from 'tailwind-merge'
+import { cn } from '@/lib/utils'
 
 const CustomLink = (props) => {
   const href = props.href
@@ -64,7 +65,14 @@ function Video(props) {
 
 function Callout(props) {
   return (
-    <div className="mb-8 flex items-center rounded border border-cyan-900 bg-slate-800 p-1 px-4 py-3">
+    <div
+      className={cn(
+        'mb-8 flex items-center rounded-lg border border-cyan-900 p-1 px-4 py-3',
+        props.type === 'info' && 'border-cyan-400 bg-cyan-200/10',
+        props.type === 'warning' && 'border-yellow-400 bg-yellow-200/10',
+        props.type === 'error' && 'border-gradient-pink bg-pink-600/10',
+      )}
+    >
       <div className="mr-4 flex w-4 text-lg">{props.emoji}</div>
       <div className="callout w-full">{props.children}</div>
     </div>
