@@ -154,3 +154,13 @@ development in general.`,
     type: 'leads',
   },
 ] satisfies Testimonial[]
+
+export const clientTestimonials = testimonials.filter((testimonial) => {
+  return testimonial.type === TESTIMONIAL_TYPE.CLIENT
+})
+export const leadTestimonials = testimonials.filter((testimonial) => {
+  return testimonial.type === TESTIMONIAL_TYPE.LEAD
+})
+export const colleagueTestimonials = testimonials.filter((testimonial) => {
+  return testimonial.type === TESTIMONIAL_TYPE.COLLEAGUE
+})

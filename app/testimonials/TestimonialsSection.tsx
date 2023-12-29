@@ -1,7 +1,7 @@
 'use client'
 
 import { SeeOriginalButton, SeeOriginalLink } from 'app/testimonials/Links'
-import { AnimatePresence, LayoutGroup, motion } from 'framer-motion'
+import { LayoutGroup, motion } from 'framer-motion'
 import { Testimonial, testimonials } from 'app/testimonials/data'
 import clsx from 'clsx'
 import { getGradientPerIndex } from 'helpers/gradients'
@@ -51,7 +51,7 @@ export const TestimonialsSection = ({ filters }: TestimonialsSectionProps) => {
               </p>
             ))}
           </blockquote>
-          <div className="flex justify-start sm:hidden">
+          <div className="-mt-3 mb-3 flex justify-end sm:hidden">
             <SeeOriginalLink testimonialLink={testimonial.testimonialLink} />
           </div>
         </motion.div>

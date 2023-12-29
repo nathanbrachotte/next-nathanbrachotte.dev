@@ -7,6 +7,12 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { TESTIMONIAL_TYPES } from 'app/constants'
 import { cn } from '@/lib/utils'
+import {
+  clientTestimonials,
+  colleagueTestimonials,
+  leadTestimonials,
+  testimonials,
+} from 'app/testimonials/data'
 
 const TestimonialsPage = () => {
   const router = useRouter()
@@ -17,21 +23,13 @@ const TestimonialsPage = () => {
     .getAll('key')
     .filter((value) => TESTIMONIAL_TYPES.includes(value))
 
-  // Get a new searchParams string by merging the current
-  // searchParams with a provided key/value pair
-  const createQueryString = useCallback(
-    (name: string, values: string[]) => {
-      // When trying to remove all filters, we want to actually turn them all on.
-      // const newKeys = values.length > 0 ? values : TESTIMONIAL_TYPES
+  const createQueryString = useCallback((name: string, values: string[]) => {
+    const params = new URLSearchParams([
+      ...values.map((value) => ['key', value]),
+    ])
 
-      const params = new URLSearchParams([
-        ...values.map((value) => ['key', value]),
-      ])
-
-      return params.toString()
-    },
-    [searchParams],
-  )
+    return params.toString()
+  }, [])
 
   useEffect(() => {
     if (searchParamFilters.length === 0) {
@@ -39,60 +37,71 @@ const TestimonialsPage = () => {
     }
   }, [searchParamFilters])
 
+  const filteredTestimonials =
+    searchParamFilters.length > 0
+      ? testimonials.filter((testimonial) => {
+          return searchParamFilters.includes(testimonial.type)
+        })
+      : testimonials
+
   return (
     <section>
       <h1 className="pb-6 text-2xl font-bold tracking-tighter">
         Some good words from my past clients, leads, coworkers or mentees 🙏
       </h1>
-      <ToggleGroup
-        type="multiple"
-        defaultValue={
-          searchParamFilters.length > 0 ? searchParamFilters : TESTIMONIAL_TYPES
-        }
-        variant={'outline'}
-        className="space-x-2 pb-6"
-        onValueChange={(value) => {
-          console.log({ value })
-          const newRoute = pathname + '?' + createQueryString('key', value)
-
-          router.push(newRoute)
-        }}
-      >
-        <ToggleGroupItem
-          value="clients"
-          aria-label="Toogle clients"
-          className={cn(
-            'bg-transparent data-[state=on]:border-gradient-purple data-[state=on]:bg-slate-900',
-            'transition-all hover:scale-105',
-            'active:scale-95',
-            // Style override for filters to keep the same look while adding search params to URL
-          )}
+      <div className="flex flex-col items-center justify-center pb-6">
+        <ToggleGroup
+          type="multiple"
+          defaultValue={
+            searchParamFilters.length > 0
+              ? searchParamFilters
+              : TESTIMONIAL_TYPES
+          }
+          variant={'outline'}
+          className="space-x-2 pb-2"
+          onValueChange={(value) => {
+            router.push(pathname + '?' + createQueryString('key', value))
+          }}
         >
-          Clients
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="leads"
-          aria-label="Toggle leads"
-          className={cn(
-            'bg-transparent data-[state=on]:border-gradient-purple data-[state=on]:bg-slate-900',
-            'transition-all hover:scale-105',
-            'active:scale-95',
-          )}
-        >
-          Leads
-        </ToggleGroupItem>
-        <ToggleGroupItem
-          value="colleagues"
-          aria-label="Toggle colleagues"
-          className={cn(
-            'bg-transparent data-[state=on]:border-gradient-purple data-[state=on]:bg-slate-900',
-            'transition-all hover:scale-105',
-            'active:scale-95',
-          )}
-        >
-          Colleagues
-        </ToggleGroupItem>
-      </ToggleGroup>
+          <ToggleGroupItem
+            value="clients"
+            aria-label="Toogle clients"
+            className={cn(
+              'bg-transparent data-[state=on]:border-gradient-purple data-[state=on]:bg-slate-900',
+              'transition-all hover:scale-105',
+              'active:scale-95',
+              // Style override for filters to keep the same look while adding search params to URL
+            )}
+          >
+            Clients ({clientTestimonials.length})
+          </ToggleGroupItem>
+          <ToggleGroupItem
+            value="leads"
+            aria-label="Toggle leads"
+            className={cn(
+              'bg-transparent data-[state=on]:border-gradient-purple data-[state=on]:bg-slate-900',
+              'transition-all hover:scale-105',
+              'active:scale-95',
+            )}
+          >
+            Leads ({leadTestimonials.length})
+          </ToggleGroupItem>
+          <ToggleGroupItem
+            value="colleagues"
+            aria-label="Toggle colleagues"
+            className={cn(
+              'bg-transparent data-[state=on]:border-gradient-purple data-[state=on]:bg-slate-900',
+              'transition-all hover:scale-105',
+              'active:scale-95',
+            )}
+          >
+            Colleagues ({colleagueTestimonials.length})
+          </ToggleGroupItem>
+        </ToggleGroup>
+        <p className="text-xs text-slate-400">
+          Showing {filteredTestimonials.length} testimonials
+        </p>
+      </div>
       <div>
         <TestimonialsSection filters={searchParamFilters} />
       </div>
