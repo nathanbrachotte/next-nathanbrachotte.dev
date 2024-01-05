@@ -13,6 +13,7 @@ import { AppStoreIcon } from 'icons/AppStore'
 import { PlayStoreIcon } from 'icons/PlayStore'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
+import { getDateWithDistance } from 'helpers/dates'
 // import { getViewsCount } from 'lib/metrics'
 
 const findProject = (slug: string) => {
@@ -55,33 +56,6 @@ export async function generateMetadata({
   }
 }
 
-function formatDate(date: string) {
-  const currentDate = new Date()
-  const targetDate = new Date(date)
-
-  const yearsAgo = currentDate.getFullYear() - targetDate.getFullYear()
-  const monthsAgo = currentDate.getMonth() - targetDate.getMonth()
-  const daysAgo = currentDate.getDate() - targetDate.getDate()
-
-  let formattedDate = ''
-
-  if (yearsAgo > 0) {
-    formattedDate = `${yearsAgo}y ago`
-  } else if (monthsAgo > 0) {
-    formattedDate = `${monthsAgo}mo ago`
-  } else if (daysAgo > 0) {
-    formattedDate = `${daysAgo}d ago`
-  } else {
-    formattedDate = 'Today'
-  }
-
-  const fullDate = targetDate.toLocaleString('en-us', {
-    year: 'numeric',
-  })
-
-  return `${fullDate} (${formattedDate})`
-}
-
 function Tools({ tools }: { tools: string[] }) {
   return (
     <div className="mb-8 mt-2 flex w-full flex-wrap">
@@ -121,7 +95,7 @@ export default async function Project({ params }) {
               <Balancer>{post.title}</Balancer>
             </h1>
             <p className="text-sm text-neutral-400">
-              Started in {formatDate(post.publishedAt)}
+              Started in {getDateWithDistance(post.publishedAt)}
             </p>
           </div>
         </div>

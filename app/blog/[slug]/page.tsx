@@ -13,6 +13,7 @@ import { FollowTwitterButton } from 'app/blog/[slug]/FollowTwitterButton'
 import { NateDescription } from 'app/components/NateDescription'
 import { Separator } from '@/components/ui/separator'
 import { formatDistanceToNow } from 'date-fns'
+import { getDateWithDistance } from 'helpers/dates'
 
 const findBlogPost = (slug: string) => {
   return allBlogs.find((post) => post.slug.includes(slug))
@@ -79,18 +80,6 @@ export async function generateMetadata({
   }
 }
 
-function formatDate(date: string) {
-  const targetDate = new Date(date)
-
-  const fullDate = targetDate.toLocaleString('en-us', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  })
-
-  return `${fullDate} (${formatDistanceToNow(targetDate)} ago)`
-}
-
 export default async function Blog({ params }) {
   const post = findBlogPost(params.slug)
 
@@ -131,7 +120,8 @@ export default async function Blog({ params }) {
       </h1>
       <div className="mb-8 mt-2 flex max-w-[650px] items-center justify-between text-sm">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          📅 {formatDate(post.publishedAt)} - {getTimePerPost(post.body.raw)}
+          📅 {getDateWithDistance(post.publishedAt)} -{' '}
+          {getTimePerPost(post.body.raw)}
           {hasFetchedViews ? (
             <>
               {' - '}
