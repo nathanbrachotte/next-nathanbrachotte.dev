@@ -12,6 +12,7 @@ import { GradientLink } from 'app/components/GradientLink'
 import { FollowTwitterButton } from 'app/blog/[slug]/FollowTwitterButton'
 import { NateDescription } from 'app/components/NateDescription'
 import { Separator } from '@/components/ui/separator'
+import { formatDistanceToNow } from 'date-fns'
 
 const findBlogPost = (slug: string) => {
   return allBlogs.find((post) => post.slug.includes(slug))
@@ -79,24 +80,7 @@ export async function generateMetadata({
 }
 
 function formatDate(date: string) {
-  const currentDate = new Date()
   const targetDate = new Date(date)
-
-  const yearsAgo = currentDate.getFullYear() - targetDate.getFullYear()
-  const monthsAgo = currentDate.getMonth() - targetDate.getMonth()
-  const daysAgo = currentDate.getDate() - targetDate.getDate()
-
-  let formattedDate = ''
-
-  if (yearsAgo > 0) {
-    formattedDate = `${yearsAgo}y ago`
-  } else if (monthsAgo > 0) {
-    formattedDate = `${monthsAgo}mo ago`
-  } else if (daysAgo > 0) {
-    formattedDate = `${daysAgo}d ago`
-  } else {
-    formattedDate = 'Today'
-  }
 
   const fullDate = targetDate.toLocaleString('en-us', {
     month: 'long',
@@ -104,7 +88,7 @@ function formatDate(date: string) {
     year: 'numeric',
   })
 
-  return `${fullDate} (${formattedDate})`
+  return `${fullDate} (${formatDistanceToNow(targetDate)} ago)`
 }
 
 export default async function Blog({ params }) {
