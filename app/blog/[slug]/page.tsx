@@ -158,7 +158,9 @@ export default async function Blog({ params }) {
             <TwitterButton title={post.title} slug={post.slug} />
           </div>
           <div className="pt-2">
-            <GradientLink href="https://github.com/nathanbrachotte/next-nathanbrachotte.dev">
+            <GradientLink
+              href={`https://github.com/nathanbrachotte/next-nathanbrachotte.dev/edit/main/content/${post.slug}.mdx`}
+            >
               Suggest an edit
             </GradientLink>
           </div>
