@@ -118,7 +118,9 @@ export default async function Blog({ params }) {
         </div>
       </div>
       <div className="flex">
-        <div className="bg-blue-300">
+        <div
+        // className="bg-blue-300"
+        >
           <h1 className="max-w-[650px] text-2xl font-bold tracking-tighter">
             <Balancer>{post.title}</Balancer>
           </h1>
@@ -139,7 +141,7 @@ export default async function Blog({ params }) {
             </p>
           </div>
         </div>
-        <Button variant={'destructive'}>ndkls</Button>
+        {/* <Button variant={'destructive'}>ndkls</Button> */}
       </div>
       <Mdx
         code={post.body.code}
