@@ -7,6 +7,11 @@ import ViewCounter from '../view-counter'
 import { getTimePerPost } from 'helpers/time'
 import { getViewsCount } from 'lib/metrics'
 import Image from 'next/image'
+import { TwitterButton } from 'app/blog/[slug]/TwitterButton'
+import { GradientLink } from 'app/components/GradientLink'
+import { FollowTwitterButton } from 'app/blog/[slug]/FollowTwitterButton'
+import { NateDescription } from 'app/components/NateDescription'
+import { Separator } from '@/components/ui/separator'
 
 const findBlogPost = (slug: string) => {
   return allBlogs.find((post) => post.slug.includes(slug))
@@ -160,6 +165,40 @@ export default async function Blog({ params }) {
         // tweets={tweets}
         tweets={[]}
       />
+
+      <div className="flex flex-col pt-14">
+        <div className="flex w-full flex-row flex-wrap justify-between">
+          <div className="pt-2">
+            <FollowTwitterButton />
+          </div>
+          <div className="pt-2">
+            <TwitterButton title={post.title} slug={post.slug} />
+          </div>
+          <div className="pt-2">
+            <GradientLink href="https://github.com/nathanbrachotte/next-nathanbrachotte.dev">
+              Suggest an edit
+            </GradientLink>
+          </div>
+        </div>
+        <Separator className="mb-0 mt-6 pt-[1px]" />
+        <div className="flex flex-col justify-center px-0 py-4 sm:flex-row sm:px-10">
+          <div className="p-4">
+            <Image
+              alt="picture of me"
+              src="/images/nate.webp"
+              className="rounded-full object-contain"
+              width={150}
+              height={150}
+            />
+          </div>
+          <div className="flex w-full flex-col space-y-3 p-4">
+            <span className="text-start text-xl font-bold">
+              Written by Nathan Brachotte
+            </span>
+            <NateDescription />
+          </div>
+        </div>
+      </div>
     </section>
   )
 }
