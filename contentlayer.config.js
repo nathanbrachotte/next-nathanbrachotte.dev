@@ -61,6 +61,9 @@ export const Blog = defineDocumentType(() => ({
     draft: {
       type: 'boolean',
     },
+    mediumLink: {
+      type: 'string',
+    },
   },
   computedFields,
 }))

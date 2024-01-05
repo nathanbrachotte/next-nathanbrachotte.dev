@@ -14,6 +14,7 @@ import { NateDescription } from 'app/components/NateDescription'
 import { Separator } from '@/components/ui/separator'
 import { formatDistanceToNow } from 'date-fns'
 import { getDateWithDistance } from 'helpers/dates'
+import { Button } from '@/components/ui/button'
 
 const findBlogPost = (slug: string) => {
   return allBlogs.find((post) => post.slug.includes(slug))
@@ -107,6 +108,7 @@ export default async function Blog({ params }) {
         <div className="relative h-80 w-full overflow-auto rounded-lg">
           {post.image ? (
             <Image
+              priority
               src={post.image}
               alt={post.title}
               fill={true}
@@ -115,24 +117,29 @@ export default async function Blog({ params }) {
           ) : null}
         </div>
       </div>
-      <h1 className="max-w-[650px] text-2xl font-bold tracking-tighter">
-        <Balancer>{post.title}</Balancer>
-      </h1>
-      <div className="mb-8 mt-2 flex max-w-[650px] items-center justify-between text-sm">
-        <p className="text-sm text-neutral-600 dark:text-neutral-400">
-          📅 {getDateWithDistance(post.publishedAt)} -{' '}
-          {getTimePerPost(post.body.raw)}
-          {hasFetchedViews ? (
-            <>
-              {' - '}
-              <ViewCounter
-                allViews={allViews ?? []}
-                slug={post.slug}
-                trackView
-              />
-            </>
-          ) : null}
-        </p>
+      <div className="flex">
+        <div className="bg-blue-300">
+          <h1 className="max-w-[650px] text-2xl font-bold tracking-tighter">
+            <Balancer>{post.title}</Balancer>
+          </h1>
+          <div className="mt-2 flex max-w-[650px] items-center justify-between text-sm">
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
+              📅 {getDateWithDistance(post.publishedAt)} -{' '}
+              {getTimePerPost(post.body.raw)}
+              {hasFetchedViews ? (
+                <>
+                  {' - '}
+                  <ViewCounter
+                    allViews={allViews ?? []}
+                    slug={post.slug}
+                    trackView
+                  />
+                </>
+              ) : null}
+            </p>
+          </div>
+        </div>
+        <Button variant={'destructive'}>ndkls</Button>
       </div>
       <Mdx
         code={post.body.code}
