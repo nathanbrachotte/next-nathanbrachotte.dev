@@ -26,7 +26,6 @@ export default function ViewCounter({
 
   return (
     <span className="text-neutral-400">
-      dsa
       {`👀 ${number.toLocaleString()} views`}
     </span>
   )
