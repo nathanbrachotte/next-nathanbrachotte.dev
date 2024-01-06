@@ -118,9 +118,7 @@ export default async function Blog({ params }) {
         </div>
       </div>
       <div className="flex">
-        <div
-        // className="bg-blue-300"
-        >
+        <div>
           <h1 className="max-w-[650px] text-2xl font-bold tracking-tighter">
             <Balancer>{post.title}</Balancer>
           </h1>
@@ -141,7 +139,9 @@ export default async function Blog({ params }) {
             </p>
           </div>
         </div>
-        {/* <Button variant={'destructive'}>ndkls</Button> */}
+        {/* <div className="">
+          <Button variant={'destructive'}>ndkls</Button>
+        </div> */}
       </div>
       <Mdx
         code={post.body.code}
@@ -165,7 +165,7 @@ export default async function Blog({ params }) {
             </GradientLink>
           </div>
         </div>
-        <Separator className="mb-0 mt-6 pt-[1px]" />
+        <Separator className="mt-6" />
         <div className="flex flex-col justify-center px-0 py-4 sm:flex-row sm:px-10">
           <div className="p-4">
             <Image
