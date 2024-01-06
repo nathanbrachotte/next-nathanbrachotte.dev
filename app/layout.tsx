@@ -64,20 +64,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html
-      lang="en"
-      className={clsx(
-        'dark',
-        // OG
-        // 'bg-white text-black dark:bg-slate-800 dark:text-white',
-        // Nice alternative
-        // 'bg-slate-900 text-white',
-        // Newest
-        'bg-background text-white',
-
-        graphik.variable,
-      )}
-    >
+    <html lang="en" className={clsx('dark', graphik.variable)}>
       <body className="mx-4 mb-40 mt-8 flex max-w-2xl flex-col antialiased md:flex-row lg:mx-auto">
         <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0">
           <Navbar />
