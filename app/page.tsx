@@ -1,6 +1,5 @@
 import { Badges } from 'app/components/Badges'
 import { GradientLink } from 'app/components/GradientLink'
-import { GradientText } from 'app/components/GradientText'
 import { NateDescription } from 'app/components/NateDescription'
 import { PageTitle } from 'app/components/PageTitle'
 import Image from 'next/image'
