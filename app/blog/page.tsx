@@ -73,6 +73,8 @@ const BlogPostCard = ({
                   src={image}
                   alt={title}
                   fill
+                  priority
+                  sizes="(max-width: 640px) 100vw, 640px"
                   className="max-h-64 rounded-lg object-cover"
                 />
               ) : null}
