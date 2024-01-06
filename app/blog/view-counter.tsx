@@ -1,6 +1,3 @@
-'use client'
-
-import { useEffect } from 'react'
 import { increment } from 'app/actions'
 
 export default function ViewCounter({
@@ -19,17 +16,18 @@ export default function ViewCounter({
 
   const number = new Number(viewsForSlug?.count || 0)
 
-  useEffect(() => {
-    if (trackView) {
-      increment(slug)
-    }
-  }, [])
+  if (trackView) {
+    increment(slug)
+  }
 
   if (!viewsForSlug?.count) {
     return null
   }
 
   return (
-    <span className="text-neutral-400">{`👀 ${number.toLocaleString()} views`}</span>
+    <span className="text-neutral-400">
+      dsa
+      {`👀 ${number.toLocaleString()} views`}
+    </span>
   )
 }
