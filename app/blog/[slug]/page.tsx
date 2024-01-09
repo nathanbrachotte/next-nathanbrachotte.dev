@@ -15,6 +15,9 @@ import { Separator } from '@/components/ui/separator'
 import { formatDistanceToNow } from 'date-fns'
 import { getDateWithDistance } from 'helpers/dates'
 import { Button } from '@/components/ui/button'
+import { ArrowUpRight } from 'icons/ArrowUpRight'
+import { MediumIcon } from 'icons/Medium'
+import Link from 'next/link'
 
 const findBlogPost = (slug: string) => {
   return allBlogs.find((post) => post.slug.includes(slug))
@@ -117,32 +120,34 @@ export default async function Blog({ params }) {
           ) : null}
         </div>
       </div>
-      <div className="flex">
-        <div>
-          <h1 className="max-w-[650px] text-2xl font-bold tracking-tighter">
-            <Balancer>{post.title}</Balancer>
-          </h1>
-          <div className="mt-2 flex max-w-[650px] items-center justify-between text-sm">
-            <p className="text-sm text-neutral-600 dark:text-neutral-400">
-              📅 {getDateWithDistance(post.publishedAt)} -{' '}
-              {getTimePerPost(post.body.raw)}
-              {hasFetchedViews ? (
-                <>
-                  {' - '}
-                  <ViewCounter
-                    allViews={allViews ?? []}
-                    slug={post.slug}
-                    trackView
-                  />
-                </>
-              ) : null}
-            </p>
-          </div>
-        </div>
-        {/* <div className="">
-          <Button variant={'destructive'}>ndkls</Button>
-        </div> */}
+      <h1 className="max-w-[650px] text-2xl font-bold tracking-tighter">
+        <Balancer>{post.title}</Balancer>
+      </h1>
+      <div className="mt-2 flex max-w-[650px] items-center justify-between text-sm">
+        <p className="text-sm text-neutral-600 dark:text-neutral-400">
+          📅 {getDateWithDistance(post.publishedAt)} -{' '}
+          {getTimePerPost(post.body.raw)}
+          {hasFetchedViews ? (
+            <>
+              {' - '}
+              <ViewCounter
+                allViews={allViews ?? []}
+                slug={post.slug}
+                trackView
+              />
+            </>
+          ) : null}
+        </p>
       </div>
+      {post.mediumLink ? (
+        <div className="mb-2 mt-4">
+          <Link href={post.mediumLink} passHref>
+            <Button size={'sm'}>
+              Read on Medium <MediumIcon className="ml-2 h-6 w-6" />
+            </Button>
+          </Link>
+        </div>
+      ) : null}
       <Mdx
         code={post.body.code}
         // tweets={tweets}
