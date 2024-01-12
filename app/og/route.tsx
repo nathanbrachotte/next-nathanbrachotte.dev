@@ -26,7 +26,7 @@ export async function GET(request: Request) {
     // const backgroundImage = 'https://www.nathanbrachotte.dev' + image
     const backgroundImage = getProductionUrl() + image
     // const logoImage = `https://www.nathanbrachotte.dev/images/nate.jpg`
-    const logoImage = `${getProductionUrl()}/images/logo.jpg`
+    const logoImage = `${getProductionUrl()}/images/nate.jpg`
 
     return new ImageResponse(
       (
