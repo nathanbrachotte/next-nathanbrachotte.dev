@@ -28,7 +28,6 @@ export async function GET(request: Request) {
     const logoImage = `https://www.nathanbrachotte.dev/images/logo.jpg`
     // const logoImage = `${getProductionUrl()}/images/logo.jpg`
 
-    console.log({ backgroundImage, logoImage, image })
     return new ImageResponse(
       (
         <div
@@ -51,7 +50,7 @@ export async function GET(request: Request) {
                       right: 0,
                       bottom: 0,
                       left: 0,
-                      backgroundImage: `url(${image})`,
+                      backgroundImage: `url(${backgroundImage})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                       filter: 'blur(8px)',
@@ -69,7 +68,7 @@ export async function GET(request: Request) {
                     right: 0,
                     bottom: 0,
                     left: 0,
-                    backgroundImage: `url(${image})`,
+                    backgroundImage: `url(${backgroundImage})`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     filter: 'blur(8px)',
@@ -87,7 +86,7 @@ export async function GET(request: Request) {
                   right: 0,
                   bottom: 0,
                   left: 0,
-                  backgroundImage: `url(${image})`,
+                  backgroundImage: `url(${backgroundImage})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   filter: 'blur(8px)',
