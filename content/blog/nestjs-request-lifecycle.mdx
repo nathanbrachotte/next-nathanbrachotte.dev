@@ -1,7 +1,7 @@
 ---
 title: 'NestJS request lifecycle: Who goes first?'
 publishedAt: '2024-01-02'
-summary: 'It can be pretty damn hard to understand what piece of code is going to run first when hitting your NestJS backend. Lets deep-dive into all its elements to clarify it.'
+summary: 'It can be pretty damn hard to understand what piece of code is going to run first when hitting your NestJS backend. Lets deep-dive into all the components that live during a request lifecycle'
 image: '/images/blog/put-a-cherry-on-top/cover.webp'
 draft: true
 ---
@@ -18,18 +18,18 @@ Each section of the article will cover a specific fundamental piece of Nest, whi
 ## Prerequesite
 
 You need to be able to understand the concept of `decorators`, `Modules`, `Controllers` and `Services`.
-Here is a quick intro: [-- add link]()
+You can also watch [this introduction video](https://www.youtube.com/watch?v=qZfO4EopfPA&list=PL4cUxeGkcC9g8YFseGdkyj9RH9kVs_cMr&index=2) by the NetNinja.
 
 tldr:
 
 1. **Module**: Use `@Module()` decorator, act as a container that organizes the application structure by grouping related controllers and services.
 2. **Controllers**: Use `@Controller()` decorator, responsible for handling incoming requests and returning responses to the client.
 3. **Services**: Use `@Injectable()` decorator, encapsulate the business logic of the application, and are used by controllers to perform specific tasks and operations.
-   When bootstrap a new NestJS project, we end up with the following:
+   When bootstrap a new NestJS project, we end up with the followting:
 
 ## Middleware
 
-Middlewares are also common in <Badges.Express />, they are a function that are given `request` and `context` as parameters. You can at any time call the next middleware using `next()`.
+[Middlewares](https://docs.nestjs.com/middleware) are also common in <Badges.Express />, they are a function that are given `request` and `context` as parameters. You can at any time call the next middleware using `next()`.
 
 Consider this very simple NestJS app:
 
@@ -62,12 +62,16 @@ export class AppService {
 }
 ```
 
---- add github link
+<Callout emoji="📑" type="info">
+  You can find the source code for the whole article
+  [here](https://github.com/nathanbrachotte/nestjs-example/tree/part-2-request-lifecycle/src).
+</Callout>
 
 Now let's say we want to add, for all our routes, some logic that logs what route is being hit and which `user-agent` used to send the request (this might be useful to send this to your analytics then and track what clients are the most used to hit your server).
+
 First let's write our Middleware:
 
-```ts title="logger.middleware.ts" caption="In our case we only log the user agent to keep it simple"
+```ts title="logger.middleware.ts" caption=""
 import { Injectable, NestMiddleware, Logger } from '@nestjs/common'
 // Assuming you're using express, don't forget to add @types/express to your project
 import type { Request, Response, NextFunction } from 'express'
@@ -86,7 +90,9 @@ export class LoggerMiddleware implements NestMiddleware {
 }
 ```
 
-Now let's add the middleware to our AppModule:
+In our case we only log the user agent to keep it simple.
+
+Now let's add the middleware to our `AppModule`:
 
 ```ts {9,11}
 @Module({
@@ -112,15 +118,24 @@ export class AppModule {
 </Callout>
 
 Now what's cool is that at every request our server processes, we're going to see the following:
-![[SCR-20231210-tvq.png]]
+
+<Image
+  alt={`Middleware logs`}
+  src={`/images/blog/nestjs-request-lifecycle/middleware-1-cut.png`}
+  priority
+  width={1991}
+  height={762}
+/>
+
+Middlewares are pretty effective, but they have a major drawback: they are not aware of the context of the request. They are executed before the controller, and therefore have no way to know what controller or method is being called. This is where Guards come in.
 
 ## Guards
 
-Guards are Middlewares with extra powers.
+[Guards](https://docs.nestjs.com/guards) are Middlewares with extra powers.
 
 - They can be added at app level (in main.ts), at controller level or at method level.
-- They implement a `canActivate` method that is triggered at each request and throws an error if this it returns `false`. Otherwise it continues the same way a Middleware would call `next()`.
-  They usually are used to handle authentication and roles to give access or not to user to specific routes and resources.
+- They implement a `canActivate` method that is triggered at each request and throws an `ForbiddenError` if it returns `false`. Otherwise it continues the same way a Middleware would call `next()`.
+- They usually are used to handle authentication and roles to give access or not to user to specific routes and resources.
 
 Let's take [the guard example](https://docs.nestjs.com/guards#authorization-guard) from the doc and implement it in our app:
 
@@ -156,9 +171,11 @@ export class AuthGuard implements CanActivate {
 }
 ```
 
-For simplicity sake, we're only going to check if a `cookie` header is present, and prevent the request if it isn't present. We also added a way to log the level in which the Guard is being executed, that is useful once we add the Guard into the app:
+For simplicity sake, we're only going to check if a `cookie` header is present, and throw an error otherwise.
 
-```ts
+We also added a way to log the context in which the Guard is being executed, this is useful because we can add the Guard at different level in the app:
+
+```ts {4,10,14}
 // main.ts
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -180,7 +197,7 @@ export class AppController {
 }
 ```
 
-We now added our AuthGuard at the 3 different levels of the app. Let's send a first request without the header and see which is triggered first:
+Now, let's send a first request without the header and see which is triggered first:
 ![[Pasted image 20231210214756.png]]
 The one at `main` level got triggered first, and even without knowing too much about Nest, it feels natural that the control flow goes global -> controller -> method. We also correctly got an error sent back to our client:
 ![[Pasted image 20231210214922.png]]
