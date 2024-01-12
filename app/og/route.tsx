@@ -27,6 +27,7 @@ export async function GET(request: Request) {
     // const logoImage = `https://www.nathanbrachotte.dev/images/logo.jpg`
     const logoImage = `${getProductionUrl()}/images/logo.jpg`
 
+    console.log({ backgroundImage, logoImage, image })
     return new ImageResponse(
       (
         <div
