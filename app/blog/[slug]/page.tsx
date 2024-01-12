@@ -12,10 +12,8 @@ import { GradientLink } from 'app/components/GradientLink'
 import { FollowTwitterButton } from 'app/blog/[slug]/FollowTwitterButton'
 import { NateDescription } from 'app/components/NateDescription'
 import { Separator } from '@/components/ui/separator'
-import { formatDistanceToNow } from 'date-fns'
 import { getDateWithDistance } from 'helpers/dates'
 import { Button } from '@/components/ui/button'
-import { ArrowUpRight } from 'icons/ArrowUpRight'
 import { MediumIcon } from 'icons/Medium'
 import Link from 'next/link'
 
@@ -44,6 +42,12 @@ export async function generateMetadata({
     ? image.replace('cover.webp', 'cover-fallback.png')
     : ''
 
+  const dynamicOGImage = `https://nathanbrachotte.dev/og?${new URLSearchParams({
+    title: title,
+    description: description,
+    ...(image && { image: coverFallback }),
+  })}`
+
   return {
     title,
     description,
@@ -53,28 +57,22 @@ export async function generateMetadata({
       type: 'article',
       publishedTime,
       url: `https://nathanbrachotte.dev/blog/${slug}`,
-      // ...(image && {
-      //   images: [
-      //     {
-      //       url: image,
-      //     },
-      //     {
-      //       url: coverFallback,
-      //     },
-      //   ],
-      // }),
-      images: [
-        {
-          url: `https://nathanbrachotte.dev/og?${new URLSearchParams({
-            title: title,
-            description: description,
-            ...(image && { image: coverFallback }),
-          })}`,
-          width: 1200,
-          height: 630,
-          alt: 'Your alt text',
-        },
-      ],
+      ...(image && {
+        images: [
+          {
+            url: dynamicOGImage,
+            width: 1200,
+            height: 630,
+            alt: 'Your alt text',
+          },
+          {
+            url: coverFallback,
+            width: 1200,
+            height: 630,
+            alt: 'Your alt text',
+          },
+        ],
+      }),
     },
     twitter: {
       card: 'summary_large_image',
@@ -83,7 +81,12 @@ export async function generateMetadata({
       description,
       ...(image && {
         images: [
-          { url: image, width: 1200, height: 630, alt: 'Your alt text' },
+          {
+            url: dynamicOGImage,
+            width: 1200,
+            height: 630,
+            alt: 'Your alt text',
+          },
           {
             url: coverFallback,
             width: 1200,
