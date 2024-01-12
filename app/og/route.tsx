@@ -1,3 +1,4 @@
+import { getBaseUrl, getProductionUrl } from 'helpers/url'
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
@@ -22,13 +23,17 @@ export async function GET(request: Request) {
     const hasImage = searchParams.has('image')
     const image = hasImage ? searchParams.get('image') : ''
 
+    const backgroundImage = getProductionUrl() + image
+    // const logoImage = `https://www.nathanbrachotte.dev/images/logo.jpg`
+    const logoImage = `${getProductionUrl()}/images/logo.jpg`
+
     return new ImageResponse(
       (
         <div
           tw="flex w-full text-white items-center h-full justify-between"
           style={{
             // This doesn't work correctly at all but I'm somewhat getting what I want
-            backgroundImage: `url(${image})`,
+            backgroundImage: `url(${backgroundImage})`,
             // backgroundImage: `linear-gradient(55deg, rgba(11, 15, 26, 0.9), rgba(11, 255, 26, 0) 70%), url(${image})`,
           }}
         >
@@ -36,7 +41,8 @@ export async function GET(request: Request) {
             <div tw="flex justify-between">
               <div tw="flex">
                 <img
-                  src="https://www.nathanbrachotte.dev/images/logo.jpg"
+                  src={logoImage}
+                  // src="https://www.nathanbrachotte.dev/images/logo.jpg"
                   tw="h-18"
                 />
                 <p tw="ml-6 text-4xl relative">
@@ -109,22 +115,3 @@ export async function GET(request: Request) {
     })
   }
 }
-
-/*
-<div
-          tw="flex w-full text-white items-center h-full pl-16 justify-center"
-          style={{
-            backgroundImage: 'url(https://www.nathanbrachotte.dev/images/og.png)',
-            backgroundRepeat: 'no-repeat',
-            backgroundSize: '100% 100%',
-            height: '100%',
-            width: '100%',
-          }}
-        >
-        <div tw="flex mx-[20%] text-center">
-          <p tw="text-6xl">
-          The dangers of NestJS
-          </p>
-        </div>
-        </div>
-        */
