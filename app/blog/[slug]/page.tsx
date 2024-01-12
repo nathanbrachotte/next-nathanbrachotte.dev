@@ -44,7 +44,7 @@ export async function generateMetadata({
 
   const dynamicOGImage = `https://nathanbrachotte.dev/og?${new URLSearchParams({
     title: title,
-    description: description,
+    // description: description,
     ...(image && { image: coverFallback }),
   })}`
 
@@ -56,20 +56,20 @@ export async function generateMetadata({
       description,
       type: 'article',
       publishedTime,
-      url: `https://nathanbrachotte.dev/blog/${slug}`,
+      url: `https://nathanbrachotte.dev/${slug}`,
       ...(image && {
         images: [
           {
             url: dynamicOGImage,
             width: 1200,
             height: 630,
-            alt: 'Your alt text',
+            alt: title,
           },
           {
             url: coverFallback,
             width: 1200,
             height: 630,
-            alt: 'Your alt text',
+            alt: title,
           },
         ],
       }),
@@ -85,13 +85,13 @@ export async function generateMetadata({
             url: dynamicOGImage,
             width: 1200,
             height: 630,
-            alt: 'Your alt text',
+            alt: title,
           },
           {
             url: coverFallback,
             width: 1200,
             height: 630,
-            alt: 'Your alt text',
+            alt: title,
           },
         ],
       }),

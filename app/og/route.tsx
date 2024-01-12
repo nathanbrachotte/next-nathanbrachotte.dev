@@ -16,8 +16,8 @@ export async function GET(request: Request) {
       : 'Nathan Brachotte'
 
     // ?description=<description>
-    const hasDescription = searchParams.has('description')
-    const descripton = hasDescription ? searchParams.get('description') : ''
+    // const hasDescription = searchParams.has('description')
+    // const descripton = hasDescription ? searchParams.get('description') : ''
 
     // ?image=<image>
     const hasImage = searchParams.has('image')
