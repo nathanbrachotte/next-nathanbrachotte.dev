@@ -23,10 +23,10 @@ export async function GET(request: Request) {
     const hasImage = searchParams.has('image')
     const image = hasImage ? searchParams.get('image') : ''
 
-    const backgroundImage = 'https://www.nathanbrachotte.dev' + image
-    // const backgroundImage = getProductionUrl() + image
-    const logoImage = `https://www.nathanbrachotte.dev/images/nate.jpg`
-    // const logoImage = `${getProductionUrl()}/images/logo.jpg`
+    // const backgroundImage = 'https://www.nathanbrachotte.dev' + image
+    const backgroundImage = getProductionUrl() + image
+    // const logoImage = `https://www.nathanbrachotte.dev/images/nate.jpg`
+    const logoImage = `${getProductionUrl()}/images/logo.jpg`
 
     return new ImageResponse(
       (
@@ -40,8 +40,13 @@ export async function GET(request: Request) {
         >
           <div tw="flex-1 flex flex-col justify-between h-full py-16 mx-[5%]">
             <div tw="flex justify-between">
-              <div tw="flex">
-                <img src={logoImage} tw="h-18" />
+              <div tw="flex items-center">
+                <img
+                  src={logoImage}
+                  tw="h-18 w-18 rounded-full"
+                  height={120}
+                  width={120}
+                />
                 <p tw="ml-6 text-4xl relative">
                   <div
                     style={{
