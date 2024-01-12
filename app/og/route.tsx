@@ -25,7 +25,7 @@ export async function GET(request: Request) {
 
     const backgroundImage = 'https://www.nathanbrachotte.dev' + image
     // const backgroundImage = getProductionUrl() + image
-    const logoImage = `https://www.nathanbrachotte.dev/images/logo.jpg`
+    const logoImage = `https://www.nathanbrachotte.dev/images/nate.jpg`
     // const logoImage = `${getProductionUrl()}/images/logo.jpg`
 
     return new ImageResponse(
@@ -53,49 +53,53 @@ export async function GET(request: Request) {
                       backgroundImage: `url(${backgroundImage})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
-                      filter: 'blur(8px)',
+                      filter: 'blur(4px)',
                       transform: 'scale(1)',
                     }}
                   />
                   Nathan Brachotte
                 </p>
               </div>
-              <p tw="text-3xl text-cyan-300 relative">
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                    left: 0,
-                    backgroundImage: `url(${backgroundImage})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    filter: 'blur(8px)',
-                    transform: 'scale(1)',
-                  }}
-                />
-                nathanbrachotte.dev
-              </p>
+              <div tw="flex flex-row justify-start items-center">
+                <p tw="text-3xl relative ml-6">
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      left: 0,
+                      backgroundImage: `url(${backgroundImage})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      filter: 'blur(4px)',
+                      transform: 'scale(1)',
+                    }}
+                  />
+                  nathanbrachotte.dev
+                </p>
+              </div>
             </div>
-            <div tw="flex justify-start items-start mr-[10%] relative">
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  right: 0,
-                  bottom: 0,
-                  left: 0,
-                  backgroundImage: `url(${backgroundImage})`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  filter: 'blur(8px)',
-                  transform: 'scale(1)',
-                }}
-              />
-              <p tw="text-6xl tracking-tight font-bold leading-tight my-0 text-left">
-                {title}
-              </p>
+            <div tw="flex">
+              <div tw="flex justify-start items-start mr-[10%]">
+                <p tw="text-6xl tracking-tight font-bold leading-tight my-0 text-left">
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      right: 0,
+                      bottom: 0,
+                      left: 0,
+                      backgroundImage: `url(${backgroundImage})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      filter: 'blur(4px)',
+                      transform: 'scale(1)',
+                    }}
+                  />
+                  {title}
+                </p>
+              </div>
             </div>
           </div>
         </div>
