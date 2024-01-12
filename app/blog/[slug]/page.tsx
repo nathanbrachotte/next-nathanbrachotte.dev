@@ -87,12 +87,6 @@ export async function generateMetadata({
             height: 630,
             alt: title,
           },
-          {
-            url: coverFallback,
-            width: 1200,
-            height: 630,
-            alt: title,
-          },
         ],
       }),
     },
