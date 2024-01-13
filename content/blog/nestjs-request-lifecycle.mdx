@@ -113,7 +113,7 @@ export class AppModule {
 <Callout emoji="💡" type="info">
   FYI, you can get your middlewares to [exclude
   routes](https://docs.nestjs.com/middleware#excluding-routes) and [target
-  specific methods](https://docs.nestjs.com/middleware#route-wildcards) if you
+  specific routes](https://docs.nestjs.com/middleware#route-wildcards) if you
   wish.
 </Callout>
 
@@ -127,13 +127,13 @@ Now what's cool is that at every request our server processes, we're going to se
   height={762}
 />
 
-Middlewares are pretty effective, but they have a major drawback: they are not aware of the context of the request. They are executed before the controller, and therefore have no way to know what controller or method is being called. This is where Guards come in.
+Middlewares are pretty effective, but they have a major drawback: they are not aware of the context of the request. They are executed before the controller, and therefore have no way to know what controller or route is being called. This is where Guards come in.
 
 ## Guards
 
 [Guards](https://docs.nestjs.com/guards) are Middlewares with extra powers.
 
-- They can be added at app level (in main.ts), at controller level or at method level.
+- They can be added at app level, module leve, controller level or route level.
 - They implement a `canActivate` method that is triggered at each request and throws an `ForbiddenError` if it returns `false`. Otherwise it continues the same way a Middleware would call `next()`.
 - They usually are used to handle authentication and roles to give access or not to user to specific routes and resources.
 
@@ -175,21 +175,39 @@ For simplicity sake, we're only going to check if a `cookie` header is present, 
 
 We also added a way to log the context in which the Guard is being executed, this is useful because we can add the Guard at different level in the app:
 
-```ts {4,10,14}
+```ts {4,5,14-20,26,27,31,32}
 // main.ts
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+  // Here we add the guard at global level after creating the app
   app.useGlobalGuards(new AuthGuard('main'))
   await app.listen(3000)
 }
 
+// app.module.ts
+@Module({
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService],
+  // Here we add the guard at module level
+  {
+    provide: APP_GUARD,
+    useFactory: () => {
+      return new AuthGuard('app module');
+    },
+  }
+})
+export class AppModule {}
+
 // app.controller.ts
 @Controller()
+// Here we add the guard to a specific controller
 @UseGuards(new AuthGuard('controller'))
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @UseGuards(new AuthGuard('method'))
+  // And here we add the guard to specific a route
+  @UseGuards(new AuthGuard('route'))
   @Get('/og')
   async getFirstUsersNames(): Promise<string> {
     return await this.appService.getFirstUserName()
@@ -197,18 +215,74 @@ export class AppController {
 }
 ```
 
-Now, let's send a first request without the header and see which is triggered first:
-![[Pasted image 20231210214756.png]]
-The one at `main` level got triggered first, and even without knowing too much about Nest, it feels natural that the control flow goes global -> controller -> method. We also correctly got an error sent back to our client:
-![[Pasted image 20231210214922.png]]
-Let's verify this hypothese by adding a cookie header in our request:
-![[Pasted image 20231210215028.png]]
-Cool, that works. What about the logs?
-![[Pasted image 20231210215128.png]]
-That seems about right. We first had the middleware running, and then all guard going from the most high-level (--- the most global, the most shoot at everything) to the most accurate one. Of course, in a real-life scenario, this would not be necessary and we definitely should have this Guard set only once, either at controller or method level if some of our endpoints can be public, or at global level if we are sure none of our endpoint should be ever reached by a unauthenticated user.
+Now, let's send a first request without the header and see what happens:
+
+<Image
+  alt={`Middleware logs`}
+  src={`/images/blog/nestjs-request-lifecycle/guard-response-1.png`}
+  priority
+  width={1991}
+  height={762}
+/>
+
+Nice. We got a `ForbiddenError` as expected, now the logs:
+
+<Image
+  alt={`Middleware logs`}
+  src={`/images/blog/nestjs-request-lifecycle/guard-1-cut.png`}
+  priority
+  width={1991}
+  height={762}
+/>
+Nice, we can see here the `Guard` instance declared in `main.ts` is the one that
+threw an error. We can also see the `Guard` is executed before the `Middleware`.
+
+Now, let's add the header and see what happens:
+
+<Image
+  alt={`Middleware logs`}
+  src={`/images/blog/nestjs-request-lifecycle/guard-2-request.png`}
+  priority
+  width={1991}
+  height={762}
+/>
+
+<Image
+  alt={`Middleware logs`}
+  src={`/images/blog/nestjs-request-lifecycle/guard-2.png`}
+  priority
+  width={1991}
+  height={762}
+/>
+
+The different instances of `AuthGuard` got triggered one after the other: `app module`, `main`, `controller` and then `route`.
+Even without knowing too much about NestJS, it feels natural that the control flow goes from `global -> controller -> route`. **From the highest, most global level, to the most specific one.** Of course, in a real-life scenario, this would not be necessary
+and we definitely should have this `Guard` set only once, either at controller or route
+level if some of our endpoints can be public, or at global level if we are sure none
+of our endpoint should be ever reached by a unauthenticated user.
+
+What's interesting though, is that the **`app module` instance, which is the one we declared at module level, is triggered before the `main` instance, which is the one we declared at app level.**
+Reading some footnotes in the doc:
+
+<Callout emoji="📖" type="info">
+  If you are using app.useGlobalGuard() or providing the component via a module,
+  it is globally bound. Otherwise, it is bound to a controller if the decorator
+  precedes a controller class, or to a route if the decorator proceeds a route
+  declaration.
+</Callout>
+
+**That means that both `app.useGlobalGuard()` and `@UseGuards()` are both globally bound, and therefore we should consider them at the same level and not rely on one being triggered before the other.**
 
 So far, we end up with the following request lifecycle:
-![[Pasted image 20231210220556.png]]
+
+<Image
+  alt={`Request lifecycle with guards`}
+  src={`/images/blog/nestjs-request-lifecycle/guard-exca.png`}
+  priority
+  width={1991}
+  height={762}
+/>
+
 Note: Since the complexity will grow exponentially from there, I'll be remove more and more details from the previous section as we go to make space, don't hesitate to come back to this diagram as needed.
 
 ## Interceptors
