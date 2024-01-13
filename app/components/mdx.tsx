@@ -1,11 +1,10 @@
 import * as React from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import Tweet from './tweet'
 import { Badges } from 'app/components/Badges'
-import { twMerge } from 'tailwind-merge'
 import { cn } from '@/lib/utils'
+import { ZoomedImage } from 'app/components/ZoomedImage'
 
 const CustomLink = (props) => {
   const href = props.href
@@ -31,21 +30,6 @@ const CustomLink = (props) => {
       className={className}
       {...props}
     />
-  )
-}
-
-// TODO: Create a script that read height and width of an image and outputs the corrected width & height for the blog
-function RoundedImage(props) {
-  const { wrapperClassName, className, ...restProps } = props
-
-  return (
-    <div className={wrapperClassName}>
-      <Image
-        alt={restProps.alt}
-        {...restProps}
-        className={twMerge('rounded-lg', className)}
-      />
-    </div>
   )
 }
 
@@ -136,7 +120,7 @@ function ConsCard({ title, cons }) {
 // TODO: Implement Image gallery with cloudinary: https://github.com/vercel/next.js/blob/canary/examples/with-cloudinary/pages/p/%5BphotoId%5D.tsx
 // https://cloudinary.com/pricing
 const components = {
-  Image: RoundedImage,
+  Image: ZoomedImage,
   a: CustomLink,
   Callout,
   ProsCard,
