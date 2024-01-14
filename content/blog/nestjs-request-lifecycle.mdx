@@ -6,32 +6,32 @@ image: '/images/blog/put-a-cherry-on-top/cover.webp'
 draft: true
 ---
 
-<Badges.Nest /> presents itself as an great framework for teams new to the
-<Badges.TypeScript /> ecosystem that hope to quickly get up to speed. Its main weakness
-though, is that before being able to make full use of its power, it took me a while
-to figure out in what order each method/piece of code run and when to use which.
-I'm writing this in hope to clear this up (and so I can get back to this article
-in the future, because it's really not that obvious).
+<Badges.Nest /> presents itself as an ideal alternative for teams new to
+the <Badges.TypeScript /> ecosystem that hopes to get up to speed quickly. Its
+main weakness, though, is that before fully using its power, one needs to know
+and understand in what order each piece of code runs and which one to use when.
+This article will go through each component in the hope to clear this up (and so
+I can get back to this article in the future because it could be more obvious).
 
-Each section of the article will cover a specific fundamental piece of Nest, while trying to keep the request lifecycle global vision
+Each section of the article will cover a specific fundamental piece of Nest while trying to keep the request lifecycle global vision.
 
 ## Prerequesite
 
-You need to be able to understand the concept of `decorators`, `Modules`, `Controllers` and `Services`.
+You need to understand the concept of `decorators`, `Modules`, `Controllers` and `Services`.
 You can also watch [this introduction video](https://www.youtube.com/watch?v=qZfO4EopfPA&list=PL4cUxeGkcC9g8YFseGdkyj9RH9kVs_cMr&index=2) by the NetNinja.
 
-tldr:
+TLDR:
 
-1. **Module**: Use `@Module()` decorator, act as a container that organizes the application structure by grouping related controllers and services.
-2. **Controllers**: Use `@Controller()` decorator, responsible for handling incoming requests and returning responses to the client.
-3. **Services**: Use `@Injectable()` decorator, encapsulate the business logic of the application, and are used by controllers to perform specific tasks and operations.
-   When bootstrap a new NestJS project, we end up with the followting:
+1. **Module**: Uses `@Module()` decorator, act as a container that organizes the application structure by grouping related controllers and services.
+2. **Controllers**: Uses `@Controller()` decorator, responsible for handling incoming requests and returning responses to the client.
+3. **Services**: Uses `@Injectable()` decorator, encapsulates the application's business logic, and is used by controllers to perform specific tasks and operations.
+   When bootstrapping a new NestJS project, we end up with the following:
 
 ## Middleware
 
-[Middlewares](https://docs.nestjs.com/middleware) are also common in <Badges.Express />, they are a function that are given `request` and `context` as parameters. You can at any time call the next middleware using `next()`.
+[Middlewares](https://docs.nestjs.com/middleware) are also common in <Badges.Express /> is a function that is given `request` and `context` as parameters. You can call the next Middleware anytime using `next()`.
 
-Consider this very simple NestJS app:
+Consider the boilerplate <Badges.Nest /> app:
 
 ```ts
 // app.module.ts
@@ -67,9 +67,9 @@ export class AppService {
   [here](https://github.com/nathanbrachotte/nestjs-example/tree/part-2-request-lifecycle/src).
 </Callout>
 
-Now let's say we want to add, for all our routes, some logic that logs what route is being hit and which `user-agent` used to send the request (this might be useful to send this to your analytics then and track what clients are the most used to hit your server).
+Now let's say we want to add, for all our routes, some logic that logs what route is being hit and which `user-agent` is used to send the request (this might be useful to send this to your analytics then and track what clients are the most used to hit your server).
 
-First let's write our Middleware:
+First, let's write our Middleware:
 
 ```ts title="logger.middleware.ts" caption=""
 import { Injectable, NestMiddleware, Logger } from '@nestjs/common'
@@ -90,9 +90,9 @@ export class LoggerMiddleware implements NestMiddleware {
 }
 ```
 
-In our case we only log the user agent to keep it simple.
+In our case, we only log the user agent to keep it simple.
 
-Now let's add the middleware to our `AppModule`:
+Now let's add the Middleware to our `AppModule`:
 
 ```ts {9,11}
 @Module({
@@ -111,13 +111,13 @@ export class AppModule {
 ```
 
 <Callout emoji="💡" type="info">
-  FYI, you can get your middlewares to [exclude
+  FYI, you can get your Middlewares to [exclude
   routes](https://docs.nestjs.com/middleware#excluding-routes) and [target
   specific routes](https://docs.nestjs.com/middleware#route-wildcards) if you
   wish.
 </Callout>
 
-Now what's cool is that at every request our server processes, we're going to see the following:
+Now, what's cool is that at every request our server processes, we're going to see the following:
 
 <Image
   alt={`Middleware logs`}
@@ -127,15 +127,15 @@ Now what's cool is that at every request our server processes, we're going to se
   height={762}
 />
 
-Middlewares are pretty effective, but they have a major drawback: they are not aware of the context of the request. They are executed before the controller, and therefore have no way to know what controller or route is being called. This is where Guards come in.
+Middlewares are pretty effective, but they have a major drawback: they are not aware of the context of the request. They are executed before the Controller and, therefore, cannot know what Controller or route is being called.
 
 ## Guards
 
 [Guards](https://docs.nestjs.com/guards) are Middlewares with extra powers.
 
-- They can be added at app level, module leve, controller level or route level.
-- They implement a `canActivate` method that is triggered at each request and throws an `ForbiddenError` if it returns `false`. Otherwise it continues the same way a Middleware would call `next()`.
-- They usually are used to handle authentication and roles to give access or not to user to specific routes and resources.
+- They can be added at the app, module, Controller, or route levels.
+- They implement a `canActivate` method that is triggered at each request and throws a `ForbiddenError` if it returns `false`. Otherwise, it goes to the next Middleware (equivalent to call `next()`).
+- They usually are used to handle authentication and roles to give access or not to users to specific routes and resources.
 
 Let's take [the guard example](https://docs.nestjs.com/guards#authorization-guard) from the doc and implement it in our app:
 
@@ -171,15 +171,15 @@ export class AuthGuard implements CanActivate {
 }
 ```
 
-For simplicity sake, we're only going to check if a `cookie` header is present, and throw an error otherwise.
+For simplicity's sake, we will only check if a `cookie` header is present and throw an error otherwise.
 
-We also added a way to log the context in which the Guard is being executed, this is useful because we can add the Guard at different level in the app:
+We also added a way to log the context in which the Guard is being executed, this is useful because we can add the Guard at different levels in the app:
 
 ```ts {4,5,14-20,26,27,31,32}
 // main.ts
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-  // Here we add the guard at global level after creating the app
+  // Here, we add the Guard at the global level after creating the app
   app.useGlobalGuards(new AuthGuard('main'))
   await app.listen(3000)
 }
@@ -189,7 +189,7 @@ async function bootstrap() {
   imports: [],
   controllers: [AppController],
   providers: [AppService],
-  // Here we add the guard at module level
+  // Here, we add the Guard at the module level
   {
     provide: APP_GUARD,
     useFactory: () => {
@@ -203,12 +203,12 @@ export class AppModule {
 
 // app.controller.ts
 @Controller()
-// Here we add the guard to a specific controller
+// Here we add the Guard to a specific controller
 @UseGuards(new AuthGuard('controller'))
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  // And here we add the guard to specific a route
+  // And here we add the Guard to a specific route
   @UseGuards(new AuthGuard('route'))
   @Get('/og')
   async getOG(): Promise<string> {
@@ -226,7 +226,7 @@ Now, let's send a first request without the header and see what happens:
   height={520}
 />
 
-Nice. We got a `ForbiddenError` as expected, now the logs:
+Nice. We got a `ForbiddenError` as expected. Now the logs:
 
 <Image
   alt={`Forbidden error logs`}
@@ -254,14 +254,18 @@ Now, let's add the header and see what happens:
   width={1991}
   height={762}
 />
+<Callout emoji="ℹ️" type="info">
+  Note: These are contrived examples, and it, of course, doesn't make sense to
+  use the same Guard several times at different levels; if a module is protected
+  by a Guard, you don't need to have one at the Controller or route level. But
+  you likely will have other Guards at these levels in a production app, hence
+  the important to know in which order they are called.
+</Callout>
 
 The different instances of `AuthGuard` got triggered one after the other: `app module`, `main`, `controller` and then `route`.
-Even without knowing too much about NestJS, it feels natural that the control flow goes from `global -> controller -> route`. **From the highest, most global level, to the most specific one.** Of course, in a real-life scenario, this would not be necessary
-and we definitely should have this `Guard` set only once, either at controller or route
-level if some of our endpoints can be public, or at global level if we are sure none
-of our endpoint should be ever reached by a unauthenticated user.
+If you think about it, it feels natural that the control flow goes from `global -> controller -> route`. **From the highest/global level to the most specific one.** Of course, in a real-life scenario, this would not be necessary and we definitely should have this `Guard` set only once, either at Controller or route level if some of our endpoints can be public or at a global level if we are sure none of our endpoints should be ever reached by an unauthenticated user.
 
-What's interesting though, is that the **`app module` instance, which is the one we declared at module level, is triggered before the `main` instance, which is the one we declared at app level.**
+What's interesting, though, is that the **`app module` instance, which is the one we declared at the Module level, is triggered before the `main` instance, which is the one we declared at the app level.**
 Reading some footnotes in the doc:
 
 <Callout emoji="📖" type="info">
@@ -271,7 +275,7 @@ Reading some footnotes in the doc:
   declaration.
 </Callout>
 
-**That means that both `app.useGlobalGuard()` and `@UseGuards()` are both globally bound, and therefore we should consider them at the same level and not rely on one being triggered before the other.**
+**That means that both `app.useGlobalGuard()` and `@UseGuards()` are globally bound; therefore, we should consider them at the same level and not rely on one being triggered before the other.**
 
 So far, we end up with the following request lifecycle:
 
@@ -283,18 +287,13 @@ So far, we end up with the following request lifecycle:
   height={762}
 />
 
-<Callout emoji="ℹ️" type="info">
-  Note: Since the complexity will grow exponentially from there, I'll be
-  removing some details as we go to keep this schema readable
-</Callout>
-
 ## Interceptors
 
 Interceptors are a way to run some business logic **before and after** the route business logic execution.
 
-It can, for example, be used to log how long your business logic took to run, or to implement a caching mecanism on some of your routes.
+It can, for example, be used to log how long your business logic took to run or to implement a caching mechanism on some of your routes.
 
-Let's add an interceptor that will the time it took for requests to be resolved by our app, this could be useful to track performance issues:
+Let's add an interceptor that will the time it takes for requests to be resolved by our app. This could be useful for tracking performance issues:
 
 ```ts title="logger.interceptor.ts"
 export class LoggerInterceptor implements NestInterceptor {
@@ -327,8 +326,7 @@ export class LoggerInterceptor implements NestInterceptor {
 }
 ```
 
-Implementation details aren't very relevant here but know we are using [rxjs's](https://rxjs.dev/) `tap` operator to run some code after the route business logic has been executed.
-`Interceptors`. [NestJS doc on Interceptor](https://docs.nestjs.com/interceptors).
+Implementation details aren't very relevant here, but know we are using [rxjs's](https://rxjs.dev/) `tap` operator to run some code after the route business logic has been executed. [NestJS doc on Interceptor](https://docs.nestjs.com/interceptors).
 
 Now let's add this `Interceptor` to our app, just like `Guards`, can be added at many levels:
 
@@ -371,7 +369,7 @@ export class AppController {
 }
 ```
 
-Now let's send a request:
+Now, let's send a request:
 
 <Image
   alt={`Middleware logs`}
@@ -380,12 +378,12 @@ Now let's send a request:
   height={762}
 />
 
-Now this is getting VERY interesting 👀
+Hmm, this is getting VERY interesting 👀
 
 1. `Interceptor` follows the same `global -> controller -> route` pattern
 1. `Interceptor` is always triggered **after** the `Guard`, no matter the level. The route-level `Guard` runs **before** the global `Interceptor`.
 
-This actually surprised me the first time I understood that, it'd be logic to think that all global level components would be triggered before any controller or route level component, but it's not the case.
+It makes sense that all global-level components would be triggered before any Controller or route-level component, but that's not the case.
 
 So we now have the following request lifecycle:
 
@@ -398,12 +396,12 @@ So we now have the following request lifecycle:
 
 ## Pipes
 
-Pipes are used in <Badges.Nest /> way to validate and transform data before it reaches the route business logic. They can help validating the request body, query params, headers, etc. We won't dive into the Pipe topic too much as it can be quite hairy, but you can read more about it [here](https://docs.nestjs.com/pipes).
-Let's consider a use case where we want our request to have a `body` that contains a `name` field that is a string of 2 to 10 characters.
+Pipes are used in <Badges.Nest />'s way to validate and transform data before it reaches the route business logic. They can help validate the request body, query params, headers, etc. We won't dive into the Pipe topic too much as it can be quite hairy, but you can read more about it [here](https://docs.nestjs.com/pipes).
+Let's consider a use case where we want our request to have a `body` containing a `name` field with a string of 2 to 10 characters.
 
-We first create a custom Pipe, that does the same as the `ValidationPipe` from NestJS, but with extra logs:
+We first create a custom Pipe that does the same as the `ValidationPipe` from NestJS, but with extra logs:
 
-```ts {11-13, 16, 18-21} title="customValidationPipe.pipe.ts" caption="This is pseudo-code. You can check the real implementation in the source code"
+```ts {11-13, 16, 18-21} title="customValidationPipe.pipe.ts" caption="This is pseudo-code. You can check the real implementation in the source code."
 @Injectable()
 export class CustomValidationPipe implements PipeTransform {
   private readonly logger = new Logger(CustomValidationPipe.name)
@@ -430,7 +428,7 @@ export class CustomValidationPipe implements PipeTransform {
 }
 ```
 
-and let's add this pipe to our app:
+And let's add this pipe to our app:
 
 ```ts {5,12-17,26,33,34,37}
 // main.ts
@@ -484,7 +482,7 @@ Now let's send a request again, with a bad query param first:
   height={762}
 />
 
-Cool. Just like for the others, the global `Pipe` at module level threw. Now let's send a request that will succeed:
+Cool. Like the others, the global `Pipe` at the module level threw an error. Now, let's send a request that will succeed:
 
 <Image
   alt={`Middleware logs`}
@@ -519,16 +517,16 @@ That gives us now the following:
 
 ## Exception filters
 
-Continuing our exploration of NestJS, let's discuss another key component: Exception Filters. Just like Middleware, Guards, Pipes, and Interceptors, Exception Filters play a crucial role in the request lifecycle. They are, in essence, the safety net of your application, catching unhandled exceptions that occur during the processing of a request.
+Continuing our exploration of <Badges.Nest />, let's discuss another critical component: Exception Filters. Like Middleware, Guards, Pipes, and Interceptors, Exception Filters play a crucial role in the request lifecycle. They are the safety net of your application, catching unhandled exceptions that occur while processing a request.
 
-Exception Filters in NestJS are dedicated to handling exceptions across the entire application. This is especially useful for:
+This is especially useful for:
 
-- Customizing the response sent back when an exception occurs (a correlation id for example).
+- Customizing the response sent back when an exception occurs (a correlation ID, for example).
 - Logging detailed error information for debugging purposes.
 - Implementing a consistent error response structure across your application.
 - Removing sensible information from the error response before sending it back to the client.
 
-In our example we're going to use it to catch deprecated routes and send back the new route that should be used.
+In our example, we will use it to catch deprecated routes and send back the new route that should be used.
 
 ```ts {}  title="deprecated-endpoint.exception.ts"
 export class DeprecatedEndpointException extends Error {
@@ -571,7 +569,7 @@ export class DeprecatedEndpointFilter implements ExceptionFilter {
 }
 ```
 
-Now we add the filter to the app. At this point you know the drill:
+Now, we add the filter to the app. At this point, you know the drill:
 
 ```ts {5,12-17,26,33,34,37}
 // main.ts
@@ -624,9 +622,9 @@ Let's give this a shot:
   width={1991}
   height={762}
 />
-Nice! Now let's look at the log. This the exception filter is only triggered once
-and a response is sent back to the client, we can't really see the order in which
-they are called, but only the one which is triggered... wait what? 🤔
+Nice! Now, let's look at the log. This Filter is only triggered once and a response
+is sent back to the client. We can't really see the order in which they are called,
+but only the one triggered is... wait, what? 🤔
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/filter-1.png`}
@@ -635,12 +633,12 @@ they are called, but only the one which is triggered... wait what? 🤔
   height={762}
 />
 
-Here is a new one! In the case of errors, **the `route` instance is the first one called!**
+Here is something new! In the case of errors, **the `route` instance is the first one called!**
 
-If you think about how errors boundaries are handled in <Badges.JavaScript />, it kinda makes sense. **The first instance to catch the error is the one that is the closest to the error itself.**
+If you think about how error boundaries are handled in <Badges.JavaScript />, it makes sense. **The first instance to catch the error is the one closest to the error itself.**
 
-But that means that `Filters` are one of the only components that are not triggered in the `global -> controller -> route` order but rather in the `route -> controller -> global` order.
-Just to be sure, here the logs after I remove the `route` level filter:
+But that means that `Filters` are one of the only components not triggered in the `global -> Controller -> route` order but rather in the `route -> Controller -> global` order.
+Just to be sure, here are the logs after I remove the `route` level filter:
 
 <Image
   alt={`Middleware logs`}
@@ -658,7 +656,7 @@ And after I remove the `controller` level filter:
   height={762}
 />
 
-In conclusion, we now have the following request lifecycle (gettin crowded out there):
+In conclusion, we now have the following request lifecycle (getting crowded out there):
 
 <Image
   alt={`Middleware logs`}
@@ -670,10 +668,11 @@ In conclusion, we now have the following request lifecycle (gettin crowded out t
 
 ## Conclusion
 
-We now have a pretty good understanding of the request lifecycle in NestJS, and we can see that it's not as straightforward as it seems.
-Main takeaways:
+This deep dive aimed at showing how much more complex than it seems the <Badges.Nest /> request lifecycle is. It will help you choose the suitable component based on your requirements in the future and also help you debug issues you may have on code execution order.
+
+Main learnings:
 
 - Components are run one after the other no matter their scope: `Middlewares` -> `Guards` -> `Interceptors` -> `Pipes`.
 - `Filters` only run when an error is thrown.
-- Each component is ran in the following order: `global -> controller -> route`.
+- Each component is running in the following order: `global -> controller -> route.`
   - For `Filters`, the one closest to the error is the one that is triggered.
