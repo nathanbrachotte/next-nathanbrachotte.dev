@@ -6,32 +6,20 @@ image: '/images/blog/put-a-cherry-on-top/cover.webp'
 draft: true
 ---
 
-<Badges.Nest /> presents itself as an ideal alternative for teams new to
-the <Badges.TypeScript /> ecosystem that hopes to get up to speed quickly. Its
-main weakness, though, is that before fully using its power, one needs to know
-and understand in what order each piece of code runs and which one to use when.
-This article will go through each component in the hope to clear this up (and so
-I can get back to this article in the future because it could be more obvious).
+## Introduction
 
-Each section of the article will cover a specific fundamental piece of Nest while trying to keep the request lifecycle global vision.
+Understanding the execution order of code when dealing with a <Badges.Nest /> backend can be quite challenging. Its reliance on a class-based structure, coupled with the extensive use of decorators, often makes it difficult to track the flow of code execution.
 
-## Prerequesite
+This article aims to demystify the components involved in a request lifecycle and the order in which they run. I'm hoping that after this deep dive, you will have gained actionable insights on how to debug your code and choose the right component for your use case.
 
-You need to understand the concept of `decorators`, `Modules`, `Controllers` and `Services`.
-You can also watch [this introduction video](https://www.youtube.com/watch?v=qZfO4EopfPA&list=PL4cUxeGkcC9g8YFseGdkyj9RH9kVs_cMr&index=2) by the NetNinja.
+<Callout emoji="⚠️" type="warning">
+  A good understanding of decorators, Modules and Controllers is recommended to
+  fully understand this deep dive. For a refresher, check out [this introductory
+  video by
+  NetNinja](https://www.youtube.com/watch?v=qZfO4EopfPA&list=PL4cUxeGkcC9g8YFseGdkyj9RH9kVs_cMr&index=2).
+</Callout>
 
-TLDR:
-
-1. **Module**: Uses `@Module()` decorator, act as a container that organizes the application structure by grouping related controllers and services.
-2. **Controllers**: Uses `@Controller()` decorator, responsible for handling incoming requests and returning responses to the client.
-3. **Services**: Uses `@Injectable()` decorator, encapsulates the application's business logic, and is used by controllers to perform specific tasks and operations.
-   When bootstrapping a new NestJS project, we end up with the following:
-
-## Middleware
-
-[Middlewares](https://docs.nestjs.com/middleware) are also common in <Badges.Express /> is a function that is given `request` and `context` as parameters. You can call the next Middleware anytime using `next()`.
-
-Consider the boilerplate <Badges.Nest /> app:
+Let's start with a basic <Badges.Nest /> app:
 
 ```ts
 // app.module.ts
@@ -62,14 +50,16 @@ export class AppService {
 }
 ```
 
+## Middlewares
+
+[Middlewares](https://docs.nestjs.com/middleware) are also common in <Badges.Express />. They intercept requests and have access to `request` and `context`. You can trigger the next middleware using `next()`.
+
 <Callout emoji="📑" type="info">
   You can find the source code for the whole article
   [here](https://github.com/nathanbrachotte/nestjs-example/tree/part-2-request-lifecycle/src).
 </Callout>
 
-Now let's say we want to add, for all our routes, some logic that logs what route is being hit and which `user-agent` is used to send the request (this might be useful to send this to your analytics then and track what clients are the most used to hit your server).
-
-First, let's write our Middleware:
+Now let's say we want to add, for all our routes, some logic that logs what route is being hit and which `user-agent` is used to send the request (to send this to our analytics). It'll look like this:
 
 ```ts title="logger.middleware.ts" caption=""
 import { Injectable, NestMiddleware, Logger } from '@nestjs/common'
@@ -81,6 +71,7 @@ export class LoggerMiddleware implements NestMiddleware {
   private readonly logger = new Logger(LoggerMiddleware.name)
 
   use(req: Request, res: Response, next: NextFunction) {
+    // We only log the user agent to keep it simple.
     this.logger.debug(
       `Middleware -- Received request from agent ${req.headers['user-agent']}`,
     )
@@ -89,8 +80,6 @@ export class LoggerMiddleware implements NestMiddleware {
   }
 }
 ```
-
-In our case, we only log the user agent to keep it simple.
 
 Now let's add the Middleware to our `AppModule`:
 
@@ -111,10 +100,9 @@ export class AppModule {
 ```
 
 <Callout emoji="💡" type="info">
-  FYI, you can get your Middlewares to [exclude
+  You can get your Middlewares to [exclude
   routes](https://docs.nestjs.com/middleware#excluding-routes) and [target
-  specific routes](https://docs.nestjs.com/middleware#route-wildcards) if you
-  wish.
+  specific routes](https://docs.nestjs.com/middleware#route-wildcards).
 </Callout>
 
 Now, what's cool is that at every request our server processes, we're going to see the following:
@@ -127,17 +115,17 @@ Now, what's cool is that at every request our server processes, we're going to s
   height={762}
 />
 
-Middlewares are pretty effective, but they have a major drawback: they are not aware of the context of the request. They are executed before the Controller and, therefore, cannot know what Controller or route is being called.
+Middlewares are pretty effective if you want to simply modify the `request` object, but they don't integrate really well with Controllers and Services. Thankfully we've got a few more tools available in our toolbox.
 
 ## Guards
 
-[Guards](https://docs.nestjs.com/guards) are Middlewares with extra powers.
+[Guards](https://docs.nestjs.com/guards) are also Middlewares, but they have some extra capabilities.
 
-- They can be added at the app, module, Controller, or route levels.
-- They implement a `canActivate` method that is triggered at each request and throws a `ForbiddenError` if it returns `false`. Otherwise, it goes to the next Middleware (equivalent to call `next()`).
-- They usually are used to handle authentication and roles to give access or not to users to specific routes and resources.
+- They can be added at the app, Module, Controller, or route levels.
+- They implement a `canActivate` method that is ran at each request it handles and throws a `ForbiddenError` if it returns `false`. Otherwise, it goes to the next Middleware (equivalent to call `next()`).
+- They generaly are used to handle authentication and authorization for specific Modules or routes.
 
-Let's take [the guard example](https://docs.nestjs.com/guards#authorization-guard) from the doc and implement it in our app:
+Let's take [the guard example](https://docs.nestjs.com/guards#authorization-guard) from the doc and implement it in our app (and fix the types):
 
 ```ts
 import {
@@ -175,7 +163,7 @@ For simplicity's sake, we will only check if a `cookie` header is present and th
 
 We also added a way to log the context in which the Guard is being executed, this is useful because we can add the Guard at different levels in the app:
 
-```ts {4,5,14-20,26,27,31,32}
+```ts {4,5,14-20,28,29,33,34}
 // main.ts
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
@@ -189,7 +177,7 @@ async function bootstrap() {
   imports: [],
   controllers: [AppController],
   providers: [AppService],
-  // Here, we add the Guard at the module level
+  // Here, we add the Guard aft the module level
   {
     provide: APP_GUARD,
     useFactory: () => {
@@ -217,6 +205,14 @@ export class AppController {
 }
 ```
 
+<Callout emoji="ℹ️" type="info">
+  The code in this article is for demo purpose only. It doesn't make sense to
+  use the same Guard at different levels. If a whole Module is protected by a
+  Guard, you don't need it at the Controller or route level. But you may have
+  other Guards at these levels in a production app, hence the importance to know
+  in which order they are called.
+</Callout>
+
 Now, let's send a first request without the header and see what happens:
 
 <Image
@@ -235,7 +231,7 @@ Nice. We got a `ForbiddenError` as expected. Now the logs:
   height={762}
 />
 Nice, we can see here the `Guard` instance declared in `main.ts` is the one that
-threw an error. We can also see the `Guard` is executed before the `Middleware`.
+threw an error. We can also see the `Guard` is executed **after** the `Middleware`.
 
 Now, let's add the header and see what happens:
 
@@ -254,28 +250,22 @@ Now, let's add the header and see what happens:
   width={1991}
   height={762}
 />
-<Callout emoji="ℹ️" type="info">
-  Note: These are contrived examples, and it, of course, doesn't make sense to
-  use the same Guard several times at different levels; if a module is protected
-  by a Guard, you don't need to have one at the Controller or route level. But
-  you likely will have other Guards at these levels in a production app, hence
-  the important to know in which order they are called.
-</Callout>
 
 The different instances of `AuthGuard` got triggered one after the other: `app module`, `main`, `controller` and then `route`.
-If you think about it, it feels natural that the control flow goes from `global -> controller -> route`. **From the highest/global level to the most specific one.** Of course, in a real-life scenario, this would not be necessary and we definitely should have this `Guard` set only once, either at Controller or route level if some of our endpoints can be public or at a global level if we are sure none of our endpoints should be ever reached by an unauthenticated user.
+If you think about it, it feels natural that the control flow goes from `global -> controller -> route`.
 
-What's interesting, though, is that the **`app module` instance, which is the one we declared at the Module level, is triggered before the `main` instance, which is the one we declared at the app level.**
-Reading some footnotes in the doc:
+**From the highest/global level to the most specific one.**
 
-<Callout emoji="📖" type="info">
-  If you are using app.useGlobalGuard() or providing the component via a module,
-  it is globally bound. Otherwise, it is bound to a controller if the decorator
-  precedes a controller class, or to a route if the decorator proceeds a route
-  declaration.
-</Callout>
+One interesting thing to note, though, is that the `app module` instance we declared at the Module level, **is triggered before the `main` instance, declared at app level.**
 
-**That means that both `app.useGlobalGuard()` and `@UseGuards()` are globally bound; therefore, we should consider them at the same level and not rely on one being triggered before the other.**
+This is briefly explained in the [request lifecyle doc](https://ru-nestjs-docs.netlify.app/faq/request-lifecycle#guard):
+
+> If you are using app.useGlobalGuard() or providing the component via a module,
+> it is globally bound. Otherwise, it is bound to a controller if the decorator
+> precedes a controller class, or to a route if the decorator proceeds a route
+> declaration.
+
+**That means that both `app.useGlobalGuard()` and `@UseGuards()` do the same thing. We should consider them at the same level and not rely on one being triggered before the other.**
 
 So far, we end up with the following request lifecycle:
 
