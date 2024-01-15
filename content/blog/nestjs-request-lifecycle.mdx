@@ -238,7 +238,6 @@ Now, let's add the header and see what happens:
 <Image
   alt={`Successful Guard request`}
   src={`/images/blog/nestjs-request-lifecycle/guard-2-request.png`}
-  priority
   width={1991}
   height={762}
 />
@@ -246,7 +245,6 @@ Now, let's add the header and see what happens:
 <Image
   alt={`Successful Guard logs`}
   src={`/images/blog/nestjs-request-lifecycle/guard-2.png`}
-  priority
   width={1991}
   height={762}
 />
@@ -272,7 +270,6 @@ So far, we end up with the following request lifecycle:
 <Image
   alt={`Request lifecycle with guards`}
   src={`/images/blog/nestjs-request-lifecycle/guard-exca.png`}
-  priorityè
   width={1991}
   height={762}
 />
@@ -467,7 +464,6 @@ Now let's send a request again, with a bad query param first:
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/pipe-1-request.png`}
-  priority
   width={1991}
   height={762}
 />
@@ -477,14 +473,12 @@ Cool. Like the others, the global `Pipe` at the module level threw an error. Now
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/pipe-2-request.png`}
-  priority
   width={1991}
   height={762}
 />
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/pipe-2.png`}
-  priority
   width={1991}
   height={762}
 />
@@ -500,7 +494,6 @@ That gives us now the following:
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/pipe-exca.png`}
-  priority
   width={1991}
   height={762}
 />
@@ -608,7 +601,6 @@ Let's give this a shot:
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/filter-1-request.png`}
-  priority
   width={1991}
   height={762}
 />
@@ -618,7 +610,6 @@ but only the one triggered is... wait, what? 🤔
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/filter-1.png`}
-  priority
   width={1991}
   height={762}
 />
@@ -633,7 +624,6 @@ Just to be sure, here are the logs after I remove the `route` level filter:
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/filter-2.png`}
-  priority
   width={1991}
   height={762}
 />
@@ -641,7 +631,6 @@ And after I remove the `controller` level filter:
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/filter-3.png`}
-  priority
   width={1991}
   height={762}
 />
@@ -651,7 +640,6 @@ In conclusion, we now have the following request lifecycle (getting crowded out 
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/filter-exca.png`}
-  priority
   width={1991}
   height={762}
 />
