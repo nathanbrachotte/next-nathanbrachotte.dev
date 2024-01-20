@@ -66,7 +66,7 @@ function Callout(props) {
 function ProsCard({ title, pros }) {
   return (
     <div className="my-4 w-full rounded-xl border border-emerald-200 bg-background p-6 dark:border-emerald-900">
-      <span>{`You might use ${title} if...`}</span>
+      <span>{title}</span>
       <div className="mt-4">
         {pros.map((pro) => (
           <div key={pro} className="mb-2 flex items-baseline font-medium">
