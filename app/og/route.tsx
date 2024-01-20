@@ -34,8 +34,7 @@ export async function GET(request: Request) {
           tw="flex w-full text-white items-center h-full justify-between"
           style={{
             // This doesn't work correctly at all but I'm somewhat getting what I want
-            backgroundImage: `url(${backgroundImage})`,
-            // backgroundImage: `linear-gradient(55deg, rgba(11, 15, 26, 0.9), rgba(11, 255, 26, 0) 70%), url(${image})`,
+            backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(${backgroundImage})`,
           }}
         >
           <div tw="flex-1 flex flex-col justify-between h-full py-16 mx-[5%]">
@@ -55,11 +54,11 @@ export async function GET(request: Request) {
                       right: 0,
                       bottom: 0,
                       left: 0,
-                      backgroundImage: `url(${backgroundImage})`,
-                      backgroundSize: 'cover',
+                      // backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))`,
+                      // backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)), url(${backgroundImage})`,
+                      // backgroundSize: 'cover',
                       backgroundPosition: 'center',
                       filter: 'blur(4px)',
-                      transform: 'scale(1)',
                     }}
                   />
                   Nathan Brachotte
@@ -74,11 +73,11 @@ export async function GET(request: Request) {
                       right: 0,
                       bottom: 0,
                       left: 0,
-                      backgroundImage: `url(${backgroundImage})`,
+                      // backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))`,
+                      // backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${backgroundImage})`,
                       backgroundSize: 'cover',
                       backgroundPosition: 'center',
                       filter: 'blur(4px)',
-                      transform: 'scale(1)',
                     }}
                   />
                   nathanbrachotte.dev
@@ -95,11 +94,12 @@ export async function GET(request: Request) {
                       right: 0,
                       bottom: 0,
                       left: 0,
-                      backgroundImage: `url(${backgroundImage})`,
-                      backgroundSize: 'cover',
+                      // backgroundImage: `linear-gradient(55deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7))`,
+                      // backgroundImage: `linear-gradient(0deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${backgroundImage})`,
+                      // backgroundSize: 'cover',
+                      // backgroundColor: 'rgba(0, 0, 0, 0.7)',
                       backgroundPosition: 'center',
-                      filter: 'blur(4px)',
-                      transform: 'scale(1)',
+                      filter: 'blur(2px)',
                     }}
                   />
                   {title}
