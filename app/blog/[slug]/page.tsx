@@ -38,9 +38,7 @@ export async function generateMetadata({
     slug,
   } = post
 
-  const coverFallback = image
-    ? image.replace('cover.webp', 'cover-fallback.png')
-    : ''
+  const coverFallback = image ? image.replace('cover.webp', 'cover.png') : ''
 
   const dynamicOGImage = `https://nathanbrachotte.dev/og?${new URLSearchParams({
     title: title,

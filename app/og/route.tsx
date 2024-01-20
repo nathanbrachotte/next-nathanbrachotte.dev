@@ -4,7 +4,7 @@ import { ImageResponse } from 'next/og'
 export const runtime = 'edge'
 
 // TODO: Fix the doc
-// To test: http://localhost:3000/og?title=How+I+stopped+Git+from+getting+in+the+way&description=Git+is+a+powerful+tool+but+can+be+hard+and+cumbersome+to+use.+Here+is+the+ultimate+workflow+that+will+make+you+work+faster+and+more+confidently+with+Git.&image=https%3A%2F%2Fnathanbrachotte.dev%2Fimages%2Fblog%2Fstopped-git-getting-in-the-way%2Fcover-fallback.png
+// To test: http://localhost:3000/og?title=How+I+stopped+Git+from+getting+in+the+way&description=Git+is+a+powerful+tool+but+can+be+hard+and+cumbersome+to+use.+Here+is+the+ultimate+workflow+that+will+make+you+work+faster+and+more+confidently+with+Git.&image=https%3A%2F%2Fnathanbrachotte.dev%2Fimages%2Fblog%2Fstopped-git-getting-in-the-way%2Fcover.png
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
