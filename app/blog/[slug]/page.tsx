@@ -130,6 +130,7 @@ export default async function Blog({ params }) {
       <h1 className="max-w-[650px] text-2xl font-bold tracking-tighter">
         <Balancer>{post.title}</Balancer>
       </h1>
+      <span className="text-neutral-200">{post.summary}</span>
       <div className="mt-2 flex max-w-[650px] items-center justify-between text-sm">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           📅 {getDateWithDistance(post.publishedAt)} -{' '}
@@ -146,6 +147,7 @@ export default async function Blog({ params }) {
           ) : null}
         </p>
       </div>
+      <Separator className="mt-6" />
       {post.mediumLink ? (
         <div className="mb-2 mt-4">
           <Link href={post.mediumLink} passHref>
