@@ -1,16 +1,18 @@
 ---
 title: 'Deep dive - NestJS request lifecycle: Who goes first?'
 publishedAt: '2024-01-02'
-summary: "Understanding the sequence of code execution in a NestJS backend can be complex. Let's delve into all its components interact from the moment a request hits the server to the response."
+summary: "Understanding the sequence of code execution in a NestJS backend can be complex. Let's delve into all its components interact from the moment a request hits the server to when the response is sent back."
 image: '/images/blog/nestjs-request-lifecycle/cover.webp'
 draft: false
 ---
 
 ## Introduction
 
-Understanding the execution order of code when dealing with a <Badges.Nest /> backend can be quite challenging. Its reliance on a class-based structure, coupled with the extensive use of decorators, often makes it difficult to track the flow of code execution.
+Have you ever wondered if you are solving problems the right way in your <Badges.Nest /> app? Or if you could have used a more suitable component for your use case? I have been in this situation many times.
 
-This article aims to demystify the components involved in a request lifecycle and the order in which they run. I'm hoping that after this deep dive, you will have gained actionable insights on how to debug your code and choose the right component for your use case.
+Understanding the execution order of code in <Badges.Nest /> is quite challenging. Its reliance on a class-based structure, coupled with the extensive use of decorators, often makes it difficult to track the flow of code execution.
+
+With this article, I'm taking a shot at trying to demystify the components involved in a request lifecycle and the order in which they run. I'm hoping that after this deep dive, you will have gained actionable insights on how to debug your code and choose the right component to use for your use case.
 
 <Callout emoji="⚠️" type="warning">
   A good understanding of decorators, Modules and Controllers is recommended to
@@ -18,6 +20,21 @@ This article aims to demystify the components involved in a request lifecycle an
   video by
   NetNinja](https://www.youtube.com/watch?v=qZfO4EopfPA&list=PL4cUxeGkcC9g8YFseGdkyj9RH9kVs_cMr&index=2).
 </Callout>
+
+## Spoiler alert: The request lifecycle
+
+If you don't wish to read the whole article, here the final diagram of a request lifecycle:
+
+<Image
+  alt={`Middleware logs`}
+  src={`/images/blog/nestjs-request-lifecycle/filter-exca-2.png`}
+  width={1991}
+  height={762}
+/>
+
+If you wish to understand better how we got there, keep reading! 😄
+
+## Getting started
 
 Let's start with a basic <Badges.Nest /> app:
 
@@ -50,6 +67,8 @@ export class AppService {
 }
 ```
 
+This is pretty straightforward. We have an `/og` route that returns the `John Doe` when called.
+
 ## Middlewares
 
 [Middlewares](https://docs.nestjs.com/middleware) are also common in <Badges.Express />. They intercept requests and have access to `request` and `context`. You can trigger the next middleware using `next()`.
@@ -59,7 +78,7 @@ export class AppService {
   [here](https://github.com/nathanbrachotte/nestjs-example/tree/part-2-request-lifecycle/src).
 </Callout>
 
-Now let's say we want to add, for all our routes, some logic that logs what route is being hit and which `user-agent` is used to send the request (to send this to our analytics). It'll look like this:
+Now let's say we want to add, for all our routes, some logic that logs what route is being hit and which `user-agent` is used to send the request (to ultimately send this to our analytics). It'll look like this:
 
 ```ts title="logger.middleware.ts" caption=""
 import { Injectable, NestMiddleware, Logger } from '@nestjs/common'
@@ -125,7 +144,7 @@ Middlewares are pretty effective if you want to simply modify the `request` obje
 - They implement a `canActivate` method that is ran at each request it handles and throws a `ForbiddenError` if it returns `false`. Otherwise, it goes to the next Middleware (equivalent to call `next()`).
 - They generaly are used to handle authentication and authorization for specific Modules or routes.
 
-Let's take [the Guard example](https://docs.nestjs.com/guards#authorization-guard) from the doc and implement it in our app:
+Let's take [the Guard example from the NestJS documentation](https://docs.nestjs.com/guards#authorization-guard) and implement it in our app:
 
 ```ts
 @Injectable()
@@ -149,7 +168,7 @@ export class AuthGuard implements CanActivate {
 
 For simplicity's sake, we will only check if a `cookie` header is present and throw otherwise.
 
-We also added a way to log the context in which the Guard is being executed, this is useful because we now can add the Guard at different levels in the app:
+We also added a way to log the context in which the Guard is being executed, **this is useful because we actually can add the Guard at different levels in our app**:
 
 ```ts {4,5,14-20,28,29,33,34}
 // main.ts
@@ -218,8 +237,8 @@ Nice. We got a `ForbiddenError` as expected. Now the logs:
   width={1991}
   height={762}
 />
-Nice, we can see here the `Guard` instance declared in `main.ts` is the one that
-threw an error. We can also see the `Guard` is executed **after** the `Middleware`.
+We can see here the `Guard` instance declared in `main.ts` is the one that threw
+an error. We can also see the `Guard` is executed **after** the `Middleware`.
 
 Now, let's add the header and see what happens:
 
@@ -237,21 +256,29 @@ Now, let's add the header and see what happens:
   height={762}
 />
 
-The different instances of `AuthGuard` got triggered one after the other: `app module`, `main`, `controller` and then `route`.
+Interesting. The different instances of `AuthGuard` got triggered one after the other:
+
+1. `app module`,
+1. `main`,
+1. `controller`
+1. `route`.
+
 If you think about it, it feels natural that the control flow goes from `global -> controller -> route`.
 
 From the highest/global level to the most specific one.
 
 One interesting thing to note, though, is that **the `app module` instance we declared at the Module level, is triggered before the `main` instance, declared at app level.**
 
-This is briefly explained in the [request lifecyle doc](https://ru-nestjs-docs.netlify.app/faq/request-lifecycle#guard):
+This is briefly explained in [NestJS's request lifecyle FAQ](https://ru-nestjs-docs.netlify.app/faq/request-lifecycle#guard):
 
 > If you are using app.useGlobalGuard() or providing the component via a module,
 > it is globally bound. Otherwise, it is bound to a controller if the decorator
 > precedes a controller class, or to a route if the decorator proceeds a route
 > declaration.
 
-**That means that both `app.useGlobalGuard()` and `@UseGuards()` ultimately register the Guard at the same level! We should consider them at the same level and not rely on one being triggered before the other.**
+That means that both `app.useGlobalGuard()` (for main) and `@UseGuards()` (for app module) ultimately do the same thing!
+
+**We should consider them at the same level and not rely on one being triggered before the other.**
 
 So far, we end up with the following request lifecycle:
 
@@ -264,9 +291,13 @@ So far, we end up with the following request lifecycle:
 
 ## Interceptors
 
-Interceptors are a way to run some business logic **before and after** the route business logic execution.
+Interceptors are a way to run some business logic **before and after** the route business logic execution (ie. the corresponding function in the Controller running).
 
-They can, for example, be used to monitor how long your request took to return to your client. They could also be used to implement a caching mechanism on some of your routes, for example.
+Some use cases for Interceptors are:
+
+- They can be used to monitor how long your request took to return to your client.
+- They could also be used to implement a caching mechanism on some of your routes.
+- Many more things!
 
 Let's go with the first example and create a `LoggerInterceptor`:
 
