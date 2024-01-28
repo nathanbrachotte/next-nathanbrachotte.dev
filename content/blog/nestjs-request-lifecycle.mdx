@@ -28,8 +28,8 @@ If you don't wish to read the whole article, here the final diagram of a request
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/filter-exca-2.png`}
-  width={1991}
-  height={762}
+  width={1670}
+  height={1832}
 />
 
 If you wish to understand better how we got there, keep reading! 😄
@@ -225,8 +225,8 @@ Now, let's send a first request without the header and see what happens:
 <Image
   alt={`Forbidden error response`}
   src={`/images/blog/nestjs-request-lifecycle/guard-response-1.png`}
-  width={908}
-  height={520}
+  width={2004}
+  height={834}
 />
 
 Nice. We got a `ForbiddenError` as expected. Now the logs:
@@ -234,8 +234,8 @@ Nice. We got a `ForbiddenError` as expected. Now the logs:
 <Image
   alt={`Forbidden error logs`}
   src={`/images/blog/nestjs-request-lifecycle/guard-1-cut.png`}
-  width={1991}
-  height={762}
+  width={1936}
+  height={799}
 />
 We can see here the `Guard` instance declared in `main.ts` is the one that threw
 an error. We can also see the `Guard` is executed **after** the `Middleware`.
@@ -245,15 +245,15 @@ Now, let's add the header and see what happens:
 <Image
   alt={`Successful Guard request`}
   src={`/images/blog/nestjs-request-lifecycle/guard-2-request.png`}
-  width={1991}
-  height={762}
+  width={1856}
+  height={648}
 />
 
 <Image
   alt={`Successful Guard logs`}
   src={`/images/blog/nestjs-request-lifecycle/guard-2.png`}
-  width={1991}
-  height={762}
+  width={2084}
+  height={468}
 />
 
 Interesting. The different instances of `AuthGuard` got triggered one after the other:
@@ -285,8 +285,8 @@ So far, we end up with the following request lifecycle:
 <Image
   alt={`Request lifecycle with guards`}
   src={`/images/blog/nestjs-request-lifecycle/guard-exca-2.png`}
-  width={1991}
-  height={762}
+  width={2006}
+  height={1600}
 />
 
 ## Interceptors
@@ -380,8 +380,8 @@ Now, let's send a request:
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/interceptor-1-alt.png`}
-  width={1991}
-  height={762}
+  width={2996}
+  height={796}
 />
 
 Hmm, this is getting VERY interesting 👀
@@ -396,8 +396,8 @@ Now we have discovered how Interceptors work, here is the request lifecycle in o
 <Image
   alt={`Interceptor lifecycle`}
   src={`/images/blog/nestjs-request-lifecycle/interceptor-exca-2.png`}
-  width={1991}
-  height={762}
+  width={1546}
+  height={1760}
 />
 
 ## Pipes
@@ -494,8 +494,8 @@ Now let's send a request again, but with query params that don't match the valid
 <Image
   alt={`Pipe 1 request`}
   src={`/images/blog/nestjs-request-lifecycle/pipe-1-request.png`}
-  width={1991}
-  height={762}
+  width={2008}
+  height={770}
 />
 
 Cool. Like the others, the global `Pipe` at the module level threw an error. Now, let's send a request that will succeed:
@@ -503,14 +503,14 @@ Cool. Like the others, the global `Pipe` at the module level threw an error. Now
 <Image
   alt={`Pipe 2 request`}
   src={`/images/blog/nestjs-request-lifecycle/pipe-2-request.png`}
-  width={1991}
-  height={762}
+  width={1752}
+  height={482}
 />
 <Image
   alt={`Pipe 2 logs`}
   src={`/images/blog/nestjs-request-lifecycle/pipe-2.png`}
-  width={1991}
-  height={762}
+  width={2354}
+  height={962}
 />
 From the logs, we can see that once again:
 
@@ -524,8 +524,8 @@ That gives us now the following:
 <Image
   alt={`Pipe excalidraw`}
   src={`/images/blog/nestjs-request-lifecycle/pipe-exca-2.png`}
-  width={1991}
-  height={762}
+  width={1270}
+  height={1656}
 />
 
 ## Exception filters
@@ -633,8 +633,8 @@ Let's give this a shot:
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/filter-1-request.png`}
-  width={1991}
-  height={762}
+  width={2170}
+  height={689}
 />
 Nice! Now, let's look at the log. This Filter is only triggered once and a response
 is sent back to the client. We can't really see the order in which they are called,
@@ -642,8 +642,8 @@ but only the one triggered is... wait, what? 🤔
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/filter-1.png`}
-  width={1991}
-  height={762}
+  width={2130}
+  height={878}
 />
 
 Here is something new! In the case of errors, **the `route` instance is the first one called!** If you think about how error boundaries are handled in <Badges.JavaScript />, it makes sense:
@@ -656,15 +656,15 @@ Just to be sure, here are the logs after I remove the `route` level filter:
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/filter-2.png`}
-  width={1991}
-  height={762}
+  width={2044}
+  height={46}
 />
 And after I remove the `controller` level filter:
 <Image
   alt={`Middleware logs`}
   src={`/images/blog/nestjs-request-lifecycle/filter-3.png`}
-  width={1991}
-  height={762}
+  width={1948}
+  height={56}
 />
 
 So, to recap, here is the final request lifecycle:
