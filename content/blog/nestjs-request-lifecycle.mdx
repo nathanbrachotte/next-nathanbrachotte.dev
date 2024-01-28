@@ -8,9 +8,9 @@ draft: false
 
 ## Introduction
 
-Have you ever wondered if you are solving problems the right way in your <Badges.Nest /> app? Or if you could have used a more suitable component for your use case? I have been in this situation many times.
+Have you ever wondered if you are solving problems the right way in your NestJS app? Or if you could have used a more suitable component for your use case? I have been in this situation many times.
 
-Understanding the execution order of code in <Badges.Nest /> is quite challenging. Its reliance on a class-based structure, coupled with the extensive use of decorators, often makes it difficult to track the flow of code execution.
+Understanding the execution order of code in NestJS is quite challenging. Its reliance on a class-based structure, coupled with the extensive use of decorators, often makes it difficult to track the flow of code execution.
 
 With this article, I'm taking a shot at trying to demystify the components involved in a request lifecycle and the order in which they run. I'm hoping that after this deep dive, you will have gained actionable insights on how to debug your code and choose the right component to use for your use case.
 
@@ -36,7 +36,7 @@ If you wish to understand better how we got there, keep reading! 😄
 
 ## Getting started
 
-Let's start with a basic <Badges.Nest /> app:
+Let's start with a basic NestJS app:
 
 ```ts
 // app.module.ts
@@ -134,7 +134,7 @@ Now, what's cool is that at every request our server processes, we're going to s
   height={762}
 />
 
-Middlewares are pretty effective if you want to simply modify the `request` object, but they don't integrate really well with the rest of <Badges.Nest />'s ecosystem (i.e. Controllers and Services). Thankfully we've got a few more tools at our disposal...
+Middlewares are pretty effective if you want to simply modify the `request` object, but they don't integrate really well with the rest of NestJS's ecosystem (i.e. Controllers and Services). Thankfully we've got a few more tools at our disposal...
 
 ## Guards
 
@@ -416,7 +416,7 @@ export class OgQueryDto {
 }
 ```
 
-For the sake of testing the behaviour, let's create a custom Pipe that does the same as the `ValidationPipe` directly provided by <Badges.Nest />, but with some extra logs:
+For the sake of testing the behaviour, let's create a custom Pipe that does the same as the `ValidationPipe` directly provided by NestJS, but with some extra logs:
 
 ```ts {11-13, 16, 18-21} title="customValidationPipe.pipe.ts" caption="Reminder: You can check the real implementation in the source code."
 @Injectable()
@@ -678,7 +678,7 @@ So, to recap, here is the final request lifecycle:
 
 ## Conclusion
 
-This deep dive aimed at showing how much more complex than it seems the <Badges.Nest /> request lifecycle is. Hopefully this will help you choose the suitable component based on your requirements in the future and also help you debug issues you may have on code execution order.
+This deep dive aimed at showing how much more complex than it seems the NestJS request lifecycle is. Hopefully this will help you choose the suitable component based on your requirements in the future and also help you debug issues you may have on code execution order.
 
 <ProsCard
   title="Main takeaways:"
