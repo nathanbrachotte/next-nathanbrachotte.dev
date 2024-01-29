@@ -78,14 +78,7 @@ export async function generateMetadata({
       creator: '@nathanbrachotte',
       description,
       ...(image && {
-        images: [
-          {
-            url: dynamicOGImage,
-            width: 1200,
-            height: 630,
-            alt: title,
-          },
-        ],
+        images: [dynamicOGImage],
       }),
     },
   }
