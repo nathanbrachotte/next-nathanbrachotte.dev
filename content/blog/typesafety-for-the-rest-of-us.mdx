@@ -10,12 +10,14 @@ draft: true
 
 In modern web development, type safety is not just a luxury, it's a necessity for robust, maintainable applications and work with a great DX.
 
-You may have heard of tools like [GraphQL Codegen](https://the-guild.dev/graphql/codegen) or [trpc](https://trpc.io/). Both allow you to generate TypeScript types from your backend. You either use the GraphQL schema as a source (GraphQL checks at runtime that the types sent and returned correspond to the schema), or you own the backend and can use trpc for your REST endpoints (trpc also does runtime data validation in and out).
+You may have heard of tools like [GraphQL Codegen](https://the-guild.dev/graphql/codegen) or [trpc](https://trpc.io/). Both allow you to generate TypeScript types from your backend, so they can be used on your frontend.
+
+- You either use the GraphQL schema as a source (GraphQL checks at runtime that the types sent and returned correspond to the schema),
+- or you own the backend and can use trpc for your REST endpoints (trpc also does runtime data validation in and out).
 
 But sometimes, you have to deal with 3rd party APIs, or you have a legacy REST API that you simply cannot change. In these cases, you will end up having to **assume** types in your client code and hope for the best.
 
-BUT, here comes the good news: If the API you're working with has a Swagger (OpenAPI) file, you can still generate types from it!
-The [openapi-typescript](https://openapi-ts.pages.dev/) package can read a Swagger file and generate TypeScript types from it!
+BUT, here comes the good news: If the API you're working with has a Swagger (OpenAPI) file, **you can still generate types from it! 🎉**
 
 ## Generating types
 
@@ -26,20 +28,20 @@ Assuming we want to consume an API that gives use exchange rates from a base cur
 <Image
   alt={`Forbidden error response`}
   src={`/images/blog/typesafety-for-the-rest-of-us/get.png`}
-  width={2004}
-  height={834}
+  width={1538}
+  height={1946}
 />
 <Image
   alt={`Forbidden error response`}
   src={`/images/blog/typesafety-for-the-rest-of-us/post.png`}
-  width={2004}
-  height={834}
+  width={1538}
+  height={1584}
 />
 
 ### Adding openapi-typescript to your project
 
 Let's start with a basic Next.js application (`npx create-next-app@latest`)
-and run `npm i -D openapi-typescript@next`.
+and install the [openapi-typescript](https://openapi-ts.pages.dev/) package `npm i -D openapi-typescript@next`.
 
 <Callout type="info" emoji="ℹ️">
   If you want to dig into the code by yourself, you can find the full example
@@ -51,8 +53,8 @@ You can now run `npx openapi-typescript $YOUR_API_FILE_OR_URL -o ./openApi.ts` t
 <Image
   alt={`Forbidden error response`}
   src={`/images/blog/typesafety-for-the-rest-of-us/openApi.png`}
-  width={2004}
-  height={834}
+  width={1086}
+  height={202}
 />
 
 By pointing this command at a swagger.json file, whether it resides on your local machine or somewhere in the cloud, you're able to generate a TypeScript file (openApi.ts) teeming with types that mirror your API's structure.
@@ -159,9 +161,12 @@ Now we understand a bit better the types are structured, let's see how we can us
 ## Using the generated types
 
 While looking for a way to achieve end-to-end typesafety for a client, I stumbled upon a [Medium article](https://medium.com/@youry.stancatte/generating-typescript-interfaces-from-swagger-1910cc7a726a)
-that goes in the right direction by introducing an `apiCall` function without writing it. So I did. You can find it in the [repo](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/app/apiCall.ts)
+that goes in the right direction by introducing an `apiCall` function without fully giving the whole solution. So I wrote one. You can find it in the [repo](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/app/apiCall.ts)
 
-To use it, you simply can copy/paste the file into your project and use it like this:
+To use it, let's first install our client of choice (in my case [axios](https://github.com/axios/axios)) and
+[query-string](https://github.com/sindresorhus/query-string): `npm add axios query-string`
+
+Then, you simply can copy/paste the file into your project and use it like this:
 
 ```typescript
 import { apiCall } from './apiCall'
@@ -172,68 +177,126 @@ const exchangeRate = await apiCall('/currency/exchangerate', 'get', {
 })
 ```
 
----
+The best part is that evething will be autocomplete. Getting closer to what GraphQL and trpc peeps have:
 
----
+<Image
+  alt={`Forbidden error response`}
+  src={`/images/blog/typesafety-for-the-rest-of-us/autocomplete.gif`}
+  width={1996}
+  height={1080}
+/>
 
----
+And.. that's it? You probably should try it yourself, not only is the request now
+typed:
 
----
+## "Yes yes, but.. how do I auth?"
 
----
-
----
-
----
-
----
-
----
-
----
-
----
-
-# Introducing the apiCall Function
-
-At the heart of our type-safe RESTful adventure is the apiCall function.
-A masterpiece of TypeScript wizardry, apiCall abstracts the complexity of making API requests while leveraging the types generated from our Swagger definitions.
-This ensures that every request adheres to the expected data structures, reducing the likelihood of runtime errors and improving developer confidence.
-
-# Deep Dive into apiCall
-
-[OG](https://medium.com/@youry.stancatte/generating-typescript-interfaces-from-swagger-1910cc7a726a)
-The apiCall function exemplifies the power of TypeScript's advanced type system, including generics and conditional types.
-It requires developers to specify the API endpoint, method, parameters, and, when necessary, a request body—all strongly typed, of course.
-This design not only enforces type safety at compile-time but also enhances code readability and maintainability.
-
-Here's a snippet to illustrate:
+Good question, this is actually quite simple. You can simply add a `getToken` function that will return the token/headers you need as a first param.
+This actually allows you to make your `apiCall` function for both client and server side rendering components! 🎉
 
 ```typescript
-export async function apiCall<...> {
-// Function implementation
+const path = '/currency/exchangerate'
+
+// Client side
+export const useGetExchangeRate = () => {
+  // Or whichever function that returns a token from the client
+  const { getToken } = useAuth()
+
+  // Example with react-query
+  return useQuery({
+    queryKey: [path],
+    queryFn: async () =>
+      apiCall(getToken, path, 'get', {
+        query: {
+          base: 'EUR',
+        },
+      }),
+  })
+}
+
+// Server side
+export async function getExchangeRate() {
+  const { getToken } = auth()
+
+  return await apiCall(getToken, path, 'get', {
+    query: {
+      base: 'EUR',
+    },
+  })
 }
 ```
 
-This function dynamically handles URL parameters, HTTP headers, and request bodies, ensuring that every aspect of an API call is type-checked. Moreover, it uses an axiosInstance configured with environmental variables, streamlining the process of making requests across different environments.
+As simple as that. Ez.
 
-Enhancing Next.js Applications
-A notable feature of apiCall is its integration with token-based authentication, making it a perfect fit for both client and server-side rendering in Next.js applications. By requiring a token retrieval function, it seamlessly adapts to various authentication flows, further exemplifying its versatility.
+## "Yes yes, but.. I still have to create types to pass the correct values to these two functions"
 
-Leveraging Type Helpers
-The true magic, however, lies in how little manual type definition work is required. By utilizing helper types from openApiTypes.ts, such as ResponseType, RequestParams, and RequestBody, developers can easily extract and use specific types for API responses, request parameters, and bodies.
-
-Consider the following examples:
+Well.. no quite. There actually are a couple of helpers that you can build that will help with that:
 
 ```typescript
-export type BankAccounts = ResponseType<...>;
-export type BankAccountUsage = NonNullable<...>["usage"];
+const path = '/currency/exchangerate'
+
+type ExchangeRateQuery = RequestParams<typeof path, 'get'>['query']['base']
+
+// Usage
+const { data: exchangeRate } = useGetExchangeRate('EUR')
+
+// Client side
+export const useGetExchangeRate = (baseCurrency: ExchangeRateQuery) => {
+  // Or whichever function that returns a token from the client
+  const { getToken } = useAuth()
+
+  // Example with react-query
+  return useQuery({
+    queryKey: [path],
+    queryFn: async () =>
+      apiCall(getToken, path, 'get', {
+        query: {
+          base: baseCurrency,
+        },
+      }),
+  })
+}
+
+// Server side
+export async function getExchangeRate(baseCurrency: ExchangeRateQuery) {
+  const { getToken } = auth()
+
+  return await apiCall(getToken, path, 'get', {
+    query: {
+      base: baseCurrency,
+    },
+  })
+}
 ```
 
-These snippets demonstrate how to derive specific types for API interactions, minimizing the need for redundant type definitions and streamlining the development process.
+Or maybe you want to extract the type of the response:
 
-Caveats and Considerations
-While this approach significantly improves the developer experience (DX) by reducing boilerplate and enforcing type safety, it's not without its drawbacks. Reliance on Swagger documentation being up-to-date is a notable concern. Outdated or inaccurate Swagger definitions can lead to mismatches between expected and actual API behaviors, introducing potential bugs and undermining the benefits of type safety.
+```typescript
+export interface SubComponentProps {
+  // You probably want to abstract this type to `openApiTypes.ts`
+  exchangeRate: ResponseType<'/currency/exchangerate', 'get'>
+}
 
-Conclusion
-The journey to achieving end-to-end type safety in RESTful applications with TypeScript and Swagger is both challenging and rewarding. By utilizing tools like openapi-typescript and implementing practices such as the apiCall function, developers can enjoy a streamlined, type-safe development experience. However, it's crucial to ensure that your Swagger documentation accurately reflects your API's current state to fully reap the benefits of this approach. Embrace these tools and techniques, and join the ranks of developers who've elevated their code to new heights of reliability and maintainability.
+export const SubComponent = ({
+  exchangeRate: { base, date, rates },
+}: SubComponentProps) => {
+  return /** */
+}
+```
+
+All of these helper types are available in [openApiTypes.ts](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/openApiTypes.ts).
+There also is a helper to type the `PathParams` you're supposed to passed to `apiCalls` (`/:userId` will give you `{ userId: string }`
+and `RequestBody` will give you the type of the expected body, if any)
+
+The beauty in this solution is that you **only ever rely on generated types**,
+that means when the backend changes, you'll immediately know that it did, and what code to change in your frontend.
+
+We are getting pretty damn close to great DX in REST aren't we? 😎
+
+<Callout type="warning" emoji="ℹ️">
+  One thing to remember. **You should only rely on swaggers you trust**. Unlike
+  trpc and GraphQL, this solution only gives you types, it doesn't ensure
+  runtime validation of the data you receive. If the endpoints you're are
+  targeting are notoriously unstable, I'd advise you use
+  [zod](https://github.com/colinhacks/zod) to also validate the data.
+</Callout>
