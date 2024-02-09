@@ -1,8 +1,8 @@
 get.png 1538x1946
-openApi.png 1086x202
-cover.jpg 1512x864
-post.png 1538x1584
 cover.webp 1512x864
+cover.jpg 1512x864
+openApi.png 1086x202
+post.png 1538x1584
 query-autocomplete.png 1690x640
 result.png 1032x904
 url-autocomplete.png 1684x656
