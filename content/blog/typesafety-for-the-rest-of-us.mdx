@@ -8,22 +8,27 @@ draft: true
 
 ## End-to-end Type Safety for the REST of us
 
-In modern web development, type safety is not just a luxury, it's a necessity for robust, maintainable applications and work with a great DX.
+In modern web development, using <Badges.TypeScript /> efficiently is not just a luxury, it's a requirement to build robust, maintainable applications.
+With types comes a great DX and it's always easier to build great products when you're not always having to deal with the mental load of a poor DX.
 
-You may have heard of tools like [GraphQL Codegen](https://the-guild.dev/graphql/codegen) or [trpc](https://trpc.io/). Both allow you to generate TypeScript types from your backend, so they can be used on your frontend.
+You may have heard of tools like [GraphQL Codegen](https://the-guild.dev/graphql/codegen) or [trpc](https://trpc.io/).
+Both allow you to generate TypeScript types from your backend, so they can be used on your frontend.
 
 - You either use the GraphQL schema as a source (GraphQL checks at runtime that the types sent and returned correspond to the schema),
 - or you own the backend and can use trpc for your REST endpoints (trpc also does runtime data validation in and out).
 
-But sometimes, you have to deal with 3rd party APIs, or you have a legacy REST API that you simply cannot change. In these cases, you will end up having to **assume** types in your client code and hope for the best.
+But sometimes, you have to deal with 3rd party APIs, or you have a legacy REST API that you simply cannot change.
+In these cases, you will end up having to write types on your frontend, i.e., to **assume what the types are** and hope for the best.
 
 BUT, here comes the good news: If the API you're working with has a Swagger (OpenAPI) file, **you can still generate types from it! 🎉**
+
+Let's see together how we can improve the DX for the REST of us.
 
 ## Generating types
 
 ### API
 
-Assuming we want to consume an API that gives use exchange rates from a base currency with a GET endpoint, and that allows to change the rate of a currency pair with a POST endpoint:
+Assuming we want to consume an API that gives use exchange rates from a base currency with a GET endpoint:
 
 <Image
   alt={`Forbidden error response`}
@@ -38,8 +43,8 @@ Let's start with a basic Next.js application (`npx create-next-app@latest`)
 and install the [openapi-typescript](https://openapi-ts.pages.dev/) package `npm i -D openapi-typescript@next`.
 
 <Callout type="info" emoji="ℹ️">
-  If you want to dig into the code by yourself, you can find the full example
-  [here](https://github.com/nathanbrachotte/nextjs-openapi-example)
+  You can also dig into the
+  [code](https://github.com/nathanbrachotte/nextjs-openapi-example) by yourself.
 </Callout>
 
 You can now run `npx openapi-typescript $YOUR_API_FILE_OR_URL -o ./openApi.ts` to generate the types.
@@ -51,106 +56,8 @@ You can now run `npx openapi-typescript $YOUR_API_FILE_OR_URL -o ./openApi.ts` t
   height={202}
 />
 
-By pointing this command at a swagger.json file, whether it resides on your local machine or somewhere in the cloud, you're able to generate a TypeScript file (openApi.ts) teeming with types that mirror your API's structure.
-
-## Browsing through the generated types
-
-### Paths
-
-First, there is a `paths` interface that contains all the endpoints of your API and the method used for each.
-
-```typescript {9,11}
-export interface paths {
-  '/currency/exchangerate': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    get: operations['CurrencyController_getLatestRatesFromBase']
-    put?: never
-    post: operations['CurrencyController_changeCurrencyValue']
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-}
-```
-
-Indeed, the Swagger we use only has one endpoint, and only a GET and a POST method.
-
-### Components
-
-Then, we have the `components` interface.
-Components are a centralized repository of reusable definitions for schemas, responses, parameters, examples, request bodies, and security schemes.
-
-For such a simple API we usually wouldn't need it, but they are useful to [DRY](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself).
-
-```typescript {3,4,18,19}
-export interface components {
-  schemas: {
-    // The reponse in the GET request
-    CurrencyExchangeResponseDto: {
-      /** @example USD */
-      base?: string
-      /** Format: date */
-      date?: string
-      /** @example {
-       *       "USD": 1,
-       *       "EUR": 0.9,
-       *       "GBP": 0.8
-       *     } */
-      rates?: {
-        [key: string]: number | undefined
-      }
-    }
-    // The body in the POST request
-    CurrencyValueChangeBodyDto: {
-      /** @enum {string} */
-      currency: 'GBP' | 'USD' | 'EUR'
-      /** Format: float */
-      value: number
-    }
-  }
-}
-```
-
-### Operations
-
-and finally we have the `operations` type. This is the type linked in the `paths`, it gives the final shape of the request/response:
-
-```typescript {19,20}
-export interface operations {
-  CurrencyController_getLatestRatesFromBase: {
-    parameters: {
-        query: {
-            base: "GBP" | "USD" | "EUR";
-        };
-        header?: never;
-        path?: never;
-        cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Return all currency exchange rates */
-      200: {
-        headers: {
-        [name: string]: unknown;
-      };
-      content: {
-        // Here the reponse defined in `components` is used
-        "application/json": components["schemas"]["CurrencyExchangeResponseDto"];
-      };
-    };
-  };
-  // ...
-};
-```
-
-Now we understand a bit better the types are structured, let's see how we can use them.
+By pointing this command at a swagger.json file, whether it resides on your local machine or somewhere in the cloud,
+you're able to generate a <Badges.TypeScript /> file (openApi.ts) containing types that mirror your API's structure.
 
 ## Using the generated types
 
@@ -180,8 +87,7 @@ The best part is that evething will be autocomplete. Getting closer to what Grap
   height={1080}
 />
 
-And.. that's it? You probably should try it yourself, not only is the request now
-typed:
+And.. that's pretty much it 😄
 
 ## "Yes yes, but.. how do I auth?"
 
@@ -226,7 +132,7 @@ As simple as that. Ez.
 
 Well.. no quite. There actually are a couple of helpers that you can build that will help with that:
 
-```typescript
+```typescript {3, 6, 9, 19, 26, 31}
 const path = '/currency/exchangerate'
 
 type ExchangeRateQuery = RequestParams<typeof path, 'get'>['query']['base']
@@ -263,11 +169,11 @@ export async function getExchangeRate(baseCurrency: ExchangeRateQuery) {
 }
 ```
 
-Or maybe you want to extract the type of the response:
+Or maybe you want to extract the type of the response because you need to pass it down to another component via a prop:
 
 ```typescript
 export interface SubComponentProps {
-  // You probably want to abstract this type to `openApiTypes.ts`
+  // You probably want to abstract this type to `openApiTypes.ts` as you might need it in several places
   exchangeRate: ResponseType<'/currency/exchangerate', 'get'>
 }
 
@@ -279,7 +185,7 @@ export const SubComponent = ({
 ```
 
 All of these helper types are available in [openApiTypes.ts](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/openApiTypes.ts).
-There also is a helper to type the `PathParams` you're supposed to passed to `apiCalls` (`/:userId` will give you `{ userId: string }`
+There also is a helper to type the `PathParams` you're supposed to pass to `apiCalls` (`/:userId` will give you `{ userId: string }`
 and `RequestBody` will give you the type of the expected body, if any)
 
 The beauty in this solution is that you **only ever rely on generated types**,
