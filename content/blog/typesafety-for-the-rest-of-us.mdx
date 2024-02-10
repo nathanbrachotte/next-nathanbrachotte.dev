@@ -14,21 +14,22 @@ With types comes a great DX and it's always easier to build great products when 
 You may have heard of tools like [GraphQL Codegen](https://the-guild.dev/graphql/codegen) or [trpc](https://trpc.io/).
 Both allow you to generate TypeScript types from your backend, so they can be used on your frontend.
 
-- You either use the GraphQL schema as a source (GraphQL checks at runtime that the types sent and returned correspond to the schema),
-- or you own the backend and can use trpc for your REST endpoints (trpc also does runtime data validation in and out).
+- You either use the <Badges.GraphQL /> schema as a source (GraphQL checks at runtime that the types sent and returned correspond to the schema),
+- or you own the backend and can use <Badges.Trpc /> for your REST endpoints (trpc also does runtime data validation in and out).
 
 But sometimes, you have to deal with 3rd party APIs, or you have a legacy REST API that you simply cannot change.
-In these cases, you will end up having to write types on your frontend, i.e., to **assume what the types are** and hope for the best.
+In these cases, you will end up having to write types on your frontend, i.e., to **assume what the type of the parameters and of the response are** and hope for the best.
 
-BUT, here comes the good news: If the API you're working with has a Swagger (OpenAPI) file, **you can still generate types from it! 🎉**
+BUT, here comes the good news: If the API you're working with has a [Swagger (OpenAPI)](https://swagger.io/specification/) file, **you actually can generate types from it! 🎉**
 
-Let's see together how we can improve the DX for the REST of us.
+Let's explore together how the REST of us can also enjoy a great DX.
 
 ## Generating types
 
 ### API
 
-Assuming we want to consume an API that gives use exchange rates from a base currency with a GET endpoint:
+Assuming we want to consume an API that gives use exchange rates from a base
+currency with a GET endpoint:
 
 <Image
   alt={`Forbidden error response`}
@@ -39,15 +40,16 @@ Assuming we want to consume an API that gives use exchange rates from a base cur
 
 ### Adding openapi-typescript to your project
 
-Let's start with a basic Next.js application (`npx create-next-app@latest`)
-and install the [openapi-typescript](https://openapi-ts.pages.dev/) package `npm i -D openapi-typescript@next`.
+In a TS project, let's install the [openapi-typescript](https://openapi-ts.pages.dev/)
+package `npm i -D openapi-typescript@next`.
 
 <Callout type="info" emoji="ℹ️">
-  You can also dig into the
-  [code](https://github.com/nathanbrachotte/nextjs-openapi-example) by yourself.
+  You can also dig into the [example
+  code](https://github.com/nathanbrachotte/nextjs-openapi-example) by yourself.
 </Callout>
 
-You can now run `npx openapi-typescript $YOUR_API_FILE_OR_URL -o ./openApi.ts` to generate the types.
+You can now run `npx openapi-typescript 
+$YOUR_API_FILE_OR_URL -o ./openApi.ts` to generate the types.
 
 <Image
   alt={`Forbidden error response`}
@@ -56,18 +58,54 @@ You can now run `npx openapi-typescript $YOUR_API_FILE_OR_URL -o ./openApi.ts` t
   height={202}
 />
 
-By pointing this command at a swagger.json file, whether it resides on your local machine or somewhere in the cloud,
-you're able to generate a <Badges.TypeScript /> file (openApi.ts) containing types that mirror your API's structure.
+By pointing this command at a swagger.json file, whether it resides
+in your repo or behind a URL, you're able to generate a <Badges.TypeScript />
+file (called here `openApi.ts`) containing types that
+mirror your API's structure.
 
-## Using the generated types
+## Fetch data with the generated types
 
-While looking for a way to achieve end-to-end typesafety for a client, I stumbled upon a [Medium article](https://medium.com/@youry.stancatte/generating-typescript-interfaces-from-swagger-1910cc7a726a)
-that goes in the right direction by introducing an `apiCall` function without fully giving the whole solution. So I wrote one. You can find it in the [repo](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/app/apiCall.ts)
+### Using openapi-fetch
 
+We can now very simply consume this API with the types with `openapi-fetch` ([docs](https://github.com/drwpow/openapi-typescript)). It uses `axios` under the hood.
+
+`npm i openapi-fetch`
+
+We just have to create a client instance that will take the `paths` type as a generic:
+
+```typescript
+import createClient from 'openapi-fetch'
+import type { paths } from '../openApi'
+
+const { GET } = createClient<paths>({
+  baseUrl: 'https://api.example.com/v1/',
+})
+```
+
+and we then get super nice autocompletion when we want to fetch data, and a the returned data is also typed:
+
+<Image
+  alt={`Forbidden error response`}
+  src={`/images/blog/typesafety-for-the-rest-of-us/autocomplete2.gif`}
+  width={1996}
+  height={1080}
+/>
+
+## A custom alternative
+
+Now you might be wondering "What if I want to use [tanstack-query](https://tanstack.com/query/latest)?"
+or "Will this work for both client and service side components in <Badges.Next /> ?
+
+I found that it's actually not that hard to build you custom client implementation based on the types.
+(I used another article as a starter for this implementation
+but couldn't find it anymore so I could not link it here,
+if you do find this article feel free to reach out 😄)
+
+You can use this custom function, called `apiCall` in the [repo](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/customApiCall.ts).
 To use it, let's first install our client of choice (in my case [axios](https://github.com/axios/axios)) and
 [query-string](https://github.com/sindresorhus/query-string): `npm add axios query-string`
 
-Then, you simply can copy/paste the file into your project and use it like this:
+Then, you simply can copy/paste the file into your project and use it like so:
 
 ```typescript
 import { apiCall } from './apiCall'
@@ -78,31 +116,31 @@ const exchangeRate = await apiCall('/currency/exchangerate', 'get', {
 })
 ```
 
-The best part is that evething will be autocomplete. Getting closer to what GraphQL and trpc peeps have:
+<Callout type="info" emoji="ℹ️">
+  One difference to note, in this case we don't return an `error` object when
+  something goes wrong, but instead throw an error as we want `react-query` or
+  [Next.js server side error
+  handling](https://nextjs.org/docs/app/building-your-application/routing/error-handling)
+  to take care of the error.
+</Callout>
+The same way that `openapi-fetch` does, we have a fully type response, but we now
+own the code, so we can customise it.
 
-<Image
-  alt={`Forbidden error response`}
-  src={`/images/blog/typesafety-for-the-rest-of-us/autocomplete.gif`}
-  width={1996}
-  height={1080}
-/>
+### Auth with Next.js
 
-And.. that's pretty much it 😄
+For example, if you want to pass a JWT in your headers when fetching data from
+both client and server components, the way you provide the token will be different.
 
-## "Yes yes, but.. how do I auth?"
+So we can also add a custom parameter that will take a function that returns
+the token, and simply pass a different function based on which side of the web we are in:
 
-Good question, this is actually quite simple. You can simply add a `getToken` function that will return the token/headers you need as a first param.
-This actually allows you to make your `apiCall` function for both client and server side rendering components! 🎉
-
-```typescript
+```typescript /getToken/#b
 const path = '/currency/exchangerate'
 
 // Client side
 export const useGetExchangeRate = () => {
-  // Or whichever function that returns a token from the client
   const { getToken } = useAuth()
 
-  // Example with react-query
   return useQuery({
     queryKey: [path],
     queryFn: async () =>
@@ -128,24 +166,19 @@ export async function getExchangeRate() {
 
 As simple as that. Ez.
 
-## "Yes yes, but.. I still have to create types to pass the correct values to these two functions"
+### "Yes yes, but.. I still have to create types to pass the correct values to these two functions"
 
 Well.. no quite. There actually are a couple of helpers that you can build that will help with that:
 
-```typescript {3, 6, 9, 19, 26, 31}
+```typescript /ExchangeRateQuery/#g {21, 35}
 const path = '/currency/exchangerate'
 
 type ExchangeRateQuery = RequestParams<typeof path, 'get'>['query']['base']
 
-// Usage
-const { data: exchangeRate } = useGetExchangeRate('EUR')
-
 // Client side
 export const useGetExchangeRate = (baseCurrency: ExchangeRateQuery) => {
-  // Or whichever function that returns a token from the client
   const { getToken } = useAuth()
 
-  // Example with react-query
   return useQuery({
     queryKey: [path],
     queryFn: async () =>
@@ -157,6 +190,9 @@ export const useGetExchangeRate = (baseCurrency: ExchangeRateQuery) => {
   })
 }
 
+// Usage in client-side components
+const { data: exchangeRate } = useGetExchangeRate('EUR')
+
 // Server side
 export async function getExchangeRate(baseCurrency: ExchangeRateQuery) {
   const { getToken } = auth()
@@ -167,11 +203,14 @@ export async function getExchangeRate(baseCurrency: ExchangeRateQuery) {
     },
   })
 }
+
+// Usage in server-side components
+const exchangeRate = await getExchangeRate('EUR')
 ```
 
 Or maybe you want to extract the type of the response because you need to pass it down to another component via a prop:
 
-```typescript
+```typescript {3}
 export interface SubComponentProps {
   // You probably want to abstract this type to `openApiTypes.ts` as you might need it in several places
   exchangeRate: ResponseType<'/currency/exchangerate', 'get'>
@@ -180,23 +219,27 @@ export interface SubComponentProps {
 export const SubComponent = ({
   exchangeRate: { base, date, rates },
 }: SubComponentProps) => {
-  return /** */
+  return ...
 }
 ```
 
 All of these helper types are available in [openApiTypes.ts](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/openApiTypes.ts).
-There also is a helper to type the `PathParams` you're supposed to pass to `apiCalls` (`/:userId` will give you `{ userId: string }`
-and `RequestBody` will give you the type of the expected body, if any)
+Each of them allow you to extract some info about the query:
+
+- `ResponseType` will give you the expected return type
+- `RequestParams` will give you all the expected parameters to pass in the query and path
+- `PathParams` will only give you the path params (`/users/:userId` will give you `{ userId: string }`)
+- `RequestBody` will give you the type of the expected body in `POST/PUT/PATCH` methods
 
 The beauty in this solution is that you **only ever rely on generated types**,
 that means when the backend changes, you'll immediately know that it did, and what code to change in your frontend.
 
 We are getting pretty damn close to great DX in REST aren't we? 😎
 
-<Callout type="warning" emoji="ℹ️">
+<Callout type="warning" emoji="⚠️">
   One thing to remember. **You should only rely on swaggers you trust**. Unlike
   trpc and GraphQL, this solution only gives you types, it doesn't ensure
   runtime validation of the data you receive. If the endpoints you're are
   targeting are notoriously unstable, I'd advise you use
-  [zod](https://github.com/colinhacks/zod) to also validate the data.
+  [zod](https://github.com/colinhacks/zod) to also validate the data at runtime.
 </Callout>
