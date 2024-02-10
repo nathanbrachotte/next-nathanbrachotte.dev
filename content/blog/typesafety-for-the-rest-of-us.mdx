@@ -20,7 +20,7 @@ Both allow you to generate TypeScript types from your backend, so they can be us
 But sometimes, you have to deal with 3rd party APIs, or you have a legacy REST API that you simply cannot change.
 In these cases, you will end up having to write types on your frontend, i.e., to **assume what the type of the parameters and of the response are** and hope for the best.
 
-BUT, here comes the good news: If the API you're working with has a [Swagger (OpenAPI)](https://swagger.io/specification/) file, **you actually can generate types from it! 🎉**
+BUT, here comes the good news: If the API you're working with has a [Swagger (OpenAPI)](https://swagger.io/specification/) definition, **you actually can generate types from it! 🎉**
 
 Let's explore together how the REST of us can also enjoy a great DX.
 
@@ -123,7 +123,7 @@ const exchangeRate = await apiCall('/currency/exchangerate', 'get', {
   handling](https://nextjs.org/docs/app/building-your-application/routing/error-handling)
   to take care of the error.
 </Callout>
-The same way that `openapi-fetch` does, we have a fully type response, but we now
+The same way that `openapi-fetch` does, we have a fully typed response, but we now
 own the code, so we can customise it.
 
 ### Auth with Next.js
