@@ -9,18 +9,19 @@ draft: true
 ## End-to-end Type Safety for the REST of us
 
 In modern web development, using <Badges.TypeScript /> efficiently is not just a luxury, it's a requirement to build robust, maintainable applications.
-With types comes a great DX and it's always easier to build great products when you're not always having to deal with the mental load of a poor DX.
+With well-written types come a great DX, and great DX allows for building (and maintaining) great products fast.
+One main issue, though, is that we have to write these types, and dealing with the mental load of writing types in addition to business logic can slow us down hard.
 
-You may have heard of tools like [GraphQL Codegen](https://the-guild.dev/graphql/codegen) or [trpc](https://trpc.io/).
-Both allow you to generate TypeScript types from your backend, so they can be used on your frontend.
+To solve that problem, you may have heard of tools like [GraphQL Codegen](https://the-guild.dev/graphql/codegen) or [trpc](https://trpc.io/).
+Both allow us to automatically generate TypeScript types from the backend, so they can be used on the frontend.
 
-- You either use the <Badges.GraphQL /> schema as a source (GraphQL checks at runtime that the types sent and returned correspond to the schema),
-- or you own the backend and can use <Badges.Trpc /> for your REST endpoints (trpc also does runtime data validation in and out).
+- In the case of <Badges.GraphQL />, we use the schema as a source (GraphQL checks at runtime that the types sent and returned correspond to the schema),
+- And by using <Badges.Trpc />, we directly build fully-typed REST endpoints (trpc also does runtime data validation in and out).
 
-But sometimes, you have to deal with 3rd party APIs, or you have a legacy REST API that you simply cannot change.
-In these cases, you will end up having to write types on your frontend, i.e., to **assume what the type of the parameters and of the response are** and hope for the best.
+But sometimes, we have to deal with 3rd party APIs, or a legacy REST API that we cannot easily change.
+In these cases, we will end up having to write types on the frontend, i.e., to **assume what the type of the parameters and of the response are** and hope for the best.
 
-BUT, here comes the good news: If the API you're working with has a [Swagger (OpenAPI)](https://swagger.io/specification/) definition, **you actually can generate types from it! 🎉**
+BUT here comes the good news: If the API we're working with has a [Swagger (OpenAPI)](https://swagger.io/specification/) definition, **we actually can generate types from it! 🎉**
 
 Let's explore together how the REST of us can also enjoy a great DX.
 
@@ -28,7 +29,7 @@ Let's explore together how the REST of us can also enjoy a great DX.
 
 ### API
 
-Assuming we want to consume an API that gives use exchange rates from a base
+Assuming we want to consume an API that gives us exchange rates from a base
 currency with a GET endpoint:
 
 <Image
@@ -48,7 +49,7 @@ package `npm i -D openapi-typescript@next`.
   code](https://github.com/nathanbrachotte/nextjs-openapi-example) by yourself.
 </Callout>
 
-You can now run `npx openapi-typescript 
+We can now run `npx openapi-typescript 
 $YOUR_API_FILE_OR_URL -o ./openApi.ts` to generate the types.
 
 <Image
@@ -59,7 +60,7 @@ $YOUR_API_FILE_OR_URL -o ./openApi.ts` to generate the types.
 />
 
 By pointing this command at a swagger.json file, whether it resides
-in your repo or behind a URL, you're able to generate a <Badges.TypeScript />
+in the same repo or behind a URL, we're able to generate a <Badges.TypeScript />
 file (called here `openApi.ts`) containing types that
 mirror your API's structure.
 
@@ -96,16 +97,13 @@ and we then get super nice autocompletion when we want to fetch data, and a the 
 Now you might be wondering "What if I want to use [tanstack-query](https://tanstack.com/query/latest)?"
 or "Will this work for both client and service side components in <Badges.Next /> ?
 
-I found that it's actually not that hard to build you custom client implementation based on the types.
-(I used another article as a starter for this implementation
-but couldn't find it anymore so I could not link it here,
-if you do find this article feel free to reach out 😄)
+I found that it's actually not that hard to build a custom client implementation based on the types.
 
-You can use this custom function, called `apiCall` in the [repo](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/customApiCall.ts).
-To use it, let's first install our client of choice (in my case [axios](https://github.com/axios/axios)) and
+We can use this custom function, called `apiCall` in the [repo](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/customApiCall.ts).
+To use it, let's first install our client of choice ([axios](https://github.com/axios/axios)) and
 [query-string](https://github.com/sindresorhus/query-string): `npm add axios query-string`
 
-Then, you simply can copy/paste the file into your project and use it like so:
+Then, simply copy/paste the file into your project and use it like so:
 
 ```typescript
 import { apiCall } from './apiCall'
@@ -120,18 +118,19 @@ const exchangeRate = await apiCall('/currency/exchangerate', 'get', {
   One difference to note, in this case we don't return an `error` object when
   something goes wrong, but instead throw an error as we want `react-query` or
   [Next.js server side error
-  handling](https://nextjs.org/docs/app/building-your-application/routing/error-handling)
-  to take care of the error.
+  handling](https://nextjs.org/docs/app/building-your-application/routing/error-handling)(or
+  any other framework's) to take care of the error.
 </Callout>
 The same way that `openapi-fetch` does, we have a fully typed response, but we now
 own the code, so we can customise it.
 
-### Auth with Next.js
+### Example Auth
 
-For example, if you want to pass a JWT in your headers when fetching data from
-both client and server components, the way you provide the token will be different.
+For example, we may want to pass a JWT in our headers. But in most modern frameworks (Next.js, Remix, etc)
+we either are running the code in the browser, or on a server.
+Therefore, the way we provide the token might differ based on the platform.
 
-So we can also add a custom parameter that will take a function that returns
+To solve this, we can add a custom parameter that will take a function that returns
 the token, and simply pass a different function based on which side of the web we are in:
 
 ```typescript /getToken/#b
@@ -168,7 +167,7 @@ As simple as that. Ez.
 
 ### "Yes yes, but.. I still have to create types to pass the correct values to these two functions"
 
-Well.. no quite. There actually are a couple of helpers that you can build that will help with that:
+Well.. not quite. There actually are a couple of helpers that we can use that will help with that:
 
 ```typescript /ExchangeRateQuery/#g {21, 35}
 const path = '/currency/exchangerate'
@@ -204,11 +203,11 @@ export async function getExchangeRate(baseCurrency: ExchangeRateQuery) {
   })
 }
 
-// Usage in server-side components
+// Usage on the server (Next.js RSC for example)
 const exchangeRate = await getExchangeRate('EUR')
 ```
 
-Or maybe you want to extract the type of the response because you need to pass it down to another component via a prop:
+Also, maybe we want to extract the type of the response because we need to pass it down to another React component via a prop:
 
 ```typescript {3}
 export interface SubComponentProps {
@@ -224,15 +223,15 @@ export const SubComponent = ({
 ```
 
 All of these helper types are available in [openApiTypes.ts](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/openApiTypes.ts).
-Each of them allow you to extract some info about the query:
+Each of them allow us to extract some info about the query:
 
-- `ResponseType` will give you the expected return type
-- `RequestParams` will give you all the expected parameters to pass in the query and path
-- `PathParams` will only give you the path params (`/users/:userId` will give you `{ userId: string }`)
-- `RequestBody` will give you the type of the expected body in `POST/PUT/PATCH` methods
+- `ResponseType` will give the expected return type
+- `RequestParams` will give all the expected parameters to pass in the query and path
+- `PathParams` will only give the path params (`/users/:userId` will give you `{ userId: string }`)
+- `RequestBody` will give the type of the expected body in `POST/PUT/PATCH` methods
 
-The beauty in this solution is that you **only ever rely on generated types**,
-that means when the backend changes, you'll immediately know that it did, and what code to change in your frontend.
+The beauty in this solution is that we **only ever rely on generated types**,
+that means when the backend changes, and we update our generated types, we'll immediately know what changed simply by checking our types.
 
 We are getting pretty damn close to great DX in REST aren't we? 😎
 
