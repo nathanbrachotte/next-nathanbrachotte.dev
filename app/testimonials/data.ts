@@ -12,7 +12,7 @@ export interface Testimonial {
 
 export const testimonials = [
   {
-    name: 'Hhayyaan Ahmad',
+    name: 'Hayyaan Ahmad',
     paragraphs: [
       "Nathan is a great Product engineer, communicator and teammate all in one! He came in really early days when we had a bootstrapped product and lead our front-end development. He's really experienced with Typescript and the whole ecosystem, and is great at developing the team and project to follow best practices.",
       'He not only delivered high-quality code week in week out but also helped others on the team be more productive and hold high standards. His focus on type safety and improving the user experience is particularly impressive. He often looked beyond the corner and acted like an owner to ensure the product worked amazingly well, and was around when things went wrong with a calm head to ensure we stayed operational.',
