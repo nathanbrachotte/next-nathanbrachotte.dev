@@ -12,6 +12,19 @@ export interface Testimonial {
 
 export const testimonials = [
   {
+    name: 'Hhayyaan Ahmad',
+    paragraphs: [
+      "Nathan is a great Product engineer, communicator and teammate all in one! He came in really early days when we had a bootstrapped product and lead our front-end development. He's really experienced with Typescript and the whole ecosystem, and is great at developing the team and project to follow best practices.",
+      'He not only delivered high-quality code week in week out but also helped others on the team be more productive and hold high standards. His focus on type safety and improving the user experience is particularly impressive. He often looked beyond the corner and acted like an owner to ensure the product worked amazingly well, and was around when things went wrong with a calm head to ensure we stayed operational.',
+      'I found him a delight to work with and have no doubt he would be invaluable to any tech team passionate about building high quality software in a fun team culture - ask him about his Crepe machine!',
+    ],
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
+    pic: '/images/testimonials/hayyaan.webp',
+    authorLink: 'https://www.linkedin.com/in/hayyaan/',
+    position: 'CTO at Round',
+    type: 'clients',
+  },
+  {
     name: 'Sebastiaan Debrouwere',
     paragraphs: [
       'Nathan joined our team at Genie as one of the first engineers. He played an instrumental role in laying the technical foundations of building our software, and our engineering culture. In the year we worked together he consistently delivered high quality work at a rapid pace, exhibited tremendous ownership and pragmatism.',
