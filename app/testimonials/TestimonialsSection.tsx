@@ -46,7 +46,10 @@ export const TestimonialsSection = ({ filters }: TestimonialsSectionProps) => {
               )}
             />
             {testimonial.paragraphs.map((paragraph, i) => (
-              <p key={i} className="text-md">
+              <p
+                key={i}
+                className="text-md not-italic text-slate-200 md:text-lg"
+              >
                 {paragraph}
               </p>
             ))}
