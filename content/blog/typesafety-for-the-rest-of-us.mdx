@@ -1,15 +1,15 @@
 ---
 title: 'End-to-end type safety for the REST of us.'
 publishedAt: '2024-02-01'
-summary: "Just because we aren't using GraphQL or trpc in our TypeScript projects doesn't mean we have to have suffer consuming REST APIs. Let's fix this."
+summary: "Just because we have to deal with 3rd party REST APIs doesn't mean we have suffer."
 image: '/images/blog/typesafety-for-the-rest-of-us/cover.webp'
 ---
 
 ## End-to-end Type Safety for the REST of us
 
-In modern web development, using <Badges.TypeScript /> efficiently is not just a luxury, it's a requirement to modern apps.
+In modern web development, using <Badges.TypeScript /> efficiently is not just a luxury, it's a requirement to write reliable apps.
 With well-written types come a great DX, and great DX allows for building (and maintaining) great products fast.
-One main issue, though, is that we have to write these types, and dealing with the mental load of writing types in addition to business logic can slow us down hard.
+One main issue, though, is that often end up having to write these types, and dealing with the mental load of writing types and making them work together in addition to business logic can slow us down hard.
 
 To solve that problem, you may have heard of tools like [GraphQL Codegen](https://the-guild.dev/graphql/codegen) or [trpc](https://trpc.io/).
 Both allow us to automatically generate TypeScript types from the backend, so they can be used on the frontend.
