@@ -78,7 +78,7 @@ const { GET } = createClient<paths>({
 })
 ```
 
-and we then get super nice autocompletion when we want to fetch data, and a the returned data is also typed:
+This setup gives us autocompletion when fetching data, and the returned data is also typed:
 
 <Image
   alt={`Forbidden error response`}
@@ -88,18 +88,17 @@ and we then get super nice autocompletion when we want to fetch data, and a the 
   height={1080}
 />
 
-## A custom alternative
+## A Custom Alternative
 
-Now you might be wondering "What if I want to use [tanstack-query](https://tanstack.com/query/latest)?"
-or "Will this work for both client and service side components in <Badges.Next /> ?
+You might now be wondering if it's possible to use [tanstack-query](https://tanstack.com/query/latest)
+or if this approach works for client and server-side components in <Badges.Next />.
 
-I found that it's actually not that hard to build a custom client implementation based on the types.
+It's actually not that hard to build a custom client implementation based on the types we generated.
 
-We can use this custom function, called `apiCall` in the [repo](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/customApiCall.ts).
-To use it, let's first install our client of choice ([axios](https://github.com/axios/axios)) and
-[query-string](https://github.com/sindresorhus/query-string): `npm add axios query-string`
+Consider the custom function, `apiCall`, available in the [repository](https://github.com/nathanbrachotte/nextjs-openapi-example/blob/main/src/customApiCall.ts).
+Before using it, install our chosen client ([axios](https://github.com/axios/axios)) and [query-string](https://github.com/sindresorhus/query-string): `npm add axios query-string`.
 
-Then, simply copy/paste the file into your project and use it like so:
+Copy the `apiCall` function file into your project and use it as follows:
 
 ```typescript
 import { apiCall } from './apiCall'
