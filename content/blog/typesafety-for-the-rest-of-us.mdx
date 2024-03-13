@@ -1,33 +1,32 @@
 ---
 title: 'End-to-end type safety for the REST of us.'
 publishedAt: '2024-02-01'
-summary: "Just because we have to deal with 3rd party REST APIs doesn't mean we have suffer."
+summary: "Just because we're dealing with 3rd party REST APIs doesn't mean we have to suffer."
 image: '/images/blog/typesafety-for-the-rest-of-us/cover.webp'
 ---
 
-In modern web development, using <Badges.TypeScript /> efficiently is not just a luxury, it's a requirement to write reliable apps.
-With well-written types come a great DX, and great DX allows for building (and maintaining) great products fast.
-One main issue, though, is that often end up having to write these types, and dealing with the mental load of writing types and making them work together in addition to business logic can slow us down hard.
+In modern web development, using <Badges.TypeScript /> efficiently is not just a luxury; it's a requirement for writing reliable apps.
+With well-written types, we get a great Developer Experience (DX), and a great DX allows for the fast building and maintaining of great products.
+However, a major challenge is often the need to write these types, and dealing with the mental load of ensuring they work together in addition to managing business logic can significantly slow us down.
 
-To solve that problem, you may have heard of tools like [GraphQL Codegen](https://the-guild.dev/graphql/codegen) or [trpc](https://trpc.io/).
-Both allow us to automatically generate TypeScript types from the backend, so they can be used on the frontend.
+To address this issue, you may be familiar with tools like [GraphQL Codegen](https://the-guild.dev/graphql/codegen) or [trpc](https://trpc.io/).
+Both tools enable us to automatically generate TypeScript types from the backend for use on the frontend.
 
-- In the case of <Badges.GraphQL />, we use the schema as a source (GraphQL checks at runtime that the types sent and returned correspond to the schema),
-- And by using <Badges.Trpc />, we directly build fully-typed REST endpoints (trpc also does runtime data validation in and out).
+- With <Badges.GraphQL />, we use the schema as a source (GraphQL checks at runtime that the types sent and received match the schema),
+- And with <Badges.Trpc />, we directly build fully-typed REST endpoints (trpc also performs runtime data validation).
 
-But sometimes, we have to deal with 3rd party APIs, or a legacy REST API that we cannot easily change.
-In these cases, we will end up having to write types on the frontend, i.e., to **assume what the type of the parameters and of the response are** and hope for the best.
+But sometimes, we're faced with 3rd party APIs, or a legacy REST API that isn't easily changed.
+In these scenarios, we end up writing types on the frontend, essentially **assuming the type of parameters and responses** and hoping for the best.
 
-BUT here comes the good news: If the API we're working with has a [Swagger (OpenAPI)](https://swagger.io/specification/) definition, **we actually can generate types from it! 🎉**
+BUT here's the good news: If the API we're working with has a [Swagger (OpenAPI)](https://swagger.io/specification/) definition, **we can actually generate types from it! 🎉**
 
-Let's explore together how the REST of us can also enjoy a great DX.
+Let's explore how the REST of us can also enjoy a great DX.
 
-## Generating types
+## Generating Types
 
 ### API
 
-Assuming we want to consume an API that gives us exchange rates from a base
-currency with a GET endpoint:
+Assuming we're consuming an API that provides exchange rates from a base currency with a GET endpoint:
 
 <Image
   alt={`Forbidden error response`}
@@ -37,18 +36,16 @@ currency with a GET endpoint:
   height={1946}
 />
 
-### Adding openapi-typescript to your project
+### Adding openapi-typescript to Your Project
 
-In a TS project, let's install the [openapi-typescript](https://openapi-ts.pages.dev/)
-package `npm i -D openapi-typescript@next`.
+In a <Badges.TypeScript /> project, we can simply install the [openapi-typescript](https://openapi-ts.pages.dev/) package `npm i -D openapi-typescript@next`.
 
 <Callout type="info" emoji="ℹ️">
-  You can also dig into the [example
+  You can also explore the [example
   code](https://github.com/nathanbrachotte/nextjs-openapi-example) by yourself.
 </Callout>
 
-We can now run `npx openapi-typescript 
-$YOUR_API_FILE_OR_URL -o ./openApi.ts` to generate the types.
+We can then run `npx openapi-typescript $YOUR_API_FILE_OR_URL -o ./openApi.ts` to generate the types.
 
 <Image
   alt={`Forbidden error response`}
@@ -58,20 +55,19 @@ $YOUR_API_FILE_OR_URL -o ./openApi.ts` to generate the types.
   height={202}
 />
 
-By pointing this command at a swagger.json file, whether it resides
-in the same repo or behind a URL, we're able to generate a <Badges.TypeScript />
-file (called here `openApi.ts`) containing types that
+By directing this command at a swagger.json file, whether it's
+in the same repo or behind a URL, we generate a <Badges.TypeScript /> file (here called `openApi.ts`) containing types that
 mirror your API's structure.
 
-## Fetch data with the generated types
+## Fetching Data with the Generated Types
 
 ### Using openapi-fetch
 
-We can now very simply consume this API with the types with `openapi-fetch` ([docs](https://github.com/drwpow/openapi-typescript)). It uses `axios` under the hood.
+Now, we can easily consume this API with the generated types using `openapi-fetch` ([docs](https://github.com/drwpow/openapi-typescript)), which utilizes `axios` under the hood.
 
 `npm i openapi-fetch`
 
-We just have to create a client instance that will take the `paths` type as a generic:
+We just need to create a client instance that takes the `paths` type as a generic:
 
 ```typescript
 import createClient from 'openapi-fetch'
