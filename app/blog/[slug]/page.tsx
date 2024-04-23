@@ -5,7 +5,7 @@ import { allBlogs } from 'contentlayer/generated'
 import Balancer from 'react-wrap-balancer'
 import ViewCounter from '../view-counter'
 import { getTimePerPost } from 'helpers/time'
-import { getViewsCount } from 'lib/metrics'
+import { getViewCount, getViewsCount } from 'lib/metrics'
 import Image from 'next/image'
 import { TwitterButton } from 'app/blog/[slug]/TwitterButton'
 import { GradientLink } from 'app/components/GradientLink'
@@ -73,14 +73,11 @@ export async function generateMetadata({
 
 export default async function Blog({ params }) {
   const post = findBlogPost(params.slug)
+  const viewCount = await getViewCount(params.slug)
 
   if (!post) {
     notFound()
   }
-
-  const allViews = await getViewsCount()
-
-  const hasFetchedViews = allViews.length > 0
 
   return (
     <section>
@@ -108,12 +105,10 @@ export default async function Blog({ params }) {
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           📅 {getDateWithDistance(post.publishedAt)} -{' '}
           {getTimePerPost(post.body.raw)}
-          {hasFetchedViews ? (
-            <>
-              {' - '}
-              <ViewCounter allViews={allViews} slug={post.slug} trackView />
-            </>
-          ) : null}
+          <>
+            {' - '}
+            <ViewCounter viewCount={viewCount} slug={post.slug} trackView />
+          </>
         </p>
       </div>
       <Separator className="mt-6" />

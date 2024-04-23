@@ -1,9 +1,10 @@
 'use server'
 
-import { revalidateTag } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { kv } from '@vercel/kv'
 import { BLOG_POST_VIEWS_KEY } from 'app/constants'
 import { removeSlugPrefix } from 'helpers/slug.helpers'
+import { getViewCount } from 'lib/metrics'
 
 /**
  * Server actions
@@ -11,9 +12,9 @@ import { removeSlugPrefix } from 'helpers/slug.helpers'
 export async function increment(slug: string) {
   try {
     const cleanSlug = removeSlugPrefix(slug)
+    const viewCount = await getViewCount(slug)
 
-    const currentViews = await kv.get<number>(BLOG_POST_VIEWS_KEY + cleanSlug)
-    await kv.set(BLOG_POST_VIEWS_KEY + cleanSlug, (currentViews ?? 0) + 1)
+    await kv.set(BLOG_POST_VIEWS_KEY + cleanSlug, (viewCount ?? 0) + 1)
 
     revalidateTag(BLOG_POST_VIEWS_KEY)
   } catch (error) {

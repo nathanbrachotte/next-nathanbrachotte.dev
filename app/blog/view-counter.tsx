@@ -5,24 +5,28 @@ export default function ViewCounter({
   slug,
   allViews,
   trackView,
+  viewCount,
 }: {
   slug: string
-  allViews: ViewsCount
+  allViews?: ViewsCount
   trackView?: boolean
+  viewCount?: number | null
 }) {
-  const viewsForSlug = allViews && allViews.find((view) => view.slug === slug)
+  // If passing a view count, we don't need to find it in allViews
+  const viewsForSlug =
+    viewCount ||
+    (allViews && allViews.find((view) => view.slug === slug)?.count)
 
   if (trackView) {
     increment(slug)
   }
 
-  if (!viewsForSlug?.count) {
+  if (viewsForSlug == null) {
     return null
   }
 
-  const number = new Number(
-    trackView ? viewsForSlug.count + 1 : viewsForSlug.count,
-  )
+  // If we trackView, we incremented the DB so we need to add 1 to the count when displaying it
+  const number = new Number(trackView ? viewsForSlug + 1 : viewsForSlug)
 
   return (
     <span className="text-neutral-400">
