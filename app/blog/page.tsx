@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { allBlogs } from 'contentlayer/generated'
-// import ViewCounter from './view-counter'
 import { twMerge } from 'tailwind-merge'
 import { parseISO, format } from 'date-fns'
 import { getTimePerPost } from 'helpers/time'
@@ -9,7 +8,6 @@ import { ViewsCount, getViewsCount } from 'lib/metrics'
 import ViewCounter from 'app/blog/view-counter'
 import Image from 'next/image'
 import { PageTitle } from 'app/components/PageTitle'
-// import { getViewsCount } from 'lib/metrics'
 
 export const metadata: Metadata = {
   title: 'Blog',
