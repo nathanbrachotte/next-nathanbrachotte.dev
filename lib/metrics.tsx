@@ -27,3 +27,5 @@ export const getViewsCount = unstable_cache(async () => {
     return []
   }
 })
+
+export type ViewsCount = Awaited<ReturnType<typeof getViewsCount>>
