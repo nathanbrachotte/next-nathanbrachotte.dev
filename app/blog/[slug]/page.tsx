@@ -86,6 +86,7 @@ export default async function Blog({ params }) {
   }
 
   const allViews = await getViewsCount()
+  console.log({ allViews })
   const hasFetchedViews = allViews.length > 0
 
   return (
@@ -117,11 +118,7 @@ export default async function Blog({ params }) {
           {hasFetchedViews ? (
             <>
               {' - '}
-              <ViewCounter
-                allViews={allViews ?? []}
-                slug={post.slug}
-                trackView
-              />
+              <ViewCounter allViews={allViews} slug={post.slug} trackView />
             </>
           ) : null}
         </p>

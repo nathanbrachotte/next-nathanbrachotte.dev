@@ -3,12 +3,17 @@ import 'server-only'
 import { unstable_cache } from 'next/cache'
 import { allBlogs } from 'contentlayer/generated'
 import { kv } from '@vercel/kv'
+import { removeSlugPrefix } from 'helpers/slug.helpers'
+import { BLOG_POST_VIEWS_KEY } from 'app/constants'
 
 export const getViewsCount = unstable_cache(async () => {
   try {
     const allViews = await Promise.all(
       allBlogs.map(async (post) => {
-        const views = await kv.get<number>(`blog_post_views_${post.slug}`)
+        const cleanSlug = removeSlugPrefix(post.slug)
+
+        const views = await kv.get<number>(BLOG_POST_VIEWS_KEY + cleanSlug)
+        console.log({ views, cleanSlug })
         return {
           slug: post.slug,
           count: views ?? 0,
