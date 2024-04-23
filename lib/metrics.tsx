@@ -1,68 +1,24 @@
 import 'server-only'
 
-// import { google } from 'googleapis'
-import { queryBuilder } from 'lib/planetscale'
-import { cache } from 'react'
+import { unstable_cache } from 'next/cache'
+import { allBlogs } from 'contentlayer/generated'
+import { kv } from '@vercel/kv'
 
-// const googleAuth = new google.auth.GoogleAuth({
-//   credentials: {
-//     client_email: process.env.GOOGLE_CLIENT_EMAIL,
-//     private_key: process.env.GOOGLE_PRIVATE_KEY,
-//   },
-//   scopes: ['https://www.googleapis.com/auth/youtube.readonly'],
-// })
-
-// const youtube = google.youtube({
-//   version: 'v3',
-//   auth: googleAuth,
-// })
-
-export const getBlogViews = cache(async () => {
-  if (!process.env.DATABASE_HOST) {
-    return 0
-  }
-
+export const getViewsCount = unstable_cache(async () => {
   try {
-    const data = await queryBuilder
-      .selectFrom('views')
-      .select(['count'])
-      .execute()
-
-    return data.reduce((acc, curr) => acc + Number(curr.count), 0)
-  } catch (error) {
-    console.error({ error })
-    return null
-  }
-})
-
-export const getViewsCount = cache(async () => {
-  try {
-    return await queryBuilder
-      .selectFrom('views')
-      .select(['slug', 'count'])
-      .execute()
+    const allViews = await Promise.all(
+      allBlogs.map(async (post) => {
+        const views = await kv.get<number>(`blog_post_views_${post.slug}`)
+        return {
+          slug: post.slug,
+          count: views ?? 0,
+        }
+      }),
+    )
+    console.log({ allViews })
+    return allViews
   } catch (error) {
     console.error({ error })
     return []
   }
 })
-
-// export const getLeeYouTubeSubs = cache(async () => {
-//   const response = await youtube.channels.list({
-//     id: ['UCZMli3czZnd1uoc1ShTouQw'],
-//     part: ['statistics'],
-//   })
-
-//   let channel = response.data.items![0]
-//   return Number(channel?.statistics?.subscriberCount)
-// })
-
-// export const getVercelYouTubeSubs = cache(async () => {
-//   const response = await youtube.channels.list({
-//     id: ['UCLq8gNoee7oXM7MvTdjyQvA'],
-//     part: ['statistics'],
-//   })
-
-//   let channel = response.data.items![0]
-//   return Number(channel?.statistics?.subscriberCount)
-// })
