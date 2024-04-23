@@ -56,20 +56,7 @@ export async function generateMetadata({
       publishedTime,
       url: `https://nathanbrachotte.dev/${slug}`,
       ...(image && {
-        images: [
-          {
-            url: dynamicOGImage,
-            width: 1200,
-            height: 630,
-            alt: title,
-          },
-          {
-            url: coverFallback,
-            width: 1200,
-            height: 630,
-            alt: title,
-          },
-        ],
+        images: [dynamicOGImage],
       }),
     },
     twitter: {
