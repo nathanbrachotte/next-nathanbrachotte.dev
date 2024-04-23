@@ -11,7 +11,6 @@ export default function ViewCounter({
   trackView?: boolean
 }) {
   const viewsForSlug = allViews && allViews.find((view) => view.slug === slug)
-  console.log({ slug, allViews, viewsForSlug })
 
   if (trackView) {
     increment(slug)

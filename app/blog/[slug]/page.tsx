@@ -79,7 +79,7 @@ export default async function Blog({ params }) {
   }
 
   const allViews = await getViewsCount()
-  console.log({ allViews })
+
   const hasFetchedViews = allViews.length > 0
 
   return (
