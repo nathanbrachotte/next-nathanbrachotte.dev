@@ -1,5 +1,5 @@
 import { increment } from 'app/actions'
-import { getViewsCount } from 'lib/metrics'
+import { ViewsCount } from 'lib/metrics'
 
 export default function ViewCounter({
   slug,
@@ -7,7 +7,7 @@ export default function ViewCounter({
   trackView,
 }: {
   slug: string
-  allViews: Awaited<ReturnType<typeof getViewsCount>>
+  allViews: ViewsCount
   trackView?: boolean
 }) {
   const viewsForSlug = allViews && allViews.find((view) => view.slug === slug)
@@ -21,7 +21,9 @@ export default function ViewCounter({
     return null
   }
 
-  const number = new Number(viewsForSlug.count)
+  const number = new Number(
+    trackView ? viewsForSlug.count + 1 : viewsForSlug.count,
+  )
 
   return (
     <span className="text-neutral-400">

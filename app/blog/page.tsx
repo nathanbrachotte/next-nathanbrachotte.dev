@@ -5,7 +5,7 @@ import { allBlogs } from 'contentlayer/generated'
 import { twMerge } from 'tailwind-merge'
 import { parseISO, format } from 'date-fns'
 import { getTimePerPost } from 'helpers/time'
-import { getViewsCount } from 'lib/metrics'
+import { ViewsCount, getViewsCount } from 'lib/metrics'
 import ViewCounter from 'app/blog/view-counter'
 import Image from 'next/image'
 import { PageTitle } from 'app/components/PageTitle'
@@ -30,7 +30,7 @@ const BlogPostCard = ({
 }: {
   blog: (typeof allBlogs)[number]
   index: number
-  allViews: Awaited<ReturnType<typeof getViewsCount>>
+  allViews: ViewsCount
 }) => {
   const { title, summary, slug, publishedAt, body, image } = blog
 
