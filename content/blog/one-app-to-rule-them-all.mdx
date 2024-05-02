@@ -1,124 +1,127 @@
 ---
 title: 'One app to rule them all'
 publishedAt: '2024-04-01'
-summary: 'Get rid of extra tools like Paste & Rectangle, just by unlocking Raycast to its full potential.'
+summary: 'Harness the full power of Raycast to eliminate the need for separate tools like Paste and Rectangle.'
 image: '/images/blog/one-app-to-rule-them-all/cover.webp'
 ---
 
-Everyone's heard of [Raycast](https://www.raycast.com/), it's an app launcher à la Alfred.
-What most people don't know is that it can actually do a lot more and really reduce the amount of apps you have running:
+Recently, [Raycast](https://www.raycast.com/) has been making waves as a sleek, modern alternative to traditional app launchers like [Alfred](https://www.alfredapp.com/).
+While many users download it simply to open apps, they often overlook its full capabilities.
+Raycast can significantly reduce the number of applications you have running:
 
-- Clipboard & snippet manager (like [PasteApp](https://pasteapp.io/))
-- Window management tool (like [Rectangle](https://rectangleapp.com/))
-- Translations (like [DeepL](https://www.deepl.com/))
-- App launcher hotkeys (like [Alfred](https://www.alfredapp.com/) does)
-- Password manager (like [Bitwarden](https://bitwarden.com/))
+- Clipboard & snippet manager (replacing apps like [PasteApp](https://pasteapp.io/))
+- Window management tool (replacing apps like [Rectangle](https://rectangleapp.com/))
+- Translation tool (using [DeepL](https://www.deepl.com/) API)
+- App launcher hotkeys (replacing apps like [Alfred](https://www.alfredapp.com/) & Spotlight)
+- Password manager (using [Bitwarden](https://bitwarden.com/) API)
 
-## Setting it up
+## Setting it Up
 
 1. First, you need to take a look at their [landing page](https://www.raycast.com/) because hot damn 😍
-1. Install it
-1. (Optional) You can even decide to [replace spotlight](https://manual.raycast.com/hotkey) completly to use `⌘ + Space` instead of `⌥ + Space`
+1. Optionally, consider [replacing Spotlight](https://manual.raycast.com/hotkey) completely to use `⌘ + Space` instead of `⌥ + Space`.
+
    <Image
-     alt={`Spotlight replacement`}
-     src={`/images/blog/one-app-to-rule-them-all/settings.webp`}
+     alt="Spotlight replacement"
+     src="/images/blog/one-app-to-rule-them-all/settings.webp"
      priority
      width={2300}
      height={1560}
    />
 
-## Clipboard & snippet manager
+## Clipboard & Snippet Manager
 
-1.  [Set a hotkey](https://manual.raycast.com/command-aliases-and-hotkeys) to instantly see the clipboard history
+1. [Set a hotkey](https://manual.raycast.com/command-aliases-and-hotkeys) to instantly access your clipboard history.
 
-    <Image
-      alt={`Spotlight replacement`}
-      src={`/images/blog/one-app-to-rule-them-all/hotkey.webp`}
-      priority
-      width={2300}
-      height={1600}
-    />
+   <Image
+     alt="Clipboard history access"
+     src="/images/blog/one-app-to-rule-them-all/hotkey.webp"
+     priority
+     width={2300}
+     height={1600}
+   />
 
-    You can now bring up your clipboard history in one shortcut (I use `Shift + ⌘ + X`)
+   You can now summon your clipboard history with one shortcut (I use `Shift + ⌘ + X`).
 
-    <Image
-      alt={`Spotlight replacement`}
-      src={`/images/blog/one-app-to-rule-them-all/clipboard-history.webp`}
-      priority
-      width={1800}
-      height={1248}
-    />
+   <Image
+     alt="Clipboard history"
+     src="/images/blog/one-app-to-rule-them-all/clipboard-history.webp"
+     priority
+     width={1800}
+     height={1248}
+   />
 
-1.  Familiarize yourself with the shortcuts, you can either paste directly (`Enter`) or copy to the clipboard with (`⌘ + Enter`) and then only paste normally later on.
-    To see all possible actions on an item, you can hit `⌘ + K`.
+1. Learn the shortcuts: paste directly with `Enter` or copy to the clipboard with `⌘ + Enter` to paste normally later. Press `⌘ + K` to view all actions available for an item.
 
-1.  (Optional) Pin your important/recurrent text
+1. Optionally, pin your important or frequently used text.
 
-    <Image
-      alt={`Spotlight replacement`}
-      src={`/images/blog/one-app-to-rule-them-all/pin.webp`}
-      priority
-      width={1800}
-      height={1248}
-    />
+   <Image
+     alt="Pin text"
+     src="/images/blog/one-app-to-rule-them-all/pin.webp"
+     priority
+     width={1800}
+     height={1248}
+   />
 
-1.  (Optional) For the other texts you want to keep, but not always show on top of the clipboard history, you can set them as snippets:
-    <Image
-      alt={`Spotlight replacement`}
-      src={`/images/blog/one-app-to-rule-them-all/save-as-snippet.webp`}
-      width={1800}
-      height={1248}
-    />
+1. For other texts you want to keep but not always show at the top of the clipboard history, save them as snippets:
+
+   <Image
+     alt="Save as snippet"
+     src="/images/blog/one-app-to-rule-them-all/save-as-snippet.webp"
+     width={1800}
+     height={1248}
+   />
 
 ## Snippets
 
-[Snippets](https://manual.raycast.com/snippets) are really useful as you can dynamically load extra information and set shortcuts to trigger them.
-For example, I use them to easily paste a JWT in my GraphQL console:
+[Snippets](https://manual.raycast.com/snippets) are incredibly useful as they allow you to dynamically load information and set shortcuts to trigger them.
+For instance, I use them to easily paste a JWT into my GraphQL console:
 
-1. Type `Create snippets` in the search bar
-1. Write snippets and make use of [dynamic placeholder](https://manual.raycast.com/dynamic-placeholders), in this
+1. Type "Create snippets" in the search bar.
+1. Write snippets and use [dynamic placeholders](https://manual.raycast.com/dynamic-placeholders), like this:
 
    <Image
-     alt={`Snippet`}
-     src={`/images/blog/one-app-to-rule-them-all/snippet.webp`}
+     alt="Dynamic snippet example"
+     src="/images/blog/one-app-to-rule-them-all/snippet.webp"
      width={672}
      height={471}
    />
-   (I always prefix all my snippets with `r:`)
 
-Now all I need to do is to type `r:auth` and it will instantly write `{ Authorization: "Bearer eydsadsa.."}` with the prefilled JWT.
+   (I always prefix all my snippets with `r:`.)
 
-## Window management
+Now, by simply typing `r:auth`, it instantly writes `{ Authorization: "Bearer eydsadsa.."}` with the prefilled JWT.
 
-Surprisingly, Raycast also offers pretty damn good [window management](https://manual.raycast.com/window-management) commands out of the box.
-The only thing I had to do was setting my Rectangle shortcuts into the `Window management` settings (type `Window` then `⬆ + ⌘ + ,`).
+## Window Management
+
+Raycast also offers impressive [window management](https://manual.raycast.com/window-management) commands out of the box.
+You only have to add your (Rectangle) shortcuts into the `Window management` settings (type `Window` then `⬆ + ⌘ + ,`).
 
 <Image
-  alt={`Snippet`}
-  src={`/images/blog/one-app-to-rule-them-all/window-management.webp`}
+  alt="Window management settings"
+  src="/images/blog/one-app-to-rule-them-all/window-management.webp"
   width={2300}
   height={1600}
 />
 
-You only have to set the `Left Half` and `Right Half` shortcuts to also get the `1/3` and `2/3` windows positions when repeating the shortcut. You can decide if you want to keep this behavior in the `Cycling` section on the right.
+You only need to set the `Left Half` and `Right Half` shortcuts to also get the `1/3` and `2/3` window positions when repeating the shortcut.
+You can choose whether to maintain this behavior in the `Cycling` section on the right.
 
-## App launcher shortcuts
+## App Launcher Shortcuts
 
-This also comes out of the box, you can set your favorite apps to launch with a hotkey (type the name of your app and then `⬆ + ⌘ + ,`).
+This feature also comes built-in. You can assign hotkeys to launch your most used apps (type the name of your app and then `⬆ + ⌘ + ,`).
 
 <Image
-  alt={`Snippet`}
-  src={`/images/blog/one-app-to-rule-them-all/warp.webp`}
+  alt="App launch shortcut example"
+  src="/images/blog/one-app-to-rule-them-all/warp.webp"
   priority
   width={1724}
   height={359}
 />
 
-I use (`⌥ + letter`) to launch apps.
+I use `⌥ + letter` for launching apps.
 
 <Image
-  alt={`Snippet`}
-  src={`/images/blog/one-app-to-rule-them-all/hotkeys.webp`}
+  alt="App hotkeys setup"
+  src="/images/blog/one-app-to-rule-them-all/hotkeys.webp"
   priority
   width={2300}
   height={1600}
@@ -126,11 +129,11 @@ I use (`⌥ + letter`) to launch apps.
 
 ## Translations
 
-This one is a little trickier but allows me to get instant translations on small text snippets.
+This feature is a bit trickier to setup but allows for instant translations of small text snippets.
 
 <Image
-  alt={`Snippet`}
-  src={`/images/blog/one-app-to-rule-them-all/translate2.gif`}
+  alt="Translation example"
+  src="/images/blog/one-app-to-rule-them-all/translate2.gif"
   priority
   width={1700}
   height={1700}
@@ -145,10 +148,10 @@ This one is a little trickier but allows me to get instant translations on small
      width={1800}
      height={1248}
    />
-1. Set your API key in the extension settings
+1. Enter your API key in the extension settings.
    <Image
-     alt={`Snippet`}
-     src={`/images/blog/one-app-to-rule-them-all/deepl-api-key.webp`}
+     alt="API key settings"
+     src="/images/blog/one-app-to-rule-them-all/deepl-api-key.webp"
      width={2300}
      height={1600}
    />
@@ -157,42 +160,41 @@ This one is a little trickier but allows me to get instant translations on small
 ## Password manager
 
 <Callout emoji="💡" type="info">
-  This workflow will roughly be equivalent for most password managers, if you
-  don't use Bitwarden, expect somewhat similar steps.
+  This workflow will roughly be equivalent for most password managers. If you
+  don't use Bitwarden, expect somewhat similar steps for 1Password or LastPass.
 </Callout>
+1. Search for "Bitwarden" in the store and install it.
 
-Search the `Bitwarden` in the store and install it.
+    <Image
+      alt="Bitwarden store page"
+      src="/images/blog/one-app-to-rule-them-all/bitwarden-store.webp"
+      width={1800}
+      height={1248}
+    />
 
-<Image
-  alt={`Snippet`}
-  src={`/images/blog/one-app-to-rule-them-all/bitwarden-store.webp`}
-  width={1800}
-  height={1248}
-/>
+1. Then go to your Bitwarden account's settings and retrieve your API keys.
 
-Then go to your Bitwarden account's settings and get your API keys.
+   <Image
+     alt="Bitwarden API keys"
+     src="/images/blog/one-app-to-rule-them-all/bitwarden-keys.webp"
+     priority
+     width={2640}
+     height={1994}
+   />
 
-<Image
-  alt={`Snippet`}
-  src={`/images/blog/one-app-to-rule-them-all/bitwarden-keys.webp`}
-  priority
-  width={2640}
-  height={1994}
-/>
+1. On the first run, you will be prompted to enter the keys, and once done, you can access your vault by typing "bit".
 
-On the first run, you will be asked to enter the keys, once you have done that, you can access your vault by typing `bit`.
+   <Image
+     alt="Accessing Bitwarden vault"
+     src="/images/blog/one-app-to-rule-them-all/bitwarden-access.webp"
+     width={1800}
+     height={1248}
+   />
 
-<Image
-  alt={`Snippet`}
-  src={`/images/blog/one-app-to-rule-them-all/bitwarden-access.webp`}
-  width={1800}
-  height={1248}
-/>
-
-You know have access to your vault like you would with their desktop app 🥳
+You now have access to your vault just as you would with the desktop app 🥳
 
 ## Conclusion
 
-Hopefully this helped you get rid of some apps running in the background of your computer and made you gain some speed in your workflow!
+Hopefully, this guide has helped you streamline your computer by eliminating redundant apps and enhancing your workflow!
 
-If there is any other feature from Raycast that you think could be useful to be added in this post, feel free to [reach out](https://twitter.com/nathanbrachotte) 🤗
+If there are any other Raycast features you think could be useful to include in this post, feel free to [reach out](https://twitter.com/nathanbrachotte) 🤗
