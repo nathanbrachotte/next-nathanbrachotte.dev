@@ -86,7 +86,7 @@ export async function GET(request: Request) {
             </div>
             <div tw="flex">
               <div tw="flex justify-start items-start mr-[10%]">
-                <p tw="text-6xl tracking-tight font-bold leading-tight my-0 text-left">
+                <p tw="text-6xl tracking-tight font-bold leading-tight my-0 mb-4 text-left">
                   <div
                     style={{
                       position: 'absolute',
