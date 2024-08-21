@@ -1,9 +1,10 @@
-import './globals.css'
 import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import Navbar from './components/navbar'
 import { Analytics } from '@vercel/analytics/react'
+import Script from 'next/script'
+import './globals.css'
 
 const graphik = localFont({
   src: [
@@ -70,6 +71,7 @@ export default function RootLayout({
           <Navbar />
           {children}
           <Analytics />
+          <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
         </main>
       </body>
     </html>

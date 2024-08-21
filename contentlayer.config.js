@@ -87,6 +87,7 @@ export const Project = defineDocumentType(() => ({
     },
     image: {
       type: 'string',
+      required: true,
     },
     missions: {
       type: 'list',
