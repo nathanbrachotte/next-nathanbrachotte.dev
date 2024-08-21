@@ -1,10 +1,10 @@
 import Image from 'next/image'
-import { PageTitle } from './components/PageTitle'
+import { H1 } from './components/PageTitle'
 
 export default function NotFound() {
   return (
     <>
-      <PageTitle>404 - You seriously messed up 👿</PageTitle>
+      <H1>404 - You seriously messed up 👿</H1>
       Just kidding. But I don't know what you're looking for, sorry. Maybe ask
       the detective? Or the cat?
       <div className="flex w-full items-center justify-center pt-6 md:justify-start">

@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils'
 import { HTMLAttributes } from 'react'
 import Balancer from 'react-wrap-balancer'
 
-export function PageTitle({
+export function H1({
   className,
   children,
   ...props
@@ -14,5 +14,20 @@ export function PageTitle({
     >
       <Balancer>{children}</Balancer>
     </h1>
+  )
+}
+
+export function H2({
+  className,
+  children,
+  ...props
+}: HTMLAttributes<HTMLHeadingElement>) {
+  return (
+    <h2
+      className={cn('pb-2 text-xl font-bold tracking-tighter', className)}
+      {...props}
+    >
+      {children}
+    </h2>
   )
 }

@@ -14,7 +14,7 @@ import {
   testimonials,
 } from 'app/testimonials/data'
 import Balancer from 'react-wrap-balancer'
-import { PageTitle } from 'app/components/PageTitle'
+import { H1 } from 'app/components/PageTitle'
 
 const TestimonialsPage = () => {
   const router = useRouter()
@@ -48,9 +48,7 @@ const TestimonialsPage = () => {
 
   return (
     <section>
-      <PageTitle>
-        Some good words from my past clients, leads and coworkers 🙏
-      </PageTitle>
+      <H1>Some good words from my past clients, leads and coworkers 🙏</H1>
       <div className="flex flex-col items-center justify-center pb-6">
         <ToggleGroup
           type="multiple"

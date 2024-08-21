@@ -1,7 +1,7 @@
-import { PageTitle } from 'app/components/PageTitle'
+import { H1, H2 } from 'app/components/PageTitle'
 import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
 import clsx from 'clsx'
-import { Project, allProjects } from 'contentlayer/generated'
+import { type Project, allProjects } from 'contentlayer/generated'
 import { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -51,12 +51,7 @@ const Project = ({
             )}
           />
           <div className="relative h-full rounded-lg bg-background p-6">
-            {isSideProject && (
-              <span className="absolute right-6 top-6 text-xs">
-                🪴 Side Project
-              </span>
-            )}
-            {image && <ProjectLogo image={image} title={title} />}
+            {<ProjectLogo image={image} title={title} />}
             <h2 className="mt-2 text-xl font-bold tracking-tighter">{title}</h2>
             <p className="font-md text-slate-300">{summary}</p>
           </div>
@@ -69,9 +64,25 @@ const Project = ({
 export default function ProjectsPage() {
   return (
     <section>
-      <PageTitle>{metadata.description}</PageTitle>
+      <H1>{metadata.description}</H1>
+      <H2 className="mb-2 mt-10">My side projects</H2>
       <div className="grid grid-cols-1 grid-rows-1 gap-8 md:grid-cols-2">
         {allProjects
+          .filter((project) => project.isSideProject)
+          .sort((a, b) => {
+            if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
+              return -1
+            }
+            return 1
+          })
+          .map((project, index) => (
+            <Project key={project.slug} project={project} index={index} />
+          ))}
+      </div>
+      <H2 className="mb-2 mt-10">Unexhaustive list of apps I've worked on</H2>
+      <div className="grid grid-cols-1 grid-rows-1 gap-8 md:grid-cols-2">
+        {allProjects
+          .filter((project) => !project.isSideProject)
           .sort((a, b) => {
             if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
               return -1

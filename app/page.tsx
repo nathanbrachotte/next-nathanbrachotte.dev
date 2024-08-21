@@ -1,7 +1,7 @@
 import { Badges } from 'app/components/Badges'
 import { GradientLink } from 'app/components/GradientLink'
 import { NateDescription } from 'app/components/NateDescription'
-import { PageTitle } from 'app/components/PageTitle'
+import { H1 } from 'app/components/PageTitle'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -10,7 +10,7 @@ import { twMerge } from 'tailwind-merge'
 export default function Page() {
   return (
     <section>
-      <PageTitle>Hey there 👋</PageTitle>
+      <H1>Hey there 👋</H1>
       <div className="prose prose-invert">
         I'm Nathan (
         <Link
