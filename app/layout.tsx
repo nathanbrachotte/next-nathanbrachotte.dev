@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import Navbar from './components/navbar'
-import { Analytics } from '@vercel/analytics/react'
+// import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
 import './globals.css'
 
@@ -70,8 +70,14 @@ export default function RootLayout({
         <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0">
           <Navbar />
           {children}
-          <Analytics />
-          <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
+          {/* <Analytics /> */}
+          {/* https://docs.simpleanalytics.com/dnt */}
+          <Script
+            data-collect-dnt="true"
+            async
+            defer
+            src="https://scripts.simpleanalyticscdn.com/latest.js"
+          />
         </main>
       </body>
     </html>
