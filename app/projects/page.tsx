@@ -1,7 +1,5 @@
-import { Button } from '@/components/ui/button'
 import { H1, H2 } from 'app/components/PageTitle'
 import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
-import GoToAnalyticsButton from 'app/projects/GoToAnalyticsButton'
 import clsx from 'clsx'
 import { type Project, allProjects } from 'contentlayer/generated'
 import { SimpleAnalyticsIcon } from 'icons/SimpleAnalytics'
