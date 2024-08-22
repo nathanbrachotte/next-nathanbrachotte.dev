@@ -14,6 +14,9 @@ import { PlayStoreIcon } from 'icons/PlayStore'
 import Link from 'next/link'
 import { twMerge } from 'tailwind-merge'
 import { getDateWithDistance } from 'helpers/dates'
+import { Button } from '@/components/ui/button'
+import { SimpleAnalyticsIcon } from 'icons/SimpleAnalytics'
+import GoToAnalyticsButton from 'app/projects/GoToAnalyticsButton'
 // import { getViewsCount } from 'lib/metrics'
 
 const findProject = (slug: string) => {
@@ -133,6 +136,13 @@ export default async function Project({ params }) {
             <LinkButton href={post.projectUrl}>
               See project <ArrowUpRight className="ml-2 h-4 w-4" />
             </LinkButton>
+          )}
+          {post.analytics && (
+            <Button variant="default" size="icon" asChild>
+              <Link href={post.analytics}>
+                <SimpleAnalyticsIcon className="h-4 w-4" />
+              </Link>
+            </Button>
           )}
         </div>
       </div>

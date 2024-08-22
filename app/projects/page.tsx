@@ -1,7 +1,10 @@
+import { Button } from '@/components/ui/button'
 import { H1, H2 } from 'app/components/PageTitle'
 import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
+import GoToAnalyticsButton from 'app/projects/GoToAnalyticsButton'
 import clsx from 'clsx'
 import { type Project, allProjects } from 'contentlayer/generated'
+import { SimpleAnalyticsIcon } from 'icons/SimpleAnalytics'
 import { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -11,8 +14,8 @@ export const metadata: Metadata = {
     "A curated list of some of projects I've worked on in the past 👇",
 }
 
-const Project = ({
-  project: { title, summary, image, slug, isSideProject },
+const ProjectCard = ({
+  project: { title, summary, image, slug, analytics },
   index,
 }: {
   project: Project
@@ -51,8 +54,15 @@ const Project = ({
             )}
           />
           <div className="relative h-full rounded-lg bg-background p-6">
-            {<ProjectLogo image={image} title={title} />}
-            <h2 className="mt-2 text-xl font-bold tracking-tighter">{title}</h2>
+            {
+              <div className="flex flex-row justify-between">
+                <ProjectLogo image={image} title={title} />
+                {analytics != null ? (
+                  <SimpleAnalyticsIcon className="h-6 w-6" />
+                ) : null}
+              </div>
+            }
+            <H2 className="mt-2 text-xl font-bold tracking-tighter">{title}</H2>
             <p className="font-md text-slate-300">{summary}</p>
           </div>
         </div>
@@ -76,7 +86,7 @@ export default function ProjectsPage() {
             return 1
           })
           .map((project, index) => (
-            <Project key={project.slug} project={project} index={index} />
+            <ProjectCard key={project.slug} project={project} index={index} />
           ))}
       </div>
       <H2 className="mb-2 mt-10">Unexhaustive list of apps I've worked on</H2>
@@ -90,7 +100,7 @@ export default function ProjectsPage() {
             return 1
           })
           .map((project, index) => (
-            <Project key={project.slug} project={project} index={index} />
+            <ProjectCard key={project.slug} project={project} index={index} />
           ))}
       </div>
     </section>

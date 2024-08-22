@@ -112,6 +112,9 @@ export const Project = defineDocumentType(() => ({
     isSideProject: {
       type: 'boolean',
     },
+    analytics: {
+      type: 'string',
+    },
   },
   computedFields,
 }))
