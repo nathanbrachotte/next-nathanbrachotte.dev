@@ -16,8 +16,6 @@ import { twMerge } from 'tailwind-merge'
 import { getDateWithDistance } from 'helpers/dates'
 import { Button } from '@/components/ui/button'
 import { SimpleAnalyticsIcon } from 'icons/SimpleAnalytics'
-import GoToAnalyticsButton from 'app/projects/GoToAnalyticsButton'
-// import { getViewsCount } from 'lib/metrics'
 
 const findProject = (slug: string) => {
   return allProjects.find((post) => post.slug.includes(slug))
