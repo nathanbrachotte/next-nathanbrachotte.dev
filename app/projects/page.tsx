@@ -7,7 +7,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Projects',
+  title: 'N8 - Projects',
   description:
     "A curated list of some of projects I've worked on in the past 👇",
 }

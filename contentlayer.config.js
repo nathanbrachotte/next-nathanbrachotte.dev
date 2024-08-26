@@ -68,6 +68,13 @@ export const Blog = defineDocumentType(() => ({
   computedFields,
 }))
 
+export const Tips = defineDocumentType(() => ({
+  name: 'Tips',
+  filePathPattern: `**/tips/*.mdx`,
+  contentType: 'mdx',
+  computedFields,
+}))
+
 export const Project = defineDocumentType(() => ({
   name: 'Project',
   filePathPattern: `**/projects/*.mdx`,
