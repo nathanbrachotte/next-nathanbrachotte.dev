@@ -3,6 +3,7 @@ import remarkGfm from 'remark-gfm'
 import rehypePrettyCode from 'rehype-pretty-code'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import { transformerCopyButton } from '@rehype-pretty/transformers'
 
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = {
@@ -68,13 +69,6 @@ export const Blog = defineDocumentType(() => ({
   computedFields,
 }))
 
-export const Tips = defineDocumentType(() => ({
-  name: 'Tips',
-  filePathPattern: `**/tips/*.mdx`,
-  contentType: 'mdx',
-  computedFields,
-}))
-
 export const Project = defineDocumentType(() => ({
   name: 'Project',
   filePathPattern: `**/projects/*.mdx`,
@@ -126,12 +120,27 @@ export const Project = defineDocumentType(() => ({
   computedFields,
 }))
 
+export const Tips = defineDocumentType(() => ({
+  name: 'Tips',
+  filePathPattern: `**/tips/*.mdx`,
+  contentType: 'mdx',
+  fields: {
+    title: {
+      type: 'string',
+      required: true,
+    },
+    description: {
+      type: 'string',
+      required: true,
+    },
+  },
+  computedFields,
+}))
+
 /** @type {import('rehype-pretty-code').Options} */
 const options = {
   theme: 'dracula',
   onVisitLine(node) {
-    // Prevent lines from collapsing in `display: grid` mode, and allow empty
-    // lines to be copy/pasted
     if (node.children.length === 0) {
       node.children = [{ type: 'text', value: ' ' }]
     }
@@ -142,13 +151,17 @@ const options = {
     }
     node.properties.className.push('line--highlighted')
   },
-  // To not use dracula background
   keepBackground: false,
+  // Add these options for the copy button
+  filterMetaString: (string) => string.replace(/copy/i, ''),
+  // You can customize the copy button text here
+  copyButtonText: 'Copy',
+  copyButtonSuccessText: 'Copied!',
 }
 
 export default makeSource({
   contentDirPath: 'content',
-  documentTypes: [Blog, Project],
+  documentTypes: [Blog, Project, Tips],
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [

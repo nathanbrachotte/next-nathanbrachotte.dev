@@ -15,10 +15,8 @@ export const routes = {
     url: '/blog',
     name: 'Blog',
   },
-  // '/guestbook': {
-  //   name: 'guestbook',
-  // },
-  // '/uses': {
-  //   name: 'Uses',
-  // },
+  '/resources': {
+    url: '/resources',
+    name: 'Resources',
+  },
 }

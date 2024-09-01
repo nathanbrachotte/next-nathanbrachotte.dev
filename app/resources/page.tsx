@@ -1,27 +1,30 @@
+import { allTips } from 'contentlayer/generated'
+import { Mdx } from 'app/components/mdx'
 import type { Metadata } from 'next'
-import { allBlogs } from 'contentlayer/generated'
-import { parseISO, format } from 'date-fns'
-import { getViewsCount } from 'lib/metrics'
-import { H1, H2 } from 'app/components/PageTitle'
 
-export const metadata: Metadata = {
-  title: 'N8 - Resources',
-  description:
-    'A place for all values resources I find and want to keep track of',
+export async function generateMetadata(): Promise<Metadata> {
+  const resource = allTips[0]
+  if (!resource) {
+    return {}
+  }
+
+  return {
+    title: resource.title,
+    description: resource.description,
+  }
 }
 
-export default async function BlogPage() {
+export default function ResourcesPage() {
+  const resource = allTips[0]
+
   return (
     <section>
-      <H1>{metadata.description}</H1>
-      <H2>Links</H2>
-      <H2>Resources</H2>
-      <h3>Startup</h3>
-      <p>https://youform.com/pricing/</p>
-      <H2>Typescript Goodies</H2>
-      React type: PropsWithChildren
-      <H2>Tips</H2>
-      Github -{'>'} .dev = editor
+      <h1 className="mb-8 text-3xl font-bold tracking-tighter">
+        {resource?.[0]?.title || 'Resources (WIP 🏗️👷🏻‍♂️)'}
+      </h1>
+      {allTips.map((resource) => (
+        <Mdx key={resource.slug} code={resource.body.code} tweets={[]} />
+      ))}
     </section>
   )
 }

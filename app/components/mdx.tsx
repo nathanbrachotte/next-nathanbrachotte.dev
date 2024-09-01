@@ -5,6 +5,8 @@ import Tweet from './tweet'
 import { Badges } from 'app/components/Badges'
 import { cn } from '@/lib/utils'
 import { ZoomedImage } from 'app/components/ZoomedImage'
+import { Button } from '@/components/ui/button'
+import { CopyButton } from 'app/components/CopyButton'
 
 const CustomLink = (props) => {
   const href = props.href
@@ -127,6 +129,7 @@ const components = {
   ConsCard,
   Badges,
   Video,
+  pre: Pre,
 }
 
 interface MdxProps {
@@ -145,5 +148,41 @@ export function Mdx({ code, tweets }: MdxProps) {
     <article className="prose prose-neutral prose-quoteless dark:prose-invert">
       <Component components={{ ...components, StaticTweet }} />
     </article>
+  )
+}
+
+function Pre({ children, ...props }) {
+  // Extract the actual text content from the children
+  const codeElement = React.Children.toArray(children).find(
+    (child) => React.isValidElement(child) && child.type === 'code',
+  ) as React.ReactElement | undefined
+
+  const extractTextContent = (element: React.ReactNode): string => {
+    if (typeof element === 'string') {
+      return element
+    }
+    if (React.isValidElement(element)) {
+      if (typeof element.props.children === 'string') {
+        return element.props.children
+      }
+      if (Array.isArray(element.props.children)) {
+        return element.props.children.map(extractTextContent).join('')
+      }
+      return extractTextContent(element.props.children)
+    }
+    return ''
+  }
+
+  const codeString = codeElement
+    ? extractTextContent(codeElement.props.children)
+    : ''
+
+  return (
+    <div className="group relative">
+      <pre {...props}>{children}</pre>
+      <div className="absolute right-2 top-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <CopyButton content={codeString} />
+      </div>
+    </div>
   )
 }

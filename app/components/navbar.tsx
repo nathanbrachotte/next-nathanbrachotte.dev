@@ -17,6 +17,10 @@ export default function Navbar() {
     pathname = routes['/projects'].url
   }
 
+  if (pathname.includes(routes['/resources'].url)) {
+    pathname = routes['/resources'].url
+  }
+
   return (
     <aside className="-ml-[8px] mb-16 tracking-tight">
       <div className="lg:sticky lg:top-20">
