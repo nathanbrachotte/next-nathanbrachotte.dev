@@ -8,3 +8,23 @@ description: 'A place for all valuable resources I find and want to keep track o
 ```ts
 type PropsWithChildren<P> = P & { children?: ReactNode }
 ```
+
+The best way to type icons
+
+```ts
+export const CheckedIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M10.7388 16.0732L7.00793 12.3423L7.97487 11.3731L10.7388 14.1371L16.5336 8.3446L17.5005 9.31154L10.7388 16.0732Z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}
+```
