@@ -45,6 +45,7 @@ Mark deprecated files
 
 When deprecating something (Components, functions):
 
+```ts
 /\*\*
 
 - @deprecated - Give a reason and an alternative
@@ -393,11 +394,14 @@ https://github.com/total-typescript/ts-reset
 
 If TS-reset doesn’t handle your use case, build a helper to “correctly” type the poorly handled method. For example, to correctly type Object.entries:
 
-type Entries<T> = {
-[K in keyof T]: [K, T[K]];
-}[keyof T][];
 
-export const getEntries = <T extends object>(obj: T) => Object.entries(obj) as Entries<T>;
+type Entries<T> = {
+  [K in keyof T]: [K, T[K]]
+}[keyof T][]
+
+export const getEntries = <T extends object>(obj: T) =>
+  Object.entries(obj) as Entries<T>
+
 
 What if I still use as?
 
@@ -579,7 +583,7 @@ const MyButton = ({ parentOnClick }: { parentOnClick: (e: MouseEvent) => void })
 
   <button onClick={(e) => {
        // do something
-       
+
        // handle parent event
        parentOnClick(e)
       }
@@ -843,3 +847,4 @@ contacts.map((contact) => (
 This also happens with "" which is a very common scenario.
 
 See https://kentcdodds.com/blog/use-ternaries-rather-than-and-and-in-jsx for a more in-depth explanation
+```
