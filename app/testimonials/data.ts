@@ -12,6 +12,18 @@ export interface Testimonial {
 
 export const testimonials = [
   {
+    name: 'Ferhat Beyaz',
+    paragraphs: [
+      'When Nate joined our team as a freelance engineer, we felt his impact from day one. The guy knows his way around JS, TS, GraphQL, and many related technologies. Nate immediately took ownership of projects, began mentoring engineers across multiple teams, handled stakeholder requests and discussions with ease, and navigated through ambiguous requirements. He also challenged our existing technologies and helped modernize our stack, all while managing day-to-day projects.',
+      "We hired him as a freelance engineer, but we got a tech lead. What sets Nate apart from 99% of engineers is his incredible team spirit and his ability to bring motivation and drive. Nate is not just another tech lead. He’s the teammate you'll want to keep around long after the project ends.",
+    ],
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
+    pic: '/images/testimonials/ferhat.webp',
+    authorLink: 'https://www.linkedin.com/in/ferhat-beyaz/',
+    position: 'Senior Engineering Manager',
+    type: 'clients',
+  },
+  {
     name: 'Hayyaan Ahmad',
     paragraphs: [
       "Nathan is a great Product engineer, communicator and teammate all in one! He came in really early days when we had a bootstrapped product and lead our front-end development. He's really experienced with Typescript and the whole ecosystem, and is great at developing the team and project to follow best practices.",

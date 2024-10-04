@@ -13,7 +13,6 @@ import {
   leadTestimonials,
   testimonials,
 } from 'app/testimonials/data'
-import Balancer from 'react-wrap-balancer'
 import { H1 } from 'app/components/PageTitle'
 
 const TestimonialsPage = () => {

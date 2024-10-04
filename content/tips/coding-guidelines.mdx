@@ -1,3 +1,8 @@
+---
+title: 'Coding Guidelines'
+description: 'A place for all valuable resources I find and want to keep track of'
+---
+
 Purpose of this document
 
 Onboarding Guide: Introduces engineers new to JavaScript and TypeScript to DOs & DONTs of these languages.
@@ -529,11 +534,8 @@ const MyStaticComponent = () => {
 const emojis = Array.from({length: 5}, () => <div className="w-2 h-2">😭</div>)
 
 return (
-<>
-{emojis}
-</>
-)
-}
+
+<>{emojis}</>) }
 
 // ✅ emojis is created once and then reused. This is the most ideal form as
 // the calculation is done once ever, outside of the render loop (non-blocking)
@@ -541,6 +543,7 @@ const emojis = Array.from({length: 5}, () => <div className="w-2 h-2">😭</div>
 const MyStaticComponent = () => (
 
 {' '}
+
 <>{emojis}</>)
 
 // ❌ This array gets freshly created on every render. This might be not be a problem
@@ -550,11 +553,13 @@ const MyStaticComponent = () => (
 const MyRatings = ({ ratings }: { ratings: number[] }) => (
 
 {' '}
+
 <div className="some-css">
   {ratings.map((todo) => (
     <div key={`${rating}`}>{rating}</div>
   ))}
-</div>)
+</div>
+)
 
 // ✅ Now each ratings component is only rendered once as long as the ratings
 // do no change. Now the calculations are only done on the first page render.
@@ -565,13 +570,8 @@ todo => <div key={`${rating}`}>{ rating }</div>
 )
 , [ratings])
 return (
-<div className="some-css">
-{
-ratingsComponent
-}
-</div>
-)
-}
+
+<div className="some-css">{ratingsComponent}</div>) }
 
 // ❌ This button component creates a new onClick event function on EVERY RENDER
 // #DeathByOneThousandCuts
@@ -600,6 +600,7 @@ const buttonHandler = useCallback((e: MouseEvent) => {
 },[parentOnClick])
 
 return (
+
 <button onClick={buttonHandler}>
 My button
 </div>
@@ -622,21 +623,25 @@ If a child is just being directly rendered in the “body” of your component. 
 const WrapWithEmoji = ({ ComponentToWrap, emoji }: { ComponentToWrap: JSX.Element, emoji: string }) => (
 
 {' '}
+
 <>
   {emoji}
   {ComponentToWrap}
   {emoji}
-</>)
+</>
+)
 
 // ✅ Uses native react types. Handles children in native react way.
 const WrapWithEmoji = ({ children, emoji }: PropsWithChildren<{ emoji: string }>) => (
 
 {' '}
+
 <>
   {emoji}
   {children}
   {emoji}
-</>)
+</>
+)
 
 The exception to this rule
 
@@ -647,6 +652,7 @@ When you require component props to be used in unconventional layouts where the 
 const MyLayout = ({ children, emoji }: PropsWithChildren<{ emoji: string }>) => (
 
 {' '}
+
 <header>{children[0]}</header>
 My Cool Layout! {emoji}
 <div>{children[1]}</div>
@@ -663,6 +669,7 @@ emoji: string
 const MyLayout = ({ Header, Body, Footer, emoji }: MyLayoutProps) => (
 
 {' '}
+
 <header>{Header}</header>
 My Cool Layout! {emoji}
 <div>{Body}</div>
@@ -676,17 +683,21 @@ Rendered arrays in React use keys in order to save time on render. When a prop a
 const MyList = ({ listItems } : { listItems: string[]) => (
 
 {' '}
+
 <>
   listItems.map((item, index) => <div key={index}>{item}</div>)
-</>)
+</>
+)
 
 // ✅ Assuming listItem strings are unique this works.
 const MyList = ({ listItems } : { listItems: string[]) => (
 
 {' '}
+
 <>
   listItems.map((item) => <div key={item}>{item}</div>)
-</>)
+</>
+)
 
 // Or defer ordering to parent
 
@@ -698,9 +709,11 @@ key: string
 const MyList = ({ listItems } : { listItems: ListItem[]) => (
 
 {' '}
+
 <>
   listItems.map(({(item, key)}) => <div key={key}>{item}</div>)
-</>)
+</>
+)
 
 Avoid complex/nested ternaries in render loop
 
@@ -712,6 +725,7 @@ const { loading, data, error} = useSomeQuery()
 const { loading: loading2, data: data2, error: error2} = useSomeOtherQuery()
 
 return (
+
 <>
 { loading && !error2 ? <Loading/> : loading2 ? <Loading/> : <MyHappyPathComponent data={{...data, ...data2}}/> : null }
 { error || error2 ? error ? <DisplayError error={error}/> : <DisplayError error={error2}/> : null}
@@ -755,6 +769,7 @@ return <SomeComponent data={data2}/>
 }, [error2,loading2, data2])
 
 return (
+
 <article>
 <p>Some text</p>
 
@@ -785,9 +800,11 @@ const MyList = ({ listItems } : { listItems: string[]) => (
 const MyList = ({ listItems } : { listItems: string[]) => (
 
 {' '}
+
 <>
   listItems.map((item) => <div key={item}>{item}</div>)
-</>)
+</>
+)
 
 Use ternaries instead of &&
 
@@ -797,6 +814,7 @@ Usually when something is missing we want to render null or undefined. But by no
 function ContactList() {
 const contacts = []
 return (
+
 <ul>
 {contacts.length &&
 contacts.map((contact) => (
