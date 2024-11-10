@@ -113,3 +113,24 @@ type Entries<T> = {
 export const getEntries = <T extends object>(obj: T) =>
   Object.entries(obj) as Entries<T>
 ````
+
+```
+  {
+    "key": "cmd+down",
+    "command": "cursorMove",
+    "when": "editorTextFocus",
+    "args": {
+      "to": "nextBlankLine",
+      "by": "wrappedLine"
+    }
+  },
+  {
+    "key": "cmd+up",
+    "command": "cursorMove",
+    "when": "editorTextFocus",
+    "args": {
+      "to": "prevBlankLine",
+      "by": "wrappedLine"
+    }
+  }
+```
