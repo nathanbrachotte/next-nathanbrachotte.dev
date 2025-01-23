@@ -9,7 +9,10 @@ export function H1({
 }: HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h1
-      className={cn('pb-6 text-2xl font-bold tracking-tighter', className)}
+      className={cn(
+        'pb-6 text-2xl font-bold tracking-tighter sm:text-3xl',
+        className,
+      )}
       {...props}
     >
       <Balancer>{children}</Balancer>
@@ -24,7 +27,10 @@ export function H2({
 }: HTMLAttributes<HTMLHeadingElement>) {
   return (
     <h2
-      className={cn('pb-2 text-xl font-bold tracking-tighter', className)}
+      className={cn(
+        'pb-2 text-xl font-bold tracking-tighter sm:text-2xl',
+        className,
+      )}
       {...props}
     >
       {children}

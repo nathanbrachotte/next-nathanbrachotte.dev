@@ -69,6 +69,7 @@ const TestimonialsPage = () => {
               'bg-transparent data-[state=on]:border-gradient-purple data-[state=on]:bg-slate-900',
               'transition-all hover:scale-105',
               'active:scale-95',
+              'whitespace-nowrap',
               // Style override for filters to keep the same look while adding search params to URL
             )}
           >
@@ -81,6 +82,7 @@ const TestimonialsPage = () => {
               'bg-transparent data-[state=on]:border-gradient-purple data-[state=on]:bg-slate-900',
               'transition-all hover:scale-105',
               'active:scale-95',
+              'whitespace-nowrap',
             )}
           >
             Leads ({leadTestimonials.length})
@@ -92,6 +94,7 @@ const TestimonialsPage = () => {
               'bg-transparent data-[state=on]:border-gradient-purple data-[state=on]:bg-slate-900',
               'transition-all hover:scale-105',
               'active:scale-95',
+              'whitespace-nowrap',
             )}
           >
             Colleagues ({colleagueTestimonials.length})
