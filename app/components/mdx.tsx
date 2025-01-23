@@ -134,13 +134,13 @@ const components = {
 
 interface MdxProps {
   code: string
-  tweets: Record<string, any>
+  tweets?: Record<string, any>
 }
 
 export function Mdx({ code, tweets }: MdxProps) {
   const Component = useMDXComponent(code)
   const StaticTweet = ({ id }) => {
-    const tweet = tweets.find((tweet) => tweet.id === id)
+    const tweet = tweets?.find((tweet) => tweet.id === id)
     return <Tweet {...tweet} />
   }
 

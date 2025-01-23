@@ -137,6 +137,23 @@ export const Tips = defineDocumentType(() => ({
   computedFields,
 }))
 
+export const Bookmarks = defineDocumentType(() => ({
+  name: 'Bookmarks',
+  filePathPattern: `**/bookmarks.mdx`,
+  contentType: 'mdx',
+  fields: {
+    title: {
+      type: 'string',
+      required: true,
+    },
+    description: {
+      type: 'string',
+      required: true,
+    },
+  },
+  computedFields,
+}))
+
 /** @type {import('rehype-pretty-code').Options} */
 const options = {
   theme: 'dracula',
@@ -161,7 +178,7 @@ const options = {
 
 export default makeSource({
   contentDirPath: 'content',
-  documentTypes: [Blog, Project, Tips],
+  documentTypes: [Blog, Project, Tips, Bookmarks],
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [

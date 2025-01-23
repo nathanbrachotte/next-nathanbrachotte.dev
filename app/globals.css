@@ -88,7 +88,7 @@ html {
 
 /* Anchor style */
 .prose .anchor {
-  @apply absolute -ml-4 w-full max-w-[700px] cursor-pointer pt-[2px] text-2xl no-underline opacity-0 transition-all hover:opacity-100;
+  @apply absolute -ml-4 flex w-4 cursor-pointer items-center justify-center pt-0.5 no-underline opacity-0 transition-all hover:opacity-100;
 }
 
 .prose .anchor:after {
@@ -97,7 +97,7 @@ html {
 }
 
 .prose *:hover > .anchor {
-  @apply visible;
+  @apply opacity-100;
 }
 
 /* Pre - surroundings and background */

@@ -15,6 +15,10 @@ export const routes = {
     url: '/blog',
     name: 'Blog',
   },
+  '/bookmarks': {
+    url: '/bookmarks',
+    name: 'Bookmarks',
+  },
   // '/resources': {
   //   url: '/resources',
   //   name: 'Resources',
