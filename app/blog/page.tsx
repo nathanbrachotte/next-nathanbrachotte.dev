@@ -7,7 +7,7 @@ import { getTimePerPost } from 'helpers/time'
 import { ViewsCount, getViewsCount } from 'lib/metrics'
 import ViewCounter from 'app/blog/view-counter'
 import Image from 'next/image'
-import { H1 } from 'app/components/PageTitle'
+import { H1 } from 'app/components/Typography'
 
 export const metadata: Metadata = {
   title: 'Blog',

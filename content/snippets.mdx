@@ -1,0 +1,24 @@
+---
+title: 'Snippets'
+description: 'A collection of useful React, TypeScript, and Next.js code snippets and type definitions'
+---
+
+## React Types
+
+#### Component Props
+
+```tsx
+import { ComponentProps } from 'react'
+
+// Get all props from a native button element
+type ButtonProps = ComponentProps<'button'>
+
+// Create a custom button component with all HTML button props
+const MyButton = (props: ButtonProps) => {
+  return <button {...props} />
+}
+
+// Or extract specific props from an HTML element
+type InputProps = ComponentProps<'input'>['type']
+// type InputProps = "text" | "password" | "checkbox" | "radio" | etc...
+```

@@ -19,6 +19,10 @@ export const routes = {
     url: '/bookmarks',
     name: 'Bookmarks',
   },
+  '/snippets': {
+    url: '/snippets',
+    name: 'Snippets',
+  },
   // '/resources': {
   //   url: '/resources',
   //   name: 'Resources',

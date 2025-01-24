@@ -1,11 +1,18 @@
 import { Metadata } from 'next'
 import { allBookmarks } from 'contentlayer/generated'
 import { Mdx } from 'app/components/mdx'
+import { H1 } from 'app/components/Typography'
 
-export const metadata: Metadata = {
-  title: 'Bookmarks',
-  description:
-    'A collection of useful resources and tools I frequently need to find from various devices, so I keep them here 😊',
+export async function generateMetadata(): Promise<Metadata> {
+  const bookmark = allBookmarks[0]
+  if (!bookmark) {
+    return {}
+  }
+
+  return {
+    title: bookmark.title,
+    description: bookmark.description,
+  }
 }
 
 export default async function BookmarksPage() {
@@ -13,13 +20,11 @@ export default async function BookmarksPage() {
 
   return (
     <div className="">
-      <div className="flex flex-col items-start gap-4 md:gap-8">
-        <h1 className="inline-block text-4xl font-bold lg:text-5xl">
-          Bookmarks
-        </h1>
+      <div className="flex flex-col items-start">
+        <H1>Bookmarks</H1>
         <p className="text-xl text-muted-foreground">{bookmarks.description}</p>
 
-        <hr className="w-full border-border" />
+        <hr className="mt-8 w-full border-border" />
 
         <Mdx code={bookmarks.body.code} />
       </div>

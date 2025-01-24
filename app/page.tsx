@@ -1,7 +1,7 @@
 import { Badges } from 'app/components/Badges'
 import { GradientLink } from 'app/components/GradientLink'
 import { NateDescription } from 'app/components/NateDescription'
-import { H1 } from 'app/components/PageTitle'
+import { H1 } from 'app/components/Typography'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'

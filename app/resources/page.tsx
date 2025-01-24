@@ -1,6 +1,7 @@
 import { allTips } from 'contentlayer/generated'
 import { Mdx } from 'app/components/mdx'
 import type { Metadata } from 'next'
+import { H1 } from 'app/components/Typography'
 
 export async function generateMetadata(): Promise<Metadata> {
   const resource = allTips[0]
@@ -19,9 +20,7 @@ export default function ResourcesPage() {
 
   return (
     <section>
-      <h1 className="mb-8 text-3xl font-bold tracking-tighter">
-        {resource?.[0]?.title || 'Resources (WIP 🏗️👷🏻‍♂️)'}
-      </h1>
+      <H1>{resource?.[0]?.title || 'Resources (WIP 🏗️👷🏻‍♂️)'}</H1>
       {allTips.map((resource) => (
         <Mdx key={resource.slug} code={resource.body.code} tweets={[]} />
       ))}

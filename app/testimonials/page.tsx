@@ -13,7 +13,7 @@ import {
   leadTestimonials,
   testimonials,
 } from 'app/testimonials/data'
-import { H1 } from 'app/components/PageTitle'
+import { H1 } from 'app/components/Typography'
 
 const TestimonialsPage = () => {
   const router = useRouter()

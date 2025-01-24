@@ -1,4 +1,4 @@
-import { H1, H2 } from 'app/components/PageTitle'
+import { H1, H2 } from 'app/components/Typography'
 import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
 import clsx from 'clsx'
 import { type Project, allProjects } from 'contentlayer/generated'

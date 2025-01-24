@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { H1 } from './components/PageTitle'
+import { H1 } from 'app/components/Typography'
 
 export default function NotFound() {
   return (
