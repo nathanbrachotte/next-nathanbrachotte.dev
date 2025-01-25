@@ -19,7 +19,7 @@ export default async function BookmarksPage() {
   const bookmarks = allBookmarks[0]
 
   return (
-    <div className="">
+    <div>
       <div className="flex flex-col items-start">
         <H1>Bookmarks</H1>
         <p className="text-xl text-muted-foreground">{bookmarks.description}</p>

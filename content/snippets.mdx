@@ -1,6 +1,6 @@
 ---
 title: 'Snippets'
-description: 'A collection of useful React, TypeScript, and Next.js code snippets and type definitions'
+description: 'My collection of super useful code snippets I always end up needing in my projects'
 ---
 
 ## React Types
@@ -13,12 +13,245 @@ import { ComponentProps } from 'react'
 // Get all props from a native button element
 type ButtonProps = ComponentProps<'button'>
 
-// Create a custom button component with all HTML button props
 const MyButton = (props: ButtonProps) => {
   return <button {...props} />
 }
 
 // Or extract specific props from an HTML element
 type InputProps = ComponentProps<'input'>['type']
-// type InputProps = "text" | "password" | "checkbox" | "radio" | etc...
+//      ^? "text" | "password" | "checkbox" | "radio" | etc...
+```
+
+## TypeScript Utilities
+
+#### Valid Value Type
+
+```ts
+/**
+ * Excludes common falsy values from a type
+ * @example
+ * type Example = string | number | null | undefined | 0 | '' | false
+ * type ValidExample = ValidValue<Example>
+ *        ^? string | number
+ */
+export type ValidValue<T> = Exclude<T, null | undefined | 0 | '' | false>
+```
+
+#### Optional Type
+
+```ts
+/**
+ * Makes a type optional by allowing null or undefined
+ * @example
+ * type User = { name: string }
+ * type OptionalUser = Optional<User>
+ *        ^? { name: string } | undefined | null
+ */
+export type Optional<T> = T | undefined | null
+```
+
+#### Boolean Filter
+
+```ts
+/**
+ * Just like .filter(Boolean), but allows TypeScript to exclude falsy values in return type
+ * @example
+ * const x = [1, 2, 3, "", null, undefined, 0, false]
+ * const y = x.filter(BooleanFilter)
+ *       ^? [1, 2, 3]
+ */
+export const BooleanFilter = <T,>(x: T): x is ValidValue<T> => Boolean(x)
+```
+
+#### Unwrap Promise Type
+
+```ts
+/**
+ * Extracts the type from a Promise
+ * @example
+ * type PromiseNumber = Promise<number>
+ * type Unwrapped = UnwrapPromise<PromiseNumber>
+ *         ^? number
+ */
+export type UnwrapPromise<T> = T extends Promise<infer U> ? U : T
+```
+
+## String Utilities
+
+#### Capitalize First Character
+
+```ts
+/**
+ * Capitalizes the first character of a string
+ * @example
+ * capitaliseFirstChar('hello world') -> 'Hello world'
+ */
+export function capitaliseFirstChar(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+```
+
+#### Enum to Nice String
+
+```ts
+/**
+ * Converts an enum to a nice string
+ * @example
+ * enumToNiceString('USER_PROFILE_DATA') -> 'User profile data'
+ */
+export function enumToNiceString(str: string) {
+  const newStr = str
+    .replace(/_/g, ' ')
+    .replace(/([A-Z])/g, '$1')
+    .trim()
+    .toLowerCase()
+  return newStr.charAt(0).toUpperCase() + newStr.slice(1)
+}
+```
+
+## Money Formatting
+
+#### Compact Money Format
+
+```ts
+/**
+ * Formats a number to a compact money format
+ * @example
+ * formatMoneyCompact('GBP', 123456.78) -> '£123.457K'
+ */
+export const formatMoneyCompact = (
+  currency: string | undefined,
+  amount: number,
+) =>
+  new Intl.NumberFormat('en-GB', {
+    ...(currency && {
+      style: 'currency',
+      currency: currency,
+    }),
+    notation: 'compact',
+    minimumFractionDigits: 0,
+  }).format(amount)
+```
+
+#### Standard Money Format
+
+```ts
+/**
+ * Formats a number to a standard money format
+ * @example
+ * formatMoney('GBP', 123456.78) -> '£123,456.78'
+ */
+export const formatMoney = (currency: string | undefined, amount: number) => {
+  return new Intl.NumberFormat('en-GB', {
+    ...(currency && {
+      style: 'currency',
+      currency: currency,
+    }),
+    minimumFractionDigits: 2,
+    currencyDisplay: 'narrowSymbol',
+  }).format(amount)
+}
+```
+
+## Cookie Management
+
+#### Save Cookie
+
+```ts
+/**
+ * Saves a cookie
+ * @example
+ * saveCookie({ key: 'myCookie', value: 'myValue' })
+ */
+export const saveCookie = ({
+  key,
+  value,
+  maxAgeInSeconds = 30 * 24 * 60 * 60, // 30 days,
+}: {
+  key: string
+  value: string | null
+  maxAgeInSeconds?: number
+}): void => {
+  if (value === null) {
+    return
+  }
+  const domain = window?.location?.hostname?.split('.').slice(-2).join('.') // e.g. "blinkist.com"
+
+  document.cookie = `${key}=${value}; path=/; domain=.${domain}; max-age=${maxAgeInSeconds};`
+}
+```
+
+#### Get All Cookies
+
+```ts
+/**
+ * Gets all cookies
+ * @example
+ * getAllCookies() -> { myCookie: 'myValue' }
+ */
+export const getAllCookies = (): Record<string, string> | null => {
+  if (typeof window === 'undefined') {
+    return null
+  }
+
+  return document.cookie.split(';').reduce(
+    (acc, curr) =>
+      Object.assign(acc, {
+        [curr?.split('=')?.[0]?.trim() ?? '']: curr?.split('=')?.[1] ?? '',
+      }),
+    {},
+  )
+}
+```
+
+#### Get Single Cookie
+
+```ts
+/**
+ * Gets a single cookie
+ * @example
+ * getCookie('myCookie') -> 'myValue'
+ */
+export const getCookie = (key: string): string | null => {
+  return getAllCookies()?.[key] ?? null
+}
+```
+
+## Object Utilities
+
+#### Type-Safe Object Entries
+
+```ts
+/**
+ * Type-safe version of Object.entries()
+ * @example
+ * getEntries({ a: 1, b: 2 }) -> [['a', 1], ['b', 2]]
+ */
+export const getEntries = <T extends object>(obj: T) =>
+  Object.entries(obj) as Entries<T>
+```
+
+## VSCode Keybindings
+
+#### Navigate to Next Blank Line using Cmd+Down or Cmd+Up
+
+```json
+{
+  "key": "cmd+down",
+  "command": "cursorMove",
+  "when": "editorTextFocus",
+  "args": {
+    "to": "nextBlankLine",
+    "by": "wrappedLine"
+  }
+},
+{
+  "key": "cmd+up",
+  "command": "cursorMove",
+  "when": "editorTextFocus",
+  "args": {
+    "to": "prevBlankLine",
+    "by": "wrappedLine"
+  }
+}
 ```

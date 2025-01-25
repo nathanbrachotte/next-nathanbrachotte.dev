@@ -10,8 +10,21 @@ import { CopyButton } from 'app/components/CopyButton'
 
 const CustomLink = (props) => {
   const href = props.href
-  const className =
-    'animate-text-gradient-background cursor-pointer bg-gradient-to-r from-gradient-cyan to-gradient-blue bg-clip-text text-gradient-blue decoration-gradient-blue decoration-[0.1em] underline-offset-2 transition-all visited:text-gradient-pink visited:decoration-gradient-pink hover:text-transparent hover:decoration-gradient-cyan'
+
+  const className = cn(
+    // Animation & Interaction
+    'animate-text-gradient-background cursor-pointer',
+    // Gradient & Colors
+    'bg-gradient-to-r from-gradient-cyan to-gradient-blue',
+    'bg-clip-text text-gradient-blue',
+    // Text Decoration
+    'decoration-gradient-blue decoration-[0.1em] underline-offset-2',
+    // State & Transitions
+    'transition-all',
+    'visited:text-gradient-cyan visited:decoration-gradient-cyan',
+    // 'visited:text-gradient-pink visited:decoration-gradient-pink',
+    'hover:text-gradient-cyan hover:decoration-gradient-cyan',
+  )
 
   if (href.startsWith('/')) {
     return (
