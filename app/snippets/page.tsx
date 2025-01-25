@@ -22,7 +22,6 @@ export default function SnippetsPage() {
         <p className="text-xl text-muted-foreground">{snippets.description}</p>
 
         <hr className="mt-8 w-full border-border" />
-
         <Mdx code={snippets.body.code} />
       </div>
     </div>

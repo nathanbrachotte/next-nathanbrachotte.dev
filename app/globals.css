@@ -104,6 +104,8 @@ html {
 .prose pre {
   /* @apply border border-neutral-800 bg-neutral-900; */
   @apply border border-slate-700 bg-slate-800;
+  max-width: calc(100vw);
+  overflow-x: auto;
 }
 
 /* Inline code */
@@ -168,6 +170,12 @@ table {
 }
 
 /* Whole code wrapper */
+[data-rehype-pretty-code-fragment] {
+  width: 100%;
+  overflow-x: auto;
+  max-width: calc(100vw - 3rem);
+}
+
 [data-rehype-pretty-code-fragment] code {
   @apply grid min-w-full break-words rounded-none border-0 bg-transparent p-0 text-sm text-black;
   counter-reset: line;
