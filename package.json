@@ -20,6 +20,7 @@
     "@vercel/edge-config": "^0.2.1",
     "@vercel/kv": "^1.0.1",
     "@vercel/og": "^0.5.8",
+    "@vercel/speed-insights": "^1.1.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^1.2.1",
     "contentlayer": "^0.3.4",

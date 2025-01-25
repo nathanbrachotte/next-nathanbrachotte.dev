@@ -5,6 +5,7 @@ import Navbar from './components/navbar'
 // import { Analytics } from '@vercel/analytics/react'
 import Script from 'next/script'
 import './globals.css'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const graphik = localFont({
   src: [
@@ -78,6 +79,7 @@ export default function RootLayout({
             defer
             src="https://scripts.simpleanalyticscdn.com/latest.js"
           />
+          <SpeedInsights />
         </main>
       </body>
     </html>
