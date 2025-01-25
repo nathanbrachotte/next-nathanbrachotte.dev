@@ -21,7 +21,7 @@ const formatDate = (date: string) => {
   return readableDate
 }
 
-const BlogPostCard = ({
+export const BlogPostCard = ({
   blog,
   index,
   allViews,

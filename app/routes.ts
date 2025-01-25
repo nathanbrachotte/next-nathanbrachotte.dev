@@ -27,4 +27,4 @@ export const routes = {
   //   url: '/resources',
   //   name: 'Resources',
   // },
-}
+} as const

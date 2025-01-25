@@ -1,13 +1,19 @@
 import { Badges } from 'app/components/Badges'
 import { GradientLink } from 'app/components/GradientLink'
 import { NateDescription } from 'app/components/NateDescription'
-import { H1 } from 'app/components/Typography'
+import { H1, H2 } from 'app/components/Typography'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { twMerge } from 'tailwind-merge'
+import { allBlogs } from 'contentlayer/generated'
 
-export default function Page() {
+import { getViewsCount } from 'lib/metrics'
+import { BlogPostCard } from './blog/page'
+
+export default async function Page() {
+  const allViews = await getViewsCount()
+
   return (
     <section>
       <H1>Hey there 👋</H1>
@@ -118,6 +124,29 @@ export default function Page() {
           from my past clients and coworkers will give you a better idea of what
           I could bring to your team 😊
         </p>
+      </div>
+
+      <div className="mt-16 flex flex-col gap-6">
+        <H2>Latest Blog Posts</H2>
+        <div>
+          {allBlogs
+            .filter((post) => !post.draft)
+            .sort((a, b) => {
+              if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
+                return -1
+              }
+              return 1
+            })
+            .slice(0, 3)
+            .map((post, index) => (
+              <BlogPostCard
+                key={post.slug}
+                blog={post}
+                index={index}
+                allViews={allViews}
+              />
+            ))}
+        </div>
       </div>
     </section>
   )

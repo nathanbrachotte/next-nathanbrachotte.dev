@@ -5,7 +5,12 @@ import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { LayoutGroup, motion } from 'framer-motion'
 import { routes } from 'app/routes'
+import { GithubIcon } from 'icons/Github'
+import { BlueskyIcon } from 'icons/Bluesky'
+import { Button } from '@/components/ui/button'
+import { LINKS } from 'app/constants'
 
+// Menu, Header
 export default function Navbar() {
   let pathname = usePathname() || '/'
 
@@ -19,7 +24,7 @@ export default function Navbar() {
 
   return (
     <aside className="-ml-[8px] mb-12 tracking-tight">
-      <div className="lg:sticky lg:top-20">
+      <div className="flex flex-row items-center justify-between lg:sticky lg:top-20">
         <LayoutGroup>
           <nav
             className="fade relative flex scroll-pr-6 flex-row items-start px-0 pb-0 md:relative md:overflow-auto"
@@ -59,6 +64,22 @@ export default function Navbar() {
             </div>
           </nav>
         </LayoutGroup>
+        <div className="flex flex-row justify-end gap-2">
+          <Button variant="outline" size="icon" asChild>
+            <Link href={LINKS.GITHUB} target="_blank" rel="noopener noreferrer">
+              <GithubIcon className="h-5 w-5" />
+            </Link>
+          </Button>
+          <Button variant="outline" size="icon" asChild>
+            <Link
+              href={LINKS.BLUESKY}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <BlueskyIcon className="h-5 w-5" />
+            </Link>
+          </Button>
+        </div>
       </div>
     </aside>
   )
