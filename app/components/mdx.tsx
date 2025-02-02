@@ -164,31 +164,58 @@ export function Mdx({ code, tweets }: MdxProps) {
   )
 }
 
+function extractTextContent(element: React.ReactNode): string {
+  // Handle null/undefined
+  if (!element) {
+    return ''
+  }
+
+  // Handle string directly
+  if (typeof element === 'string') {
+    return element
+  }
+
+  // Handle arrays (like children arrays)
+  if (Array.isArray(element)) {
+    return element.map(extractTextContent).join('')
+  }
+
+  // Handle React elements
+  if (React.isValidElement(element)) {
+    // If the element has children in its props
+    if (element.props) {
+      // Handle string children
+      if (typeof element.props.children === 'string') {
+        return element.props.children
+      }
+
+      // Handle array children or nested elements
+      if (element.props.children) {
+        return extractTextContent(element.props.children)
+      }
+    }
+    return ''
+  }
+
+  // Handle plain objects that might have a children property
+  if (typeof element === 'object' && 'children' in element) {
+    return extractTextContent((element as any).children)
+  }
+
+  return ''
+}
+
 function Pre({ children, ...props }) {
+  console.log('🚀 ~ file: mdx.tsx ~ Pre ~ children:', children)
   // Extract the actual text content from the children
   const codeElement = React.Children.toArray(children).find(
     (child) => React.isValidElement(child) && child.type === 'code',
   ) as React.ReactElement | undefined
 
-  const extractTextContent = (element: React.ReactNode): string => {
-    if (typeof element === 'string') {
-      return element
-    }
-    if (React.isValidElement(element)) {
-      if (typeof element.props.children === 'string') {
-        return element.props.children
-      }
-      if (Array.isArray(element.props.children)) {
-        return element.props.children.map(extractTextContent).join('')
-      }
-      return extractTextContent(element.props.children)
-    }
-    return ''
-  }
-
   const codeString = codeElement
     ? extractTextContent(codeElement.props.children)
     : ''
+  console.log('🚀 ~ Pre ~ codeString:', codeString)
 
   return (
     <div className="group relative">
