@@ -5,7 +5,7 @@ description: 'My collection of super useful code snippets I always end up needin
 
 ## React Types
 
-#### Component Props
+#### ComponentProps
 
 ```tsx
 import { ComponentProps } from 'react'
@@ -20,6 +20,19 @@ const MyButton = (props: ButtonProps) => {
 // Or extract specific props from an HTML element
 type InputProps = ComponentProps<'input'>['type']
 //      ^? "text" | "password" | "checkbox" | "radio" | etc...
+```
+
+#### PropsWithChildren
+
+```tsx
+import { PropsWithChildren } from 'react'
+
+export function Axemple({
+  children,
+  href,
+}: PropsWithChildren<{ href: string }>) {
+  return <a href={href}>{children}</a>
+}
 ```
 
 ## TypeScript Utilities
