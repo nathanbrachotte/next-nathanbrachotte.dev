@@ -268,3 +268,29 @@ export const getEntries = <T extends object>(obj: T) =>
   }
 }
 ```
+
+## Git Config
+
+### Make sure amends use cursor
+
+```bash
+git config --global core.editor "cursor --wait"
+```
+
+### Sort branches by committer date
+
+```bash
+git config --global branch.sort -committerdate
+```
+
+### Automatically add fixup commits to the current branch
+
+```bash
+git config --global alias.gpfixup '!sh -c '\''git commit --fixup="$(git log --oneline | grep -v "fixup!" | head -n 1 | awk "{print \$1}")" --no-verify'\'
+```
+
+#### Undo Last Commit
+
+```bash
+git config --global alias.undo 'reset --soft HEAD~1'
+```
