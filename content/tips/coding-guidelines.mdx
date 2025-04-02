@@ -4,10 +4,7 @@ description: 'A place for all valuable resources I find and want to keep track o
 draft: true
 ---
 
-Most rules originate from https://nathanbrachotte.notion.site/Code-Style-and-Architecture-f774439d3c6b4ae5981b82ca3c7437ca
-
-React / JSX
-
+```tsx
 Avoid high mem ops in render functions
 
 In React functional components, the body of your function is processed on EVERY render cycle. It is important to consider this and try to reduce processing power and memory usage whenever possible.
@@ -330,7 +327,5 @@ contacts.map((contact) => (
 This also happens with "" which is a very common scenario.
 
 See https://kentcdodds.com/blog/use-ternaries-rather-than-and-and-in-jsx for a more in-depth explanation
-
-```
 
 ```

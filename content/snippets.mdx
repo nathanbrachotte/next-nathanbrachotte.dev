@@ -35,35 +35,37 @@ export function Axemple({
 }
 ```
 
-## TypeScript Utilities
-
-#### Valid Value Type
+## TypeScript
 
 ```ts
-/**
- * Excludes common falsy values from a type
- * @example
- * type Example = string | number | null | undefined | 0 | '' | false
- * type ValidExample = ValidValue<Example>
- *        ^? string | number
- */
-export type ValidValue<T> = Exclude<T, null | undefined | 0 | '' | false>
+type ValuesOf<T> = T[keyof T]
+
+type XXType = ValuesOf<typeof XX>
+
+type NonNullable<T>
 ```
 
-#### Optional Type
+```ts
+// Without & XOR
+// source: https://github.com/Microsoft/TypeScript/issues/14094#issuecomment-373782604
+type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never }
+type XOR<T, U> = T | U extends Record<string, unknown>
+  ? (Without<T, U> & U) | (Without<U, T> & T)
+  : T | U
+```
 
 ```ts
 /**
- * Makes a type optional by allowing null or undefined
- * @example
- * type User = { name: string }
- * type OptionalUser = Optional<User>
- *        ^? { name: string } | undefined | null
- */
+- Excludes common falsy values from a type
+- @example
+- type Example = string | number | null | undefined | 0 | '' | false
+- type ValidExample = ValidValue<Example>
+-        ^? string | number
+**/
+export type ValidValue<T> = Exclude<T, null | undefined | 0 | '' | false>
+
 export type Optional<T> = T | undefined | null
 ```
-
-#### Boolean Filter
 
 ```ts
 /**

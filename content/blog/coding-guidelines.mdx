@@ -290,17 +290,33 @@ true && '' // ''
 
 That means that in React, we might render an unwanted value in a place where we just wanted to return nothing:
 
-<Image
-  alt="Ternary operations"
-  src="/images/blog/coding-guidelines/ternary.png"
-  priority
-  width={2640}
-  height={1994}
-  wrapperClassName="mb-6"
-/>
+```tsx title="✅ This will render '<ul></ul>'"  /?/#g /: null/#g
+function ContactList() {
+  const contacts = []
+  return (
+    <ul>
+      {contacts.length
+        ? contacts.map((contact) => <li key={contact.id}>{contact.name}</li>)
+        : null}
+    </ul>
+  )
+}
+```
+
+```tsx title="❌ This will render '<ul>0</ul>'" /&&/#r
+function ContactList() {
+  const contacts = []
+  return (
+    <ul>
+      {contacts.length &&
+        contacts.map((contact) => <li key={contact.id}>{contact.name}</li>)}
+    </ul>
+  )
+}
+```
 
 <Callout emoji="💡" type="info">
-  See this other [Kent blog
+  See this [Kent blog
   posts](https://kentcdodds.com/blog/use-ternaries-rather-than-and-and-in-tsx)
   to know more
 </Callout>
@@ -341,7 +357,7 @@ interface Person {
 }
 
 // Now both interfaces are merged
-const john: Person = {
+const JOHN: Person = {
   name: 'John',
   age: 26,
 }
@@ -520,6 +536,32 @@ export const getEntries = <T extends object>(obj: T) =>
   Object.entries(obj) as Entries<T>
 ```
 
+4. Build type guard functions
+
+````tsx
+function assertIsString(val: any): asserts val is string {
+  if (typeof val !== "string") {
+    throw new Error("Not a string!");
+  }
+}
+
+function getSomething(str: any) {
+  assertIsString(str);
+  // Now TypeScript knows that 'str' is a 'string'.
+  return str.toUppercase();
+}
+
+// Other example
+function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
+  if (val === undefined || val === null) {
+    throw new Error(
+      `Expected 'val' to be defined, but received ${val}`
+    );
+  }
+}
+
+
+
 #### What if I still have to use `as`?
 
 - Add a comment explaining why and hints at how we could avoid using it in the future.
@@ -533,7 +575,7 @@ In some instances, it is possible we know a value is here, but TS doesn't. For e
 ```tsx title="In the args, we make sure only users with posts are returned"
 const usersWithPost = this.prisma.users.findMany(...)
 //      ^ User & { post?: Post} - Still type of Post is optional
-```
+````
 
 It will become annoying to work with post because although we know from the filtering in args that we only got the users with posts, `post` type is still optional.
 
