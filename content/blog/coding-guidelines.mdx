@@ -9,114 +9,74 @@ image: '/images/blog/stopped-git-getting-in-the-way/cover.webp'
 Last update: 04.10.2025
 
 Use these guidelines in any time and your team's output will go up, bugs fewers and code will be more maintainable and readable.
+
 (TODO: Add a "Download Markdown" button)
+TODO: Reformulate this: Unified Style Guide: Reduces debates on code style and guidelines by making the decision once.
+TODO: Reformulate this: Efficient Reviews: Simplifies PR reviews and discussion by allowing referencing guidelines that already contain examples.
+
 TODO: Fix image sizes
 
-## High level
+Feel free to disagree on some, and only take what you like from this.
+If've found that this guidelines work great for teams of various sizes and experiences,
+but are especially useful getting a "juior-heavy" team up to speed.
 
-### CPP - My framework to be the best team in the team
-
-#### Be candid. Share your honest thoughts and motivations
-
-#### Be Proactive, Challenge the status quo
-
-#### Be Pragmatic, not dogmatic
-
-### Helping a "junior-heavy" team level up:
-
-TODO: Add pragmatic engineer post
-
-Excerpt:
-
-#### Coding
-
-- Pair less experienced engineers with more experienced ones
-- Supportive code reviews. Encourage not just offline ones, but talking code over
-- Mob programming exercises
-- Review their code, and work and give (supportive) feedback
-- Where do they need the most support to grow? Can you help?
-  - With direct feedback
-  - With mentoring yourself
-  - With connecting them with mentors
-  - With pairing (and letting them drive)
-- This is where having been a senior engineer can be really helpful
-
-#### Engineering practices
-
-- Discuss what "quality" means on the team, and document them
-  Definition of Done on a feature. Discuss, document, follow.
-- Complete relevant courses on technology used
-  - Summarize learnings
-
-#### Getting things done
-
-- Expose them to the business
-  - Product manager / designer / data scientist collaborating directly with people
-  - Share business goals, updates
-  - Team and org-wide demos
-- Start small
-  - Give smaller, better defined tasks to them. This might mean cutting scope, and doing
-    more pre-work (for you, the manager, and the PM)
-
-#### Mistakes, outages, bugs
-
-- Expect them, and embrace them. Do NOT create a culture of fear
-
-#### Expectations
-
-- Career ladder: define what their level looks like, and what the next level is
-- Competencies: define the dimensions on which they are evaluated (e.g. coding, architecture,
-  execution etc)
-- Current situation: figure out (with them where they are. Make a plan to close the most pressing gaps)
-
-#### Be realistic
-
-- It will take time to grow
-- Progress will be slower
-- Set expectations upwards, and hold your back for the team
-- Can you bring in seniors externally (e.g. contractors) for the sake of mentoring? Try it!
-- Do celebrate progress and wins. One step at a time!
-
-## Coding guidelines
+## General guidelines
 
 ### Collaboration
 
 #### Comments
 
-Make heavy use of comments and JSDoc.
+- Make heavy use of comments and JSDoc in code.
+- **Provide product context**: `why we're implementing this feature?`
+- **Explain unusual technical solutions**: `why we're using this specific approach?`
 
-- Always provide product context (`why are we doing this?`) or explanations to an unusual solution (`why are we implementing it like that?`)
-- The goal is for other devs (or yourself in 6 months) to have an easier time understanding why the software was built this way.
+The goal is for other devs (or yourself in 6 months) to have an easier time understanding why the software was built this way.
 
 #### Git
 
-- For commits, do what you want, but you can follow [this simple methodology](https://www.nathanbrachotte.dev/blog/stopped-git-getting-in-the-way)
+- No strict commit strategy, [but suggested methodology](https://www.nathanbrachotte.dev/blog/stopped-git-getting-in-the-way)
 
 #### Pull Requests
 
-- Small and incremental PRs, they are easier to review.
+- **Small and incremental PRs**, they are easier to review.
 - A PR should try to accomplish a singular task or goal.
 
 #### Code reviews
 
-- Use inclusive language, and if possible, provide suggestions.
-  - “You should do this” → “Let’s do this.”
-  - “You have a typo” → “ typo: change to XYZ“
-- Use [Conventional Comments](https://conventionalcomments.org/)
+- **Use inclusive language**, and if possible, provide suggestions.
+  - "You should do this" → "Let's do this."
+  - "You made a mistake here" → "Are we correctly handling this use case?"
+  - "You have a typo" → "typo: change to XYZ"
+- **Suggestion:** Use [Conventional Comments](https://conventionalcomments.org/)
 
 ### Style
 
 #### File names
 
-- Base template for files: `$domain.$type.$extension` (example: `user.mocks.ts`)
-- For React components: Use PascalCase
+- **Default:** `$domain.$type.$extension` (example: `user.mocks.ts`)
+- **React components:** Use `PascalCase.tsx`
+
+#### Keep it short
+
+Try to keep comments and all strings a variable names to the shortest (but still descriptive name):
+
+```tsx
+// ❌ “should” is superfluous
+it('should add 1', () => {
+  // ...
+})
+
+// ✅
+it('adds 1', () => {
+  // ...
+})
+```
 
 #### Colocation
 
-Use colocation as much as possible. [See this great article from Kent about it](https://kentcdodds.com/blog/colocation#lets-talk-about-code-comments)
-It's better to have:
+- **Use colocation.** [See this great article from Kent about it](https://kentcdodds.com/blog/colocation#lets-talk-about-code-comments)
 
-```
+```tsx title="✅ Files we're likely to touch at the same time are colocated"
 user/
  - user.mocks.ts
  - user.test.ts
@@ -124,9 +84,7 @@ user/
 ...
 ```
 
-than:
-
-```
+```tsx title="❌ Files are scattered around the codebase"
 mocks/
     - user.ts
     ...
@@ -138,8 +96,14 @@ src/
     ...
 ```
 
-- If you search for the `user` files you'd have to look at the path as well to see which one you're looking for
-- If you're working on the user logic, it's likely you'll also want to touch tests and mocks related to that logic as well. You'd see them a siblings in the tree right away.
+<ProsCard
+  title="With colocation:"
+  pros={[
+    'You can ⌘+P `user.mo` and instantly find the right file',
+    'You can look at siblings in the tree',
+    'If you only change something `user` domain, PRs will only be 3 siblings files',
+  ]}
+/>
 
 ### Handling tech debt
 
@@ -174,9 +138,15 @@ Your IDE will cross out all symbols marked as:
 
 - When deprecating a whole file, change the file name to `DEPRECATED_xx`
 
-### Code quality
-
 ### Naming
+
+#### Names
+
+- **Booleans: ** Prefix with `has` or `is` if possible
+- **Functions: ** Prefix with verbs `get`, `extract`, `filter`, etc
+- **Constants: ** Use `SCREAMING_SNAKE_CASE`
+
+#### Use positives
 
 - Prefer positives when naming constants to avoid double negatives
 
@@ -199,6 +169,50 @@ if (!newPushNotificationsDisabled) {
 </Callout>
 
 ## JavaScript
+
+## Use const
+
+```tsx
+// ✅ Easy to keep track of myArray's value
+const myArray = [1, 2]
+const myDoubledArray = myArray.map(v => v \* 2)
+
+// ❌ If we keep mutating myArray it can become hard to understand what value it holds at a specific time
+let myArray = [1, 2]
+myArray = myArray.map(v => "completely different")
+
+```
+
+```tsx title="👍🏻 Exception: try/catch"
+// ✅ Easy to set a starting value (or set to undefined)
+let apiResponse = ['default-value']
+
+try {
+  apiResponse = await fetch('...')
+} catch (error) {
+  // ✅ We can even set fallback values in the catch based on error
+  apiResponse = ['error-value']
+}
+```
+
+## Use named imports
+
+```tsx title="❌ Default export"
+const myCoupon = {}
+
+export default myCoupon
+
+// 😥 Variable can be renamed.
+// 😥 The `rename` function fron IDE won't rename it here
+// 😥 The `find reference` feature applied to `myCoupon` won't find this reference
+import somethingElse from './coupon'
+```
+
+```tsx title="✅ Named export"
+// ✅ Variable can be renamed across the codebase
+// ✅ The IDE can reference the variable's use in all code
+export const myCoupon = { ... }
+```
 
 ### Strict equality
 
@@ -350,7 +364,7 @@ const john: Person = {
 Using mutable variables is error-prone. It can have nasty side effects, and TypeScript will give you a rough time.
 Default to working with immutable values:
 
-```tsx caption="Immutability using Prisma"
+```tsx title="Immutability using Prisma"
 // ❌ Don't add keys to an object after declaring it
 async function findUserFromPostIds(postIds: string[]) {
   const query = {
@@ -433,42 +447,40 @@ async function findUserFromPostIds(postIds: string[]) {
 ```tsx
 // ❌ The return type of getUser is already `User`
 // Declaring the type here complicates refactoring if the return type is changed.
-const user: User = await getUser(userId);
+const user: User = await getUser(userId)
 
 // ✅
-const user = await getUser(userId);
+const user = await getUser(userId)
 //     ^? User
-
-const routes: Routes = [|
 ```
 
 ### Functions
 
-```tsx
-// ⚠️ Sometimes, it's okay to specify the return type of a function
-// When you want to check the function's complex internal logic returns the right type.
-async getUser(userId: string): Promise<User> {
-    const user = await sql`SELECT ...`
-				// ^? any
-		const superComplexCalculationWithUser = ...
-		// We should validate at runtime here too
-    return superComplexCalculationWithUser
-}
-
-// ✅ Most of the time, we don't need to specify anything,
-// as we should mostly rely on implicit types
-// Example: Prisma returns a type that changes implicitly based on arguments.
-async getUser(userId: string) {
-    const user = await this.prisma.user.findUnique({
-      where: { id: userId },
+```tsx title="✅ Most of the time we should mostly rely on implicit types"
+getUser(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+      // ✅ Return type will implicitly change based on arguments
+      // If we were to remove `name: true` from the select,
+      // TS would start throwing on every place that relies on `.name` anyways.
 			select: { name: true, }
     });
     return user;
 }
+
 const name = getUser("123").name
 //                          ?^ string - Type is inferred by Prisma
-// If we were to remove `name: true` from the select,
-// TS would start throwing on every place that relies on `.name` anyways.
+
+```
+
+```tsx title="⚠️ It's fine to use the return type when we want to ensure the function's complex internal logic returns the right type."
+getUser(userId: string): Promise<User> {
+    const user = await sql`SELECT ...`
+				// ^? any
+		const superComplexCalculationWithUser = ...
+		// We probably should validate at runtime here too
+    return superComplexCalculationWithUser
+}
 ```
 
 ## The `as` ~~mistake~~ keyword
@@ -498,7 +510,7 @@ function getData(unknowVar: unknown): string {
 
 3. Build a helper to correctly handle the type once.
 
-```tsx caption="Helper for Object.entries"
+```tsx title="Helper for Object.entries"
 type Entries<T> = {
   [K in keyof T]: [K, T[K]]
 }[keyof T][]
@@ -512,44 +524,39 @@ export const getEntries = <T extends object>(obj: T) =>
 
 - Add a comment explaining why and hints at how we could avoid using it in the future.
 
-## Non-nullish assertions
+### Non-nullish assertions
 
-### The problem
+#### The problem
 
-In some instances, it is possible we know a value is here, but TS doesn’t. For example we could get from Prisma:
+In some instances, it is possible we know a value is here, but TS doesn't. For example we could get from Prisma:
 
-```tsx
-// In the args, we make sure only users with posts are returned
+```tsx title="In the args, we make sure only users with posts are returned"
 const usersWithPost = this.prisma.users.findMany(...)
 //      ^ User & { post?: Post} - Still type of Post is optional
 ```
 
 It will become annoying to work with post because although we know from the filtering in args that we only got the users with posts, `post` type is still optional.
 
-```tsx
-// ❌ We have to check for nullish value every time
+```tsx title="❌ We have to check for nullish value every time"
 const allPostTitles = usersWithPost.map((user) => user.post?.title).map(Boolean)
 //                                                    ?^ Post | undefined
 ```
 
 So we might naturally go with:
 
-```tsx
-// ❌ Forcefully tell TS the value is non-nullish
+```tsx title="❌ Forcefully tell TS the value is non-nullish"
 const allPosts = usersWithPost.map(user => user.post! && ...)
 //                                               ?^ Post
 ```
 
-But this might bring its own set of problems in the future.
+But this brings its own set of problems:
 
-- If we start using `!` every time we think we’re more right than TS, we might start using it at times we’re wrong, and create hard-to-catch bugs.
-- If we change the arguments in `findMany` function to also include users that don’t have a post, we might effectively lie to TypeScript the same way we would do with `as` and run into runtime issues.
+- If we start using `!` every time we think we're more right than TS, we might start using it at times we're wrong, and create hard-to-catch bugs (see the `as` section).
+- If we change the arguments in `findMany` function to also include users that don't have a post, we could run into runtime issues.
 
-### Alternative
+#### Solution
 
-[https://github.com/alexreardon/tiny-invariant](https://github.com/alexreardon/tiny-invariant)
-
-tiny-invariant is a library that check if a value is `falsy`, if it is, it throws. If it isn’t, it narrows the type. All in one line ❤️
+[tiny-invariant](https://github.com/alexreardon/tiny-invariant) is a library that check if a value is `falsy`, if it is, it throws. If it isn’t, it narrows the type. All in one line ❤️
 
 ```tsx
 const allPostTitles = usersWithPost.map((user) => {
@@ -559,3 +566,7 @@ const allPostTitles = usersWithPost.map((user) => {
   //            ?^ Post
 })
 ```
+
+## The end
+
+I'll keep updating this post as I continue to work with my teams. Be sure to check it out from time to time.

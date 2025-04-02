@@ -134,3 +134,19 @@ export const getEntries = <T extends object>(obj: T) =>
     }
   }
 ```
+
+```tsx
+const t = Array(5)
+// [ <5 empty items> ]
+t.forEach((\_,i) => console.log(i))
+// ❌ nothing is printed
+
+const t = Array.from({length: 5})
+// [ undefined, undefined, undefined, undefined, undefined ]
+t.forEach((\_,i) => console.log(i))
+// ✅ 0...4 is printed
+
+// ✅ With initialization
+const t = Array.from({length: 5}, (\_,i). => i+1)
+// [1,2,3,4,5]
+```

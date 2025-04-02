@@ -79,11 +79,11 @@ function Callout(props) {
 
 function ProsCard({ title, pros }) {
   return (
-    <div className="my-4 w-full rounded-xl border border-emerald-200 bg-background p-6 dark:border-emerald-900">
-      <span>{title}</span>
-      <div className="mt-4">
+    <div className="my-0 w-full rounded-xl border border-emerald-900 bg-emerald-800/10 p-6 dark:border-emerald-900">
+      <span className="font-bold">{title}</span>
+      <div className="mt-2">
         {pros.map((pro) => (
-          <div key={pro} className="mb-2 flex items-baseline font-medium">
+          <div key={pro} className="mb-2 flex items-center font-medium">
             <div className="mr-2 h-4 w-4">
               <svg className="h-4 w-4 text-emerald-500" viewBox="0 0 24 24">
                 <g
