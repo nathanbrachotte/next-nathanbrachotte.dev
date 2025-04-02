@@ -161,9 +161,16 @@ src/
  **/
 ```
 
-This will make it very obvious in your IDE:
+Your IDE will cross out all symbols marked as:
 
-![Untitled](Code%20Style%20and%20Architecture%20f774439d3c6b4ae5981b82ca3c7437ca/Untitled.png)
+<Image
+  alt="Deprecate with JSDoc"
+  src="/images/blog/coding-guidelines/deprecated.png"
+  priority
+  width={2640}
+  height={1994}
+  wrapperClassName="mb-6"
+/>
 
 - When deprecating a whole file, change the file name to `DEPRECATED_xx`
 
@@ -275,82 +282,76 @@ That means that in React, we might render an unwanted value in a place where we 
   priority
   width={2640}
   height={1994}
-/>
-<Image
-  alt="Deprecate with JSDoc"
-  src="/images/blog/coding-guidelines/deprecated.png"
-  priority
-  width={2640}
-  height={1994}
+  wrapperClassName="mb-6"
 />
 
-<aside>
-💡
+<Callout emoji="💡" type="info">
+  See this other [Kent blog
+  posts](https://kentcdodds.com/blog/use-ternaries-rather-than-and-and-in-tsx)
+  to know more
+</Callout>
 
-See https://kentcdodds.com/blog/use-ternaries-rather-than-and-and-in-tsx to know more
+## TypeScript
 
-</aside>
+### End to end type safety
 
-# TypeScript
+- In a monorepo using REST, if we can decide what tech you use: [use trpc](https://trpc.io/)
+- Using GraphQL: [use Codegen and generate types (and tanstack/query hooks) automatically](https://the-guild.dev/graphql/codegen)
+- If we need to consume 3rd party REST APIs: [use openapi to generate types](https://www.nathanbrachotte.dev/blog/typesafety-for-the-rest-of-us)
 
-## End to end type safety
+### Interface VS Type
 
-- If you’re in a monorepo, and using REST: [trpc](https://trpc.io/)
-- If you are using GraphQL: [Codegen](https://the-guild.dev/graphql/codegen) and generate types (and hooks) automatically
-- If you are consuming a 3rd party REST API:
-
-[End-to-end type safety for the REST of us.](https://www.nathanbrachotte.dev/blog/typesafety-for-the-rest-of-us)
-
-## Interface VS Type
-
-- Use ✅`type` over ❌`interface`
-- `interfaces` are changeable by the rest of the codebase (declaration merging).
-
-**Example**
+- Default to ✅`type` over ❌`interface`. `interfaces` are can be merged together if we mistakently use the same name (declaration merging).
 
 ```tsx
+// Declaring a first time
 type Person = {
   name: string
 }
 
-// This gives Duplicate identifier 'Person' error
+// Declaring a second time gives `Duplicate identifier 'Person'` error
 type Person = {
   age: number
 }
 ```
 
 ```tsx
+// Declaring a first time
 interface Person {
   name: string
 }
 
+// Declaring a second time doesn't throw
 interface Person {
   age: number
 }
 
+// Now both interfaces are merged
 const john: Person = {
   name: 'John',
   age: 26,
 }
 ```
 
-<aside>
-📖 Read this article for a deeper dive into the topic [https://blog.bitsrc.io/type-vs-interface-in-typescript-cf3c00bc04ae](https://blog.bitsrc.io/type-vs-interface-in-typescript-cf3c00bc04ae)
+<Callout emoji="📖" type="info">
+  Read [this
+  article](https://blog.bitsrc.io/type-vs-interface-in-typescript-cf3c00bc04ae)
+  for a deeper dive into the topic
+</Callout>
 
-</aside>
-
-<aside>
-⚠️ When extending a big existing type, prefer `interface` : [This Pattern Will Wreck Your React App's TS Performance](https://www.totaltypescript.com/react-apps-ts-performance)
-
-</aside>
+<Callout emoji="⚠️" type="warning">
+  When extending a big existing type. For performance reasons, prefer
+  `interface`. [See why
+  here](https://www.totaltypescript.com/react-apps-ts-performance)
+</Callout>
 
 ## Immutability
 
 Using mutable variables is error-prone. It can have nasty side effects, and TypeScript will give you a rough time.
-Ideally, always default to working with immutable values:
+Default to working with immutable values:
 
-```tsx
-// ❌ Dont try and add keys to an object after declaring it
+```tsx caption="Immutability using Prisma"
+// ❌ Don't add keys to an object after declaring it
 async function findUserFromPostIds(postIds: string[]) {
   const query = {
     include: {
@@ -373,33 +374,35 @@ async function findUserFromPostIds(postIds: string[]) {
     // ❌ This too wide of a type
     include: {
       post: true,
+      anything: 'yes',
     },
   }
 
   if (postIds.length > 0) {
-    query.where.postId = { in: postIds } // ✅ You are able to add entries to it
+    // ✅ We can add entries
+    query.where.postId = { in: postIds }
   }
 
+  // ✅ We can use it
   return await prisma.user.findMany(query)
   //            ^? ❌ But the returned type will not include `post` because the param type wasn't narrow enough
 }
 
-// ✅ Use a lib-generated type (in that case, by Prisma)
+// ✅ Use a types from the library
 async function findUserFromPostIds(postIds: string[]) {
-  const where: Prisma.UserWhereInput = {
+  const where = {
     include: {
       post: true,
     },
-  }
+  } as const satisfies Prisma.UserWhereInput
 
   if (postIds.length > 0) {
     query.where.postId = { in: postIds }
   }
 
-  const result = await this.prisma.user.findMany({
+  return await prisma.user.findMany({
     where: where,
   })
-  return result
 }
 
 // ✅ Use implicit type by creating immutable objects
@@ -412,7 +415,7 @@ async function findUserFromPostIds(postIds: string[]) {
     where: postIds.length > 0 ? { postId: { in: postIds } } : undefined,
   }
 
-  // ✅ Query instantly has the correct type
+  // ✅ Works
   return await prisma.user.findMany(query)
 
   // 📖 Note: You can always create new objects to add new fields, as long as it's immutable:
@@ -422,41 +425,6 @@ async function findUserFromPostIds(postIds: string[]) {
   })
 }
 ```
-
-## The `as` ~~mistake~~ keyword
-
-### Why it’s a mistake
-
-- **Maintainability:** Using `as` often will lead to issues when refactoring our code. If the actual structure of the data changes, the TypeScript compiler won't be able to point out mismatches where the **`as`** keyword is used.
-- **Type Safety:** When you use **`as`** in TypeScript, you're effectively telling the compiler to trust you that you know the type of an object better than it does. This can easily lead to errors that the compiler would usually catch because you're bypassing its type-checking. If your assertions are incorrect, you'll experience runtime errors that could have been prevented.
-
-### “But TS doesn’t correctly handle this and that JS use case”
-
-**3 solutions:**
-
-1. Use TS-reset lib. It overrides some of TS types for JS methods to work better
-
-[https://github.com/total-typescript/ts-reset](https://github.com/total-typescript/ts-reset)
-
-1. If TS-reset doesn’t handle your use case, build a helper to “correctly” type the poorly handled method. For example, to correctly type `Object.entries`:
-
-```
-type Entries<T> = {
-  [K in keyof T]: [K, T[K]];
-}[keyof T][];
-
-export const getEntries = <T extends object>(obj: T) => Object.entries(obj) as Entries<T>;
-```
-
-1. Use a validator like [Zod](https://zod.dev/?id=basic-usage)
-
-### What if I still have to use `as`?
-
-- Add a comment explaining why that is and hints at how we could avoid using it in the future.
-- The only valid reasons are:
-  - When types from another lib are broken
-  - When types from another lib are missing/lacking
-  - When fixing the types would take days, and we are 100% sure there won’t be any runtime error because of it
 
 ## Use implicit types
 
@@ -502,6 +470,47 @@ const name = getUser("123").name
 // If we were to remove `name: true` from the select,
 // TS would start throwing on every place that relies on `.name` anyways.
 ```
+
+## The `as` ~~mistake~~ keyword
+
+### Why it's a mistake
+
+- **Maintainability:** Using `as` will lead to issues when refactoring our code. If the type changes, the TypeScript compiler won't be able to point out mismatches in places where **`as`** is used.
+- **Type Safety:** Using `as`, we're effectively telling the compiler to trust you that you know the type better than it can guess. This can easily lead to errors that the TypeScript would usually catch because you're bypassing its type-checking. If your assertions are incorrect, you'll experience runtime errors that will be hard to find and could have been prevented.
+
+### How do we keep types strict
+
+There are many solutions:
+
+1. Use `zod`
+
+```tsx
+function getData(unknowVar: unknown): string {
+  return z.string(unknowVar)
+}
+```
+
+<Callout emoji="💡" type="info">
+  You can do [plenty more](https://zod.dev/?id=basic-usage) with Zod
+</Callout>
+
+2. [Use TS-reset](https://github.com/total-typescript/ts-reset). It overrides some of TS types for JS methods to work better
+
+3. Build a helper to correctly handle the type once.
+
+```tsx caption="Helper for Object.entries"
+type Entries<T> = {
+  [K in keyof T]: [K, T[K]]
+}[keyof T][]
+
+// ✅ We can now use `getEntries` safely everywhere
+export const getEntries = <T extends object>(obj: T) =>
+  Object.entries(obj) as Entries<T>
+```
+
+#### What if I still have to use `as`?
+
+- Add a comment explaining why and hints at how we could avoid using it in the future.
 
 ## Non-nullish assertions
 

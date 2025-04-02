@@ -103,7 +103,7 @@ html {
 /* Pre - surroundings and background */
 .prose pre {
   /* @apply border border-neutral-800 bg-neutral-900; */
-  @apply border border-slate-700 bg-slate-800;
+  @apply mb-6 mt-0 border border-slate-700 bg-slate-800;
   max-width: calc(100vw);
   overflow-x: auto;
 }
@@ -184,7 +184,7 @@ table {
 
 /* Code > Pre > Lines */
 [data-rehype-pretty-code-fragment] pre {
-  @apply overflow-x-auto border-transparent px-0 py-3;
+  @apply overflow-x-auto border-transparent px-0 py-2;
 }
 
 /* Makes sure line count and code lines are correctly aligned */

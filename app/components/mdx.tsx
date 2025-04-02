@@ -5,7 +5,6 @@ import Tweet from './tweet'
 import { Badges } from 'app/components/Badges'
 import { cn } from '@/lib/utils'
 import { ZoomedImage } from 'app/components/ZoomedImage'
-import { Button } from '@/components/ui/button'
 import { CopyButton } from 'app/components/CopyButton'
 
 const CustomLink = (props) => {
