@@ -206,7 +206,6 @@ function extractTextContent(element: React.ReactNode): string {
 }
 
 function Pre({ children, ...props }) {
-  console.log('🚀 ~ file: mdx.tsx ~ Pre ~ children:', children)
   // Extract the actual text content from the children
   const codeElement = React.Children.toArray(children).find(
     (child) => React.isValidElement(child) && child.type === 'code',
@@ -215,7 +214,6 @@ function Pre({ children, ...props }) {
   const codeString = codeElement
     ? extractTextContent(codeElement.props.children)
     : ''
-  console.log('🚀 ~ Pre ~ codeString:', codeString)
 
   return (
     <div className="group relative">

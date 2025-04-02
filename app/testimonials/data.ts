@@ -20,7 +20,7 @@ export const testimonials = [
     testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
     pic: '/images/testimonials/ferhat.webp',
     authorLink: 'https://www.linkedin.com/in/ferhat-beyaz/',
-    position: 'Senior Engineering Manager',
+    position: 'Senior Engineering Manager at Blinkist',
     type: 'clients',
   },
   {

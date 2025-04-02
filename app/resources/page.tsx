@@ -20,7 +20,7 @@ export default function ResourcesPage() {
 
   return (
     <section>
-      <H1>{resource?.[0]?.title || 'Resources (WIP 🏗️👷🏻‍♂️)'}</H1>
+      <H1>{resource?.[0]?.title}</H1>
       {allTips.map((resource) => (
         <Mdx key={resource.slug} code={resource.body.code} tweets={[]} />
       ))}
