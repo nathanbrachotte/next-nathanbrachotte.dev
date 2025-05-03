@@ -16,6 +16,7 @@ import { getDateWithDistance } from 'helpers/dates'
 import { Button } from '@/components/ui/button'
 import { MediumIcon } from 'icons/Medium'
 import Link from 'next/link'
+import { DownloadMarkdownButton } from 'app/components/DownloadMarkdownButton'
 
 const findBlogPost = (slug: string) => {
   return allBlogs.find((post) => post.slug.includes(slug))
@@ -79,6 +80,8 @@ export default async function Blog({ params }) {
     notFound()
   }
 
+  const filename = `${post.slug}.mdx`
+
   return (
     <section>
       <script type="application/ld+json" suppressHydrationWarning>
@@ -101,7 +104,7 @@ export default async function Blog({ params }) {
         <Balancer>{post.title}</Balancer>
       </h1>
       <span className="text-neutral-200">{post.summary}</span>
-      <div className="mt-2 flex max-w-[650px] items-center justify-between text-sm">
+      <div className="mt-4 flex w-full flex-row flex-wrap items-center justify-between gap-3 text-sm">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           📅 {getDateWithDistance(post.publishedAt)} -{' '}
           {getTimePerPost(post.body.raw)}
@@ -110,6 +113,11 @@ export default async function Blog({ params }) {
             <ViewCounter viewCount={viewCount} slug={post.slug} trackView />
           </>
         </p>
+
+        <DownloadMarkdownButton
+          markdownContent={post.body.raw}
+          filename={filename}
+        />
       </div>
       <Separator className="mt-6" />
       {post.mediumLink ? (

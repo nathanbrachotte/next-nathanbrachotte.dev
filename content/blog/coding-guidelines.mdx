@@ -1,24 +1,28 @@
 ---
-title: 'The guidelines I set in my teams to double their output'
+title: 'The coding guidelines that make my teams shine'
 publishedAt: '2025-04-10'
-summary: "As a lead engineer, I've built tons of engineering guidelines for my past teams. It did go well."
-draft: true
-image: '/images/blog/stopped-git-getting-in-the-way/cover.webp'
+summary: 'Driving high standards at Klarna, Blinkist & other startups: the coding guidelines I use to build successful, happy engineering teams.'
+image: '/images/blog/coding-guidelines/cover.webp'
 ---
 
-Last update: 04.10.2025
+<Callout emoji="🕒" type="info">
+  Last update: 04.05.2025
+</Callout>
 
-Use these guidelines in any time and your team's output will go up, bugs fewers and code will be more maintainable and readable.
+Working within, mentoring, and leading engineering teams over the years, I've collected and refined this set of coding guidelines.
 
-(TODO: Add a "Download Markdown" button)
-TODO: Reformulate this: Unified Style Guide: Reduces debates on code style and guidelines by making the decision once.
-TODO: Reformulate this: Efficient Reviews: Simplifies PR reviews and discussion by allowing referencing guidelines that already contain examples.
+The goal has never been to create a bunch of dogmatic rules, but rather to collaboratively agree to a way to build software that helps us work effectively, write consistent code, and ultimately ship better products faster.
 
-TODO: Fix image sizes
+They've proven valuable across teams of different sizes and experience levels, particularly in helping junior-heavy teams ramp up quickly.
 
-Feel free to disagree on some, and only take what you like from this.
-If've found that this guidelines work great for teams of various sizes and experiences,
-but are especially useful getting a "juior-heavy" team up to speed.
+Feel free to adopt what resonates with your context, adapt what needs tweaking, and discard anything that doesn't fit your use case.
+
+Adopting a shared set of guidelines like these can:
+
+- **Reduce debates** on code style and conventions by making decisions upfront.
+- **Simplify PR reviews** and discussions by allowing easy linking to examples.
+
+Feel free to bookmark this page, or use the "Download in Markdown" button to save it in Markdown and add it to your team's handbook.
 
 ## General guidelines
 
@@ -26,7 +30,8 @@ but are especially useful getting a "juior-heavy" team up to speed.
 
 #### Comments
 
-- Make heavy use of comments and JSDoc in code.
+Make heavy use of comments and JSDoc in code, to:
+
 - **Provide product context**: `why we're implementing this feature?`
 - **Explain unusual technical solutions**: `why we're using this specific approach?`
 
@@ -49,7 +54,7 @@ The goal is for other devs (or yourself in 6 months) to have an easier time unde
   - "You have a typo" → "typo: change to XYZ"
 - **Suggestion:** Use [Conventional Comments](https://conventionalcomments.org/)
 
-### Style
+### Code Style
 
 #### File names
 
@@ -61,7 +66,7 @@ The goal is for other devs (or yourself in 6 months) to have an easier time unde
 Try to keep comments and all strings a variable names to the shortest (but still descriptive name):
 
 ```tsx
-// ❌ “should” is superfluous
+// ❌ "should" is superfluous
 it('should add 1', () => {
   // ...
 })
@@ -69,6 +74,105 @@ it('should add 1', () => {
 // ✅
 it('adds 1', () => {
   // ...
+})
+```
+
+#### Early return pattern
+
+```tsx
+/**
+ * ❌
+ * - Nested ifs
+ * - Hard to read
+ * - Hard to tell what's returned
+ */
+getRoute() {
+	if (isEpisode) {
+	  if (item.kind === "guide") {
+	      return routes.getGuidePath(item.show.slug)
+    } else {
+      return routes.browse(item.show.slug, id)
+    }
+  } else if (isBlocked) {
+	    return routes.getBasicBookPath(item.slug)
+  } else {
+    return routes.searchBookPath(item.slug)
+  }
+}
+```
+
+```tsx
+/**
+ * ✅
+ * - Return early
+ * - Reads well
+ * - No nesting
+ */
+getRoute() {
+	if (!isEpisode && isBlocked) {
+    return routes.getBasicBookPath(item.slug)
+	}
+
+	if (!isEpisode) {
+    return routes.searchBookPath(item.slug)
+  }
+
+	if (item.kind === "guide") {
+    return routes.getGuidePath(item.show.slug)
+	}
+
+  return routes.browse(item.show.slug, id)
+}
+```
+
+#### Keep it flat
+
+```tsx
+/**
+ * ❌
+ * - Nested code
+ * - More test cases than needed
+ * - Describes add no value
+ * - `should` should be implied
+ */
+ describe('goals.helpers', () => {
+  describe('shouldGoalSucceed', () => {
+    it('should return true when goal has shouldGoalSucceed set to true', () => {
+      expect(shouldGoalSucceed("success-goal")).toBe(true)
+    })
+
+    it('should return false when goal does not have shouldGoalSucceed property', () => {
+      expect(shouldGoalSucceed("fail-goal")).toBe(false)
+    })
+  })
+
+  describe('shouldGoalSendEmail', () => {
+    it('should return true when goal has shouldGoalSendEmail set to true', () => {
+      expect(shouldGoalSendEmail("send-email-goal")).toBe(true)
+    })
+
+    it('should return false when goal does not have shouldGoalSendEmail property', () => {
+      expect(shouldGoalSendEmail("fail-goal")).toBe(false)
+    })
+  })
+}
+```
+
+```tsx
+/**
+ * ✅
+ * - Straight to the point
+ * - No need to test each success/failure case (when test setup is small)
+ * - No `describe` as it makes the code harder to read and nested
+ */
+it('shouldGoalSucceed - returns the right value for each goal', () => {
+  expect(shouldGoalSucceed('goal')).toBe(true)
+  expect(shouldGoalSucceed('fail-goal')).toBe(false)
+})
+
+it('shouldGoalSendEmail - returns the right value for each goal', () => {
+  expect(shouldGoalSendEmail('send-email-goal')).toBe(true)
+  expect(shouldGoalSendEmail('fail-goal')).toBe(false)
 })
 ```
 
@@ -142,9 +246,9 @@ Your IDE will cross out all symbols marked as:
 
 #### Names
 
-- **Booleans: ** Prefix with `has` or `is` if possible
-- **Functions: ** Prefix with verbs `get`, `extract`, `filter`, etc
-- **Constants: ** Use `SCREAMING_SNAKE_CASE`
+- **Booleans:** Prefix with `has` or `is` if possible
+- **Functions:** Prefix with verbs `get`, `extract`, `filter`, etc
+- **Constants:** Use `SCREAMING_SNAKE_CASE`
 
 #### Use positives
 
@@ -163,14 +267,14 @@ if (!newPushNotificationsDisabled) {
 ```
 
 <Callout emoji="💡" type="info">
-  There can be times where we need to name constants as negatives and that’s
+  There can be times where we need to name constants as negatives and that's
   okay, but default to positives. [Be pragmatic, not
   dogmatic](https://www.nathanbrachotte.dev/blog/coding-guidelines#be-pragmatic-not-dogmatic)
 </Callout>
 
 ## JavaScript
 
-## Use const
+### Use `const`
 
 ```tsx
 // ✅ Easy to keep track of myArray's value
@@ -195,16 +299,16 @@ try {
 }
 ```
 
-## Use named imports
+### Use named imports
 
 ```tsx title="❌ Default export"
 const myCoupon = {}
 
 export default myCoupon
 
-// 😥 Variable can be renamed.
-// 😥 The `rename` function fron IDE won't rename it here
-// 😥 The `find reference` feature applied to `myCoupon` won't find this reference
+// ❌ Variable can be renamed.
+// ❌ The `rename` function fron IDE won't rename it here
+// ❌ The `find reference` feature applied to `myCoupon` won't find this reference
 import somethingElse from './coupon'
 ```
 
@@ -237,44 +341,6 @@ const isZero = 0 == '0' // true
 const hasParams = myParam != null
 ```
 
-### Early return pattern
-
-```tsx
-// ❌ Nested ifs, hard to read, hard to tell what's returned
-getRoute() {
-	if (isEpisode) {
-	  if (item.kind === "guide") {
-	      return routes.getGuidePath(item.show.slug)
-    } else {
-      return routes.browse(item.show.slug, id)
-    }
-  } else if (isBlocked) {
-	    return routes.getBasicBookPath(item.slug)
-  } else {
-    return routes.searchBookPath(item.slug)
-  }
-}
-```
-
-```tsx
-// ✅ Return early, reads well, no nesting
-getRoute() {
-	if (!isEpisode && isBlocked) {
-    return routes.getBasicBookPath(item.slug)
-	}
-
-	if (!isEpisode) {
-    return routes.searchBookPath(item.slug)
-  }
-
-	if (item.kind === "guide") {
-    return routes.getGuidePath(item.show.slug)
-	}
-
-  return routes.browse(item.show.slug, id)
-}
-```
-
 ### Avoid ternary operations in renders
 
 Do not use `&&` in returns in TSX.
@@ -288,7 +354,7 @@ false && true // false
 true && '' // ''
 ```
 
-That means that in React, we might render an unwanted value in a place where we just wanted to return nothing:
+We might end up rendering an unwanted value in a place where we just wanted to return nothing:
 
 ```tsx title="✅ This will render '<ul></ul>'"  /?/#g /: null/#g
 function ContactList() {
@@ -333,7 +399,7 @@ function ContactList() {
 
 - Default to ✅`type` over ❌`interface`. `interfaces` are can be merged together if we mistakently use the same name (declaration merging).
 
-```tsx
+```tsx title="✅ Type"
 // Declaring a first time
 type Person = {
   name: string
@@ -345,18 +411,18 @@ type Person = {
 }
 ```
 
-```tsx
+```tsx title="❌ Interface"
 // Declaring a first time
 interface Person {
   name: string
 }
 
-// Declaring a second time doesn't throw
+// ✅ Declaring a second time doesn't throw
 interface Person {
   age: number
 }
 
-// Now both interfaces are merged
+// ⚠️ Now both keys are expected
 const JOHN: Person = {
   name: 'John',
   age: 26,
@@ -375,12 +441,12 @@ const JOHN: Person = {
   here](https://www.totaltypescript.com/react-apps-ts-performance)
 </Callout>
 
-## Immutability
+### Immutability
 
 Using mutable variables is error-prone. It can have nasty side effects, and TypeScript will give you a rough time.
 Default to working with immutable values:
 
-```tsx title="Immutability using Prisma"
+```tsx title="Example with Prisma"
 // ❌ Don't add keys to an object after declaring it
 async function findUserFromPostIds(postIds: string[]) {
   const query = {
@@ -398,10 +464,10 @@ async function findUserFromPostIds(postIds: string[]) {
   return await prisma.user.findMany(query)
 }
 
-// ❌ Don't declare a wide type
+// ❌ Wide type
 async function findUserFromPostIds(postIds: string[]) {
+  // ❌ Too wide for Prisma to understand
   const query: Record<string, any> = {
-    // ❌ This too wide of a type
     include: {
       post: true,
       anything: 'yes',
@@ -456,21 +522,27 @@ async function findUserFromPostIds(postIds: string[]) {
 }
 ```
 
-## Use implicit types
+### Use implicit types
 
-### Constants
+#### Constants
 
 ```tsx
-// ❌ The return type of getUser is already `User`
-// Declaring the type here complicates refactoring if the return type is changed.
+/**
+ * ❌ The return type of getUser is already `User`
+ * - Declaring the type here complicates refactoring
+ * - If the return type is changed, we have to update the type in every place that uses it
+ */
 const user: User = await getUser(userId)
 
-// ✅
+/**
+ * ✅
+ * - The return type is inferred from the function's return type
+ */
 const user = await getUser(userId)
 //     ^? User
 ```
 
-### Functions
+#### Functions
 
 ```tsx title="✅ Most of the time we should mostly rely on implicit types"
 getUser(userId: string) {
@@ -494,19 +566,22 @@ getUser(userId: string): Promise<User> {
     const user = await sql`SELECT ...`
 				// ^? any
 		const superComplexCalculationWithUser = ...
-		// We probably should validate at runtime here too
+		/**
+		 * ✅ TypeScript will throw if the type isn't `User`
+		 * 📖 We probably should validate at runtime here too
+		 */
     return superComplexCalculationWithUser
 }
 ```
 
-## The `as` ~~mistake~~ keyword
+### The `as` ~~mistake~~ keyword
 
-### Why it's a mistake
+#### Why it's a mistake
 
 - **Maintainability:** Using `as` will lead to issues when refactoring our code. If the type changes, the TypeScript compiler won't be able to point out mismatches in places where **`as`** is used.
 - **Type Safety:** Using `as`, we're effectively telling the compiler to trust you that you know the type better than it can guess. This can easily lead to errors that the TypeScript would usually catch because you're bypassing its type-checking. If your assertions are incorrect, you'll experience runtime errors that will be hard to find and could have been prevented.
 
-### How do we keep types strict
+#### How do we keep types strict
 
 There are many solutions:
 
@@ -536,35 +611,38 @@ export const getEntries = <T extends object>(obj: T) =>
   Object.entries(obj) as Entries<T>
 ```
 
-4. Build type guard functions
+Find more examples in my [snippet collection](https://www.nathanbrachotte.dev/snippets).
 
-````tsx
+4.  Build type guard functions (only if you can't use Zod)
+
+```tsx
 function assertIsString(val: any): asserts val is string {
-  if (typeof val !== "string") {
-    throw new Error("Not a string!");
+  if (typeof val !== 'string') {
+    throw new Error('Not a string!')
   }
 }
 
 function getSomething(str: any) {
-  assertIsString(str);
+  assertIsString(str)
   // Now TypeScript knows that 'str' is a 'string'.
-  return str.toUppercase();
+  return str.toUppercase()
 }
 
 // Other example
 function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
   if (val === undefined || val === null) {
-    throw new Error(
-      `Expected 'val' to be defined, but received ${val}`
-    );
+    throw new Error(`Expected 'val' to be defined, but received ${val}`)
   }
 }
+```
 
+#### What if I none of these solutions work?
 
+- Add a comment explaining why you used `as` and hints at how we could avoid using it in the future.
 
-#### What if I still have to use `as`?
-
-- Add a comment explaining why and hints at how we could avoid using it in the future.
+<Callout emoji="💡" type="info">
+  Using `as` to test failure cases in tests is fine.
+</Callout>
 
 ### Non-nullish assertions
 
@@ -572,12 +650,12 @@ function assertIsDefined<T>(val: T): asserts val is NonNullable<T> {
 
 In some instances, it is possible we know a value is here, but TS doesn't. For example we could get from Prisma:
 
-```tsx title="In the args, we make sure only users with posts are returned"
-const usersWithPost = this.prisma.users.findMany(...)
+```tsx title="In the args, we made sure only users with posts are returned"
+const usersWithPost = prisma.users.findMany(...)
 //      ^ User & { post?: Post} - Still type of Post is optional
-````
+```
 
-It will become annoying to work with post because although we know from the filtering in args that we only got the users with posts, `post` type is still optional.
+It will become annoying to work with post because although we know `post` can't be `undefined`, `post` type is still typed as optional.
 
 ```tsx title="❌ We have to check for nullish value every time"
 const allPostTitles = usersWithPost.map((user) => user.post?.title).map(Boolean)
@@ -598,9 +676,9 @@ But this brings its own set of problems:
 
 #### Solution
 
-[tiny-invariant](https://github.com/alexreardon/tiny-invariant) is a library that check if a value is `falsy`, if it is, it throws. If it isn’t, it narrows the type. All in one line ❤️
+[tiny-invariant](https://github.com/alexreardon/tiny-invariant) is a library that check if a value is `falsy`, if it is, it throws. If it isn't, it narrows the type. All in one line ❤️
 
-```tsx
+```tsx title="✅ One liner to make TS happy"
 const allPostTitles = usersWithPost.map((user) => {
   //                                       ?^ user.post: Post | undefined
   invariant(user.post, 'Found user without a post')
@@ -608,7 +686,3 @@ const allPostTitles = usersWithPost.map((user) => {
   //            ?^ Post
 })
 ```
-
-## The end
-
-I'll keep updating this post as I continue to work with my teams. Be sure to check it out from time to time.
