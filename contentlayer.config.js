@@ -113,6 +113,10 @@ export const Project = defineDocumentType(() => ({
     isSideProject: {
       type: 'boolean',
     },
+    status: {
+      type: 'enum',
+      options: ['live', 'work-in-progress', 'abandoned'],
+    },
     analytics: {
       type: 'string',
     },

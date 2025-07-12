@@ -7,6 +7,7 @@ import Balancer from 'react-wrap-balancer'
 import { Badges } from 'app/components/Badges'
 import React from 'react'
 import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
+import { ProjectStatus } from 'app/projects/ProjectStatus'
 import { LinkButton } from 'app/components/LinkButton'
 import { ArrowUpRight } from 'icons/ArrowUpRight'
 import { AppStoreIcon } from 'icons/AppStore'
@@ -61,6 +62,12 @@ function Tools({ tools }: { tools: string[] }) {
   return (
     <div className="mb-8 mt-2 flex w-full flex-wrap">
       {tools.map((tool) => {
+        console.log('🚀 ~ {tools.map ~ tool:', tool)
+        if (!Badges[tool]) {
+          console.error('tool not found', tool)
+          return null
+        }
+
         return (
           <div key={tool} className="mr-2 mt-2">
             {React.createElement(Badges[tool])}
@@ -92,9 +99,12 @@ export default async function Project({ params }) {
         <div className="flex">
           {post.image && <ProjectLogo image={post.image} title={post.title} />}
           <div className="ml-2 flex flex-col items-start justify-start">
-            <h1 className="flex-shrink-0 items-center text-2xl font-bold tracking-tighter">
-              <Balancer>{post.title}</Balancer>
-            </h1>
+            <div className="flex items-center justify-between gap-2">
+              <h1 className="flex-shrink-0 items-center text-2xl font-bold tracking-tighter">
+                <Balancer>{post.title}</Balancer>
+              </h1>
+              <ProjectStatus status={post.status} />
+            </div>
             <p className="text-sm text-neutral-400">
               Started in {getDateWithDistance(post.publishedAt)}
             </p>

@@ -1,5 +1,6 @@
 import { H1, H2 } from 'app/components/Typography'
 import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
+import { ProjectStatus } from 'app/projects/ProjectStatus'
 import clsx from 'clsx'
 import { type Project, allProjects } from 'contentlayer/generated'
 import { SimpleAnalyticsIcon } from 'icons/SimpleAnalytics'
@@ -8,12 +9,11 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'N8 - Projects',
-  description:
-    "A curated list of some of projects I've worked on in the past 👇",
+  description: "Some of my side projects and apps I've worked on",
 }
 
 const ProjectCard = ({
-  project: { title, summary, image, slug, analytics },
+  project: { title, summary, image, slug, analytics, status },
   index,
 }: {
   project: Project
@@ -53,8 +53,11 @@ const ProjectCard = ({
           />
           <div className="relative h-full rounded-lg bg-background p-6">
             {
-              <div className="flex flex-row justify-between">
-                <ProjectLogo image={image} title={title} />
+              <div className="flex flex-row items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <ProjectLogo image={image} title={title} />
+                  {status ? <ProjectStatus status={status} /> : null}
+                </div>
                 {analytics != null ? (
                   <SimpleAnalyticsIcon className="h-6 w-6" />
                 ) : null}
@@ -87,7 +90,9 @@ export default function ProjectsPage() {
             <ProjectCard key={project.slug} project={project} index={index} />
           ))}
       </div>
-      <H2 className="mb-2 mt-10">Unexhaustive list of apps I've worked on</H2>
+      <H2 className="mb-2 mt-10">
+        Apps I've worked on at work that you may know of
+      </H2>
       <div className="grid grid-cols-1 grid-rows-1 gap-8 md:grid-cols-2">
         {allProjects
           .filter((project) => !project.isSideProject)
