@@ -115,7 +115,7 @@ export const Project = defineDocumentType(() => ({
     },
     status: {
       type: 'enum',
-      options: ['live', 'work-in-progress', 'abandoned'],
+      options: ['live', 'wip', 'abandoned'],
     },
     analytics: {
       type: 'string',

@@ -228,8 +228,7 @@ export default async function Page() {
             .filter(
               (project) =>
                 project.isSideProject &&
-                (project.status === 'live' ||
-                  project.status === 'work-in-progress'),
+                (project.status === 'live' || project.status === 'wip'),
             )
             .sort((a, b) => {
               if (new Date(a.publishedAt) > new Date(b.publishedAt)) {

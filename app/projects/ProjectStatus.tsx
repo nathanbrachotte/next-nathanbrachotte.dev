@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
 interface ProjectStatusProps {
-  status: 'live' | 'work-in-progress' | 'abandoned'
+  status: 'live' | 'wip' | 'abandoned'
   className?: string
 }
 
@@ -13,7 +13,7 @@ export function ProjectStatus({ status, className }: ProjectStatusProps) {
       className: 'bg-green-500/20 text-green-400 border-green-500/30',
       showDot: true,
     },
-    'work-in-progress': {
+    wip: {
       label: 'Work in Progress',
       className: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30',
     },
