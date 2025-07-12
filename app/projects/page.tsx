@@ -24,6 +24,10 @@ const ProjectCard = ({
     'from-gradient-blue via-transparent to-gradient-cyan',
     'from-gradient-orange via-transparent to-gradient-yellow',
     'from-gradient-purple via-transparent to-gradient-orange',
+    'from-gradient-green via-transparent to-gradient-turquoise',
+    'from-gradient-pink via-transparent to-gradient-blue',
+    'from-gradient-cyan via-transparent to-gradient-green',
+    'from-gradient-yellow via-transparent to-gradient-purple',
   ]
 
   const animatedGradient = [
@@ -31,6 +35,10 @@ const ProjectCard = ({
     'via-gradient-orange',
     'via-gradient-cyan',
     'via-gradient-blue',
+    'via-gradient-green',
+    'via-gradient-turquoise',
+    'via-gradient-pink',
+    'via-gradient-purple',
   ] as const
 
   // TODO: Add touch detection for animation to run on mobile - https://www.npmjs.com/package/react-touch

@@ -62,7 +62,6 @@ function Tools({ tools }: { tools: string[] }) {
   return (
     <div className="mb-8 mt-2 flex w-full flex-wrap">
       {tools.map((tool) => {
-        console.log('🚀 ~ {tools.map ~ tool:', tool)
         if (!Badges[tool]) {
           console.error('tool not found', tool)
           return null
@@ -103,7 +102,7 @@ export default async function Project({ params }) {
               <h1 className="flex-shrink-0 items-center text-2xl font-bold tracking-tighter">
                 <Balancer>{post.title}</Balancer>
               </h1>
-              <ProjectStatus status={post.status} />
+              {post.status ? <ProjectStatus status={post.status} /> : null}
             </div>
             <p className="text-sm text-neutral-400">
               Started in {getDateWithDistance(post.publishedAt)}
