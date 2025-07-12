@@ -105,7 +105,7 @@ export default {
         'gradient-blue': 'oklch(59.59% 0.24 255.09156059071347)', // #007cf0 - Azure
         'gradient-cyan': 'oklch(81.58% 0.189 190.74037768509325)', // #01dfd8 - Bright Turquoise
         'gradient-green': '#15c064', // TODO: Make this oklch
-        'gradient-turquoise': '#80FF72',
+        'gradient-turquoise': '#1C93FF',
         // background: '#0B0F1A',
       },
       boxShadow: {
