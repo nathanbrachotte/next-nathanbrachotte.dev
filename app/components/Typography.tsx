@@ -37,3 +37,15 @@ export function H2({
     </h2>
   )
 }
+
+export function H3({
+  className,
+  children,
+  ...props
+}: HTMLAttributes<HTMLHeadingElement>) {
+  return (
+    <h3 className={cn('text-lg font-semibold', className)} {...props}>
+      {children}
+    </h3>
+  )
+}

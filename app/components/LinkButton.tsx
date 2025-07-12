@@ -5,7 +5,8 @@ import { PropsWithChildren } from 'react'
 export function LinkButton({
   children,
   href,
-}: PropsWithChildren<{ href: string }>) {
+  className,
+}: PropsWithChildren<{ href: string; className?: string }>) {
   return (
     <Link
       href={href}
@@ -15,6 +16,7 @@ export function LinkButton({
         'animate-text-gradient-background bg-gradient-to-r from-gradient-purple to-gradient-pink',
         'transition-all hover:scale-105',
         'active:scale-95',
+        className,
       )}
     >
       {children}
