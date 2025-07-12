@@ -11,6 +11,7 @@ export function ProjectStatus({ status, className }: ProjectStatusProps) {
     live: {
       label: 'Live',
       className: 'bg-green-500/20 text-green-400 border-green-500/30',
+      showDot: true,
     },
     'work-in-progress': {
       label: 'Work in Progress',
@@ -33,7 +34,15 @@ export function ProjectStatus({ status, className }: ProjectStatusProps) {
       variant="outline"
       className={cn('rounded-full', config.className, className)}
     >
-      {config.label}
+      <div className="flex items-center gap-1.5">
+        {'showDot' in config && config.showDot && (
+          <div className="relative">
+            <div className="h-2 w-2 rounded-full bg-green-400"></div>
+            <div className="absolute left-0 top-0 h-2 w-2 animate-ping rounded-full bg-green-400"></div>
+          </div>
+        )}
+        {config.label}
+      </div>
     </Badge>
   )
 }

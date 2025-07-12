@@ -14,13 +14,14 @@ isSideProject: true
 status: 'work-in-progress'
 ---
 
-I am building an Electron application called ShortcutPal for managing keyboard shortcuts across different Mac applications.
-The idea is that the open remains open and watch the active app and displays the shortcuts the user is trying to learn.
-The user also has a way to add and record new shortcuts. It should also be able to prioritize which shortcuts should be shown or not.
-In the future I'm also considering adding a way for ShortcutPal to watch when is the shortcut used and when is the last time each shortcuts was used to point out to the user they may have forgotten one.
+An Electron app that helps Mac users learn keyboard shortcuts by displaying them contextually as a persistent overlay.
 
-A little software that runs on top of your windows and reminds you of your shortcuts
+## Features
+- Detects active app and shows relevant shortcuts
+- Add custom shortcuts and prioritize learning goals
+- Track usage patterns and forgotten shortcuts
 
-- The ones you want to learn
-  - The ones you haven't used in a long time
-- The ones you pinned
+## Technical Stack
+- Electron with React/TypeScript frontend
+- macOS APIs for app detection
+- Local database for shortcuts and preferences
