@@ -1,0 +1,37 @@
+---
+title: 'Purecast'
+publishedAt: '2025-03-01'
+summary: 'The Podcast app that dynamically skips unwanted content segments during playback'
+image: '/images/projects/purecast/logo.webp'
+missions:
+  - Mobile
+  - Audio Processing
+tools:
+  - ReactNative
+  - TypeScript
+  - Native Modules
+isSideProject: true
+status: 'work-in-progress'
+---
+
+A React Native podcast app that intelligently skips content segments users aren't interested in during playback.
+
+## Features
+
+- Dynamic content filtering with automatic segment skipping
+- Seamless playback continuation across app states
+- Native audio processing for background operation
+
+## Technical Challenges
+
+- **Background Processing**: Native modules handle skip logic when React Native JS thread is inactive
+- **Metadata Integration**: Embedding skip segment data into initial playback configuration
+- **Cross-Platform Audio**: Consistent behavior across iOS and Android native audio systems
+
+## Architecture
+
+- Use Itunes' API to get the podcast metadata
+- Use podcast's RSS feed to download the episodes
+- React Native frontend with TypeScript
+- Native iOS/Android modules for background audio processing
+- Client-side skip logic to avoid content modification
