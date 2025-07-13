@@ -92,17 +92,19 @@ export default async function Page() {
       </div>
 
       {/* Testimonials Teaser */}
-      <div className="mt-6 rounded-lg border p-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <H3 className="text-lg font-semibold">What people say about me</H3>
-            <p className="text-neutral-400">
-              Recommendations from clients & colleagues
-            </p>
+      <div className="mt-6 rounded-lg bg-gradient-to-r from-gradient-purple via-gradient-pink to-gradient-orange p-[1px] transition-all duration-300 hover:shadow-neon hover:scale-[1.02]">
+        <div className="rounded-lg bg-background p-4 transition-all duration-300">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <H3 className="text-lg font-semibold">What people say about me</H3>
+              <p className="text-neutral-400">
+                Recommendations from clients & colleagues
+              </p>
+            </div>
+            <GradientLink href="/testimonials" className="font-semibold">
+              Read testimonials →
+            </GradientLink>
           </div>
-          <GradientLink href="/testimonials" className="font-semibold">
-            Read testimonials →
-          </GradientLink>
         </div>
       </div>
 

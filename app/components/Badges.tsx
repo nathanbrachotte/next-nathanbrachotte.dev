@@ -607,7 +607,7 @@ function TrpcBadge() {
 function ElectronBadge() {
   return (
     <span className="not-prose">
-      <BadgeWrapper href="https://trpc.io/">
+      <BadgeWrapper href="https://www.electronjs.org/">
         <svg
           fill="#47848F"
           role="img"
