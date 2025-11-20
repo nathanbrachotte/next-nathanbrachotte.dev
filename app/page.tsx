@@ -92,11 +92,13 @@ export default async function Page() {
       </div>
 
       {/* Testimonials Teaser */}
-      <div className="mt-6 rounded-lg bg-gradient-to-r from-gradient-purple via-gradient-pink to-gradient-orange p-[1px] transition-all duration-300 hover:shadow-neon hover:scale-[1.02]">
+      <div className="mt-6 rounded-lg bg-gradient-to-r from-gradient-purple via-gradient-pink to-gradient-orange p-[1px] transition-all duration-300 hover:scale-[1.02] hover:shadow-neon">
         <div className="rounded-lg bg-background p-4 transition-all duration-300">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div>
-              <H3 className="text-lg font-semibold">What people say about me</H3>
+              <H3 className="text-lg font-semibold">
+                What people say about me
+              </H3>
               <p className="text-neutral-400">
                 Recommendations from clients & colleagues
               </p>
@@ -133,7 +135,7 @@ export default async function Page() {
 
       <div className="mt-12 flex flex-col gap-6">
         <div className="flex items-center justify-between">
-          <H2>Side Projects</H2>
+          <H2>Side Projects (live)</H2>
           <GradientLink href="/projects">View all</GradientLink>
         </div>
         <div className="grid grid-cols-1 grid-rows-1 gap-8 md:grid-cols-2">
