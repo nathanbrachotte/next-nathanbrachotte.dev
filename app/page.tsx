@@ -4,13 +4,11 @@ import { H1, H2, H3 } from 'app/components/Typography'
 import { ProjectCard } from 'app/projects/ProjectCard'
 import { allBlogs, allProjects } from 'contentlayer/generated'
 import Image from 'next/image'
-import Link from 'next/link'
 import React from 'react'
-import { twMerge } from 'tailwind-merge'
 
 import { getViewsCount } from 'lib/metrics'
 import { BlogPostCard } from './blog/page'
-import { LinkButton } from './components/LinkButton'
+import { CopyEmailCta } from './components/CopyEmailCta'
 
 export default async function Page() {
   const allViews = await getViewsCount()
@@ -48,9 +46,7 @@ export default async function Page() {
 
           {/* CTA */}
           <div className="flex flex-wrap gap-4">
-            <LinkButton href="mailto:hey+nate@nathanbrachotte.dev">
-              Let's work together
-            </LinkButton>
+            <CopyEmailCta />
             <GradientLink
               href="https://docs.google.com/document/d/1_bO2q6WnJVjbryx6EF0J4qjppmmwAWXUYl1kryGPpiY"
               className="rounded-lg border border-neutral-600 px-6 py-3 font-semibold transition-all hover:border-neutral-500"

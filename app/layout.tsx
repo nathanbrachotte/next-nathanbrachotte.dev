@@ -6,6 +6,7 @@ import Navbar from './components/navbar'
 import Script from 'next/script'
 import './globals.css'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Toaster } from '@/components/ui/sonner'
 
 const graphik = localFont({
   src: [
@@ -81,6 +82,7 @@ export default function RootLayout({
           />
           <SpeedInsights />
         </main>
+        <Toaster richColors />
       </body>
     </html>
   )
