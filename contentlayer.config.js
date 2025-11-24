@@ -110,12 +110,19 @@ export const Project = defineDocumentType(() => ({
     playStoreUrl: {
       type: 'string',
     },
+    isOpenSource: {
+      type: 'boolean',
+    },
     isSideProject: {
       type: 'boolean',
     },
     status: {
       type: 'enum',
       options: ['live', 'wip', 'abandoned'],
+    },
+    projectType: {
+      type: 'enum',
+      options: ['app', 'library'],
     },
     analytics: {
       type: 'string',

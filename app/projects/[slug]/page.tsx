@@ -17,6 +17,8 @@ import { twMerge } from 'tailwind-merge'
 import { getDateWithDistance } from 'helpers/dates'
 import { Button } from '@/components/ui/button'
 import { SimpleAnalyticsIcon } from 'icons/SimpleAnalytics'
+import { Badge } from '@/components/ui/badge'
+import { GithubIcon } from 'icons/Github'
 
 const findProject = (slug: string) => {
   return allProjects.find((post) => post.slug.includes(slug))
@@ -103,6 +105,20 @@ export default async function Project({ params }) {
                 <Balancer>{post.title}</Balancer>
               </h1>
               {post.status ? <ProjectStatus status={post.status} /> : null}
+              {post.projectType ? (
+                <Badge variant="outline" className="bg-secondary">
+                  {post.projectType.charAt(0).toUpperCase() +
+                    post.projectType.slice(1)}
+                </Badge>
+              ) : null}
+              {post.isOpenSource ? (
+                <Badge
+                  variant="outline"
+                  className="border-blue-500/30 bg-blue-500/20 text-blue-400"
+                >
+                  Open Source
+                </Badge>
+              ) : null}
             </div>
             <p className="text-sm text-neutral-400">
               Started in {getDateWithDistance(post.publishedAt)}
@@ -132,7 +148,7 @@ export default async function Project({ params }) {
                 'flex flex-row items-center justify-center',
                 'rounded-md px-3 py-2 text-sm font-semibold text-white',
                 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
-                'animate-text-gradient-background bg-gradient-to-r from-gradient-green to-gradient-turquoise',
+                'to-gradient-turquoise animate-text-gradient-background bg-gradient-to-r from-gradient-green',
                 'transition-all hover:scale-105 active:scale-95',
               )}
             >
@@ -143,6 +159,13 @@ export default async function Project({ params }) {
             <LinkButton href={post.projectUrl}>
               See project <ArrowUpRight className="ml-2 h-4 w-4" />
             </LinkButton>
+          )}
+          {post.repoUrl && (
+            <Button variant="default" size="icon" asChild>
+              <Link href={post.repoUrl} target="_blank">
+                <GithubIcon className="h-4 w-4" />
+              </Link>
+            </Button>
           )}
           {post.analytics && (
             <Button variant="default" size="icon" asChild>
