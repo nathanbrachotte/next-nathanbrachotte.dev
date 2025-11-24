@@ -8,7 +8,6 @@ import { Badges } from 'app/components/Badges'
 import React from 'react'
 import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
 import { ProjectStatus } from 'app/projects/ProjectStatus'
-import { LinkButton } from 'app/components/LinkButton'
 import { ArrowUpRight } from 'icons/ArrowUpRight'
 import { AppStoreIcon } from 'icons/AppStore'
 import { PlayStoreIcon } from 'icons/PlayStore'
@@ -19,6 +18,7 @@ import { Button } from '@/components/ui/button'
 import { SimpleAnalyticsIcon } from 'icons/SimpleAnalytics'
 import { Badge } from '@/components/ui/badge'
 import { GithubIcon } from 'icons/Github'
+import { ShinyButton } from 'app/components/ShinyButton'
 
 const findProject = (slug: string) => {
   return allProjects.find((post) => post.slug.includes(slug))
@@ -96,83 +96,78 @@ export default async function Project({ params }) {
       <script type="application/ld+json" suppressHydrationWarning>
         {JSON.stringify(post.structuredData)}
       </script>
-      <div className="flex flex-wrap items-center justify-between">
+      <div className="flex flex-col items-start justify-between">
         <div className="flex">
           {post.image && <ProjectLogo image={post.image} title={post.title} />}
           <div className="ml-2 flex flex-col items-start justify-start">
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center">
               <h1 className="flex-shrink-0 items-center text-2xl font-bold tracking-tighter">
                 <Balancer>{post.title}</Balancer>
               </h1>
-              {post.status ? <ProjectStatus status={post.status} /> : null}
-              {post.projectType ? (
-                <Badge variant="outline" className="bg-secondary">
-                  {post.projectType.charAt(0).toUpperCase() +
-                    post.projectType.slice(1)}
-                </Badge>
-              ) : null}
-              {post.isOpenSource ? (
-                <Badge
-                  variant="outline"
-                  className="border-blue-500/30 bg-blue-500/20 text-blue-400"
-                >
-                  Open Source
-                </Badge>
-              ) : null}
+              <div className="flex flex-wrap items-center gap-2">
+                {post.status ? <ProjectStatus status={post.status} /> : null}
+                {post.projectType ? (
+                  <Badge variant="outline" className="bg-secondary">
+                    {post.projectType.charAt(0).toUpperCase() +
+                      post.projectType.slice(1)}
+                  </Badge>
+                ) : null}
+                {post.isOpenSource ? (
+                  <Badge
+                    variant="outline"
+                    className="border-blue-500/30 bg-blue-500/20 text-blue-400"
+                  >
+                    Open Source
+                  </Badge>
+                ) : null}
+              </div>
             </div>
             <p className="text-sm text-neutral-400">
               Started in {getDateWithDistance(post.publishedAt)}
             </p>
           </div>
         </div>
-        <div className="mt-4 flex flex-shrink-0 space-x-2 sm:mt-0">
+        <div className="mt-4 flex flex-wrap gap-3">
           {post.appleStoreUrl && (
-            // TODO: Improve color a11y
-            <Link
-              className={twMerge(
-                'flex flex-row items-center justify-center',
-                'rounded-md px-3 py-2 text-sm font-semibold text-white',
-                'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
-                'animate-text-gradient-background bg-gradient-to-r from-gradient-blue to-gradient-cyan',
-                'transition-all hover:scale-105 active:scale-95',
-              )}
+            <ShinyButton
               href={post.appleStoreUrl}
+              className="border-blue-500/30 bg-blue-500/10 text-blue-400 hover:bg-blue-500/20"
             >
-              iOS <AppStoreIcon className="ml-2 h-4 w-4 fill-white" />
-            </Link>
+              iOS <AppStoreIcon className="ml-1 h-4 w-4" />
+            </ShinyButton>
           )}
           {post.playStoreUrl && (
-            <Link
+            <ShinyButton
               href={post.playStoreUrl}
-              className={twMerge(
-                'flex flex-row items-center justify-center',
-                'rounded-md px-3 py-2 text-sm font-semibold text-white',
-                'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
-                'to-gradient-turquoise animate-text-gradient-background bg-gradient-to-r from-gradient-green',
-                'transition-all hover:scale-105 active:scale-95',
-              )}
+              className="border-green-500/30 bg-green-500/10 text-green-400 hover:bg-green-500/20"
             >
-              Android <PlayStoreIcon className="ml-2 h-4 w-4" />
-            </Link>
+              Android <PlayStoreIcon className="ml-1 h-4 w-4" />
+            </ShinyButton>
           )}
           {post.projectUrl && (
-            <LinkButton href={post.projectUrl}>
-              See project <ArrowUpRight className="ml-2 h-4 w-4" />
-            </LinkButton>
+            <ShinyButton
+              href={post.projectUrl}
+              className="border-purple-500/30 bg-purple-500/10 text-purple-400 hover:bg-purple-500/20"
+            >
+              Visit Project <ArrowUpRight className="ml-1 h-4 w-4" />
+            </ShinyButton>
           )}
           {post.repoUrl && (
-            <Button variant="default" size="icon" asChild>
-              <Link href={post.repoUrl} target="_blank">
-                <GithubIcon className="h-4 w-4" />
-              </Link>
-            </Button>
+            <ShinyButton
+              href={post.repoUrl}
+              target="_blank"
+              className="border-neutral-500/30 bg-neutral-500/10 text-neutral-400 hover:bg-neutral-500/20"
+            >
+              GitHub <GithubIcon className="ml-1 h-4 w-4" />
+            </ShinyButton>
           )}
           {post.analytics && (
-            <Button variant="default" size="icon" asChild>
-              <Link href={post.analytics}>
-                <SimpleAnalyticsIcon className="h-4 w-4" />
-              </Link>
-            </Button>
+            <ShinyButton
+              href={post.analytics}
+              className="border-orange-500/30 bg-orange-500/10 text-orange-400 hover:bg-orange-500/20"
+            >
+              Analytics <SimpleAnalyticsIcon className="ml-1 h-4 w-4" />
+            </ShinyButton>
           )}
         </div>
       </div>
