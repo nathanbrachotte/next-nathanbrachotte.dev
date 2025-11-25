@@ -65,7 +65,7 @@ function LiveIndicator() {
       className="relative flex h-2.5 w-2.5 flex-none items-center justify-center"
     >
       <span className="h-2 w-2 rounded-full bg-green-400" />
-      <span className="absolute left-0 top-0 h-2 w-2 animate-ping rounded-full bg-green-400" />
+      <span className="absolute left-0 top-0 h-2.5 w-2.5 animate-ping rounded-full bg-green-300 opacity-50" />
     </span>
   )
 }
