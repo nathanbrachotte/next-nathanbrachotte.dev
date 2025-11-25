@@ -7,7 +7,7 @@ import Balancer from 'react-wrap-balancer'
 import { Badges } from 'app/components/Badges'
 import React from 'react'
 import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
-import { ProjectStatus } from 'app/projects/ProjectStatus'
+import { ProjectBadges } from 'app/projects/[slug]/ProjectBadges'
 import { ArrowUpRight } from 'icons/ArrowUpRight'
 import { AppStoreIcon } from 'icons/AppStore'
 import { PlayStoreIcon } from 'icons/PlayStore'
@@ -16,7 +16,6 @@ import { twMerge } from 'tailwind-merge'
 import { getDateWithDistance } from 'helpers/dates'
 import { Button } from '@/components/ui/button'
 import { SimpleAnalyticsIcon } from 'icons/SimpleAnalytics'
-import { Badge } from '@/components/ui/badge'
 import { GithubIcon } from 'icons/Github'
 import { ShinyButton } from 'app/components/ShinyButton'
 
@@ -97,6 +96,12 @@ export default async function Project({ params }) {
         {JSON.stringify(post.structuredData)}
       </script>
       <div className="flex flex-col items-start justify-between">
+        <ProjectBadges
+          status={post.status}
+          projectType={post.projectType}
+          isOpenSource={post.isOpenSource}
+          className="mb-2 sm:hidden"
+        />
         <div className="flex">
           {post.image && <ProjectLogo image={post.image} title={post.title} />}
           <div className="ml-2 flex flex-col items-start justify-start">
@@ -104,23 +109,12 @@ export default async function Project({ params }) {
               <h1 className="flex-shrink-0 items-center text-2xl font-bold tracking-tighter">
                 <Balancer>{post.title}</Balancer>
               </h1>
-              <div className="flex flex-wrap items-center gap-2">
-                {post.status ? <ProjectStatus status={post.status} /> : null}
-                {post.projectType ? (
-                  <Badge variant="outline" className="bg-secondary">
-                    {post.projectType.charAt(0).toUpperCase() +
-                      post.projectType.slice(1)}
-                  </Badge>
-                ) : null}
-                {post.isOpenSource ? (
-                  <Badge
-                    variant="outline"
-                    className="border-blue-500/30 bg-blue-500/20 text-blue-400"
-                  >
-                    Open Source
-                  </Badge>
-                ) : null}
-              </div>
+              <ProjectBadges
+                status={post.status}
+                projectType={post.projectType}
+                isOpenSource={post.isOpenSource}
+                className="hidden sm:flex"
+              />
             </div>
             <p className="text-sm text-neutral-400">
               Started in {getDateWithDistance(post.publishedAt)}
