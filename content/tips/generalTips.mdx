@@ -161,7 +161,7 @@ sips -s format jpeg input.heic --out output.jpg
 
 ## Cursor / Claude Code Rules
 
-```
+````
 # General Guidelines
 
 ## Comments
@@ -196,6 +196,7 @@ sips -s format jpeg input.heic --out output.jpg
 - **Prefer positives**: `newPushNotificationsEnabled` vs `newPushNotificationsDisabled`
 
 # JavaScript
+
 - Use `const` over `let` to make code easier to track
   - Exception: try/catch blocks where you need to set fallback values
 - Prefer named exports over default exports.
@@ -218,11 +219,30 @@ sips -s format jpeg input.heic --out output.jpg
 - Build helper functions for common type operations
 - If you encounter type errors, fix them properly with type guards, validation, or proper type definitions - never cast
 
-**Non-nullish Assertions**
+```typescript
+// ❌ Bad
+function process(input: any) {
+  return input.id;
+}
 
-- Use `tiny-invariant` instead of `!` operator
-- Provides runtime check and type narrowing in one line
-- More maintainable than force-casting with `!`
+// ✅ Good
+const InputSchema = z.object({ id: z.string() });
+function process(input: unknown) {
+  const data = InputSchema.parse(input);
+  return data.id;
+}
+````
+
+### Enhancing String Types
+
+Use Template Literals for specific formats. Example not to be used in API routes this is for typescript demonstration purposes.
+
+```typescript
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+type ApiRoute = `/api/${string}`;
+
+function request(method: HttpMethod, route: ApiRoute) { ... }
+```
 
 # React
 
@@ -251,4 +271,7 @@ sake of concision.
 At the end of which plan, give me a list of unresolved questions to
 answer, if any. Make the questions extremely concise. grammar forthe
 sake of concision.
+
+```
+
 ```
