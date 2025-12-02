@@ -237,6 +237,10 @@ export const getCookie = (key: string): string | null => {
 #### Type-Safe Object Entries
 
 ```ts
+type Entries<T> = {
+  [K in keyof T]: [K, T[K]]
+}[keyof T][]
+
 /**
  * Type-safe version of Object.entries()
  * @example
@@ -244,6 +248,24 @@ export const getCookie = (key: string): string | null => {
  */
 export const getEntries = <T extends object>(obj: T) =>
   Object.entries(obj) as Entries<T>
+```
+
+## Array Utilities
+
+```ts
+const t = Array(5)
+// [ <5 empty items> ]
+t.forEach((\_,i) => console.log(i))
+// ❌ nothing is printed
+
+const t = Array.from({length: 5})
+// [ undefined, undefined, undefined, undefined, undefined ]
+t.forEach((\_,i) => console.log(i))
+// ✅ 0...4 is printed
+
+// ✅ With initialization
+const t = Array.from({length: 5}, (\_,i). => i+1)
+// [1,2,3,4,5]
 ```
 
 ## VSCode Keybindings
@@ -296,3 +318,117 @@ git config --global alias.gpfixup '!sh -c '\''git commit --fixup="$(git log --on
 ```bash
 git config --global alias.undo 'reset --soft HEAD~1'
 ```
+
+## Cursor / Claude Code Rules
+
+````bash
+# General Guidelines
+
+## Comments
+
+- Make heavy use of comments and JSDoc to provide product context (`why we're implementing this feature?`) and explain unusual technical solutions (`why we're using this specific approach?`)
+
+## File Names
+
+- Default: `$domain.$type.$extension` (example: `mocks/user.mocks.ts`, `utils/money.utils.ts, user.utils.ts`)
+- React components: Use `PascalCase.tsx`
+
+## Code Style
+
+- Keep it short
+- Keep comments, strings, and variable names short but descriptive
+- Keep code flat. Minimize unnecessary `describe` blocks in tests. Example: `it('adds 1', () => {})` instead of `it('should add 1', () => {})`
+- Default to use the early return pattern. Avoid nesting. If nesting becomes necessary, create a small function instead.
+- Default to immutable values to avoid side effects. Create new objects instead of mutating existing ones.
+
+## Tech Debt
+
+- Follow the boy scout rule: refactor as you go when you see improvements. At least add a TODO if you don't.
+- Challenge existing code: just because something was built in the past doesn't mean it deserves to be here today
+- Be aggressive towards debt but pragmatic about timing
+- Use JSDoc when deprecating: `@deprecated - Give a reason and an alternative`
+
+## Naming Conventions
+
+- **Booleans**: Prefix with `has` or `is` (`hasPermission`, `isActive`)
+- **Functions**: Prefix with verbs (`get`, `extract`, `filter`)
+- **Constants**: Use `SCREAMING_SNAKE_CASE`
+- **Prefer positives**: `newPushNotificationsEnabled` vs `newPushNotificationsDisabled`
+
+# JavaScript
+
+- Use `const` over `let` to make code easier to track
+  - Exception: try/catch blocks where you need to set fallback values
+- Prefer named exports over default exports.
+  - Exception: Next.js page components.
+- Use `===` instead of `==` to avoid type coercion
+  - Exception: Use `myParam != null` (or `==`) for non-nullish comparison
+
+# TypeScript
+- Default to `type` over `interface`. Interfaces can be accidentally merged (declaration merging).
+  - Exception: When extending large types, use `interface` for performance
+- Default to implicit types. Only use explicit types when you need to. Let TypeScript infer types from function returns.
+
+## STRICT RULES ABOUT TYPES
+
+- NEVER use the `as` keyword for type assertions
+- NEVER use the `any` keyword, not as a type, not as a type parameter.
+- Type variables correctly.
+  - If you can't ensure the type, use a zod schema.
+  - If it gets too complex use `unknown` type and flag to fix it to me with a FIXME comment.
+- Build helper functions for common type operations
+- If you encounter type errors, fix them properly with type guards, validation, or proper type definitions - never cast
+
+```ts
+// ❌ Bad
+function process(input: any) {
+  return input.id;
+}
+
+// ✅ Good
+const InputSchema = z.object({ id: z.string() });
+function process(input: unknown) {
+  const data = InputSchema.parse(input);
+  return data.id;
+}
+```
+
+### Enhancing String Types
+
+Use Template Literals for specific formats. Example not to be used in API routes this is for typescript demonstration purposes.
+
+```ts
+type HttpMethod = "GET" | "POST" | "PUT" | "DELETE";
+type ApiRoute = `/api/${string}`;
+
+function request(method: HttpMethod, route: ApiRoute) { ... }
+```
+
+# React
+
+- Avoid massive JSX blocks and compose smaller components
+- Colocate code that changes together
+- Avoid 'useEffect' unless absolutely needed
+- Use `shouldRender ? <div>Content</div> : null`. No `&&` in render.
+
+# Tailwind
+
+- Mostly use built-in values, occasionally allow dynamic values, rarely globals
+- Always use v4 + global CSS file format + shaden/ui
+
+# Next
+
+- Prefer fetching data in RSC (page can still be static)
+- Use next/font + next/script when applicable
+- next/image above the fold should have 'sync' / 'eager' / use 'priority' sparingly
+- Be mindful of serialized prop size for RSC → child components
+
+# For every prompt
+
+In all interactions be extremely concise and sacrifice grammar for the
+sake of concision.
+
+At the end of which plan, give me a list of unresolved questions to
+answer, if any. Make the questions extremely concise. grammar forthe
+sake of concision.
+````

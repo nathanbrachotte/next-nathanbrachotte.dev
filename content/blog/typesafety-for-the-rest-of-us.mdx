@@ -69,7 +69,7 @@ Now, we can easily consume this API with the generated types using `openapi-fetc
 
 We just need to create a client instance that takes the `paths` type as a generic:
 
-```typescript
+```ts
 import createClient from 'openapi-fetch'
 import type { paths } from '../openApi'
 
@@ -100,7 +100,7 @@ Before using it, install our chosen client ([axios](https://github.com/axios/axi
 
 Copy the `apiCall` function file into your project and use it as follows:
 
-```typescript
+```ts
 import { apiCall } from './apiCall'
 import { paths } from './openApi'
 
@@ -128,7 +128,7 @@ Therefore, the way we provide the token might differ based on the platform.
 To solve this, we can add a custom parameter that will take a function that returns
 the token, and simply pass a different function based on which side of the web we are in:
 
-```typescript /getToken/#b
+```ts /getToken/#b
 const path = '/currency/exchangerate'
 
 // Client side
@@ -164,7 +164,7 @@ As simple as that. Ez.
 
 Well.. not quite. There actually are a couple of helpers that we can use that will help with that:
 
-```typescript /ExchangeRateQuery/#g {21, 35}
+```ts /ExchangeRateQuery/#g {21, 35}
 const path = '/currency/exchangerate'
 
 type ExchangeRateQuery = RequestParams<typeof path, 'get'>['query']['base']
@@ -204,7 +204,7 @@ const exchangeRate = await getExchangeRate('EUR')
 
 Also, maybe we want to extract the type of the response because we need to pass it down to another React component via a prop:
 
-```typescript {3}
+```ts {3}
 export interface SubComponentProps {
   // You probably want to abstract this type to `openApiTypes.ts` as you might need it in several places
   exchangeRate: ResponseType<'/currency/exchangerate', 'get'>
