@@ -340,6 +340,7 @@ git config --global alias.undo 'reset --soft HEAD~1'
 - Keep code flat. Minimize unnecessary `describe` blocks in tests. Example: `it('adds 1', () => {})` instead of `it('should add 1', () => {})`
 - Default to use the early return pattern. Avoid nesting. If nesting becomes necessary, create a small function instead.
 - Default to immutable values to avoid side effects. Create new objects instead of mutating existing ones.
+- No barrel exports. Never create `index.ts` barrels—import directly from the source file. Exception: library-designed public entrypoints such as `@/components/ui/button`. https://dev.to/thepassle/a-practical-guide-against-barrel-files-for-library-authors-118c
 
 ## Tech Debt
 

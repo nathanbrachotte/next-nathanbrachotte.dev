@@ -272,6 +272,37 @@ if (!newPushNotificationsDisabled) {
   dogmatic](https://www.nathanbrachotte.dev/blog/coding-guidelines#be-pragmatic-not-dogmatic)
 </Callout>
 
+## No Barrel Exports (index.ts)
+
+### Rule
+
+**Never create `index.ts` barrel export files.** Import directly from the source file.
+
+```typescript
+// ❌ Bad - barrel export
+import { User, Post } from '@/db/schema'
+
+// ✅ Good - direct imports
+import { User } from '@/db/schema/user'
+import { Post } from '@/db/schema/post'
+```
+
+### Why Barrel Exports Are Problematic
+
+1. **Tree-shaking fails**: Bundlers struggle to eliminate unused exports from barrels. Import one thing → bundle gets everything.
+2. **Slower TypeScript**: TS must resolve the entire barrel even if you need one export. Direct imports = faster type checking.
+3. **Slower dev server**: More modules loaded or watched unnecessarily slows HMR loops.
+4. **Circular dependency magnet**: Re-exporting everything makes it easy to create accidental circular imports.
+5. **Obscures origins**: Direct imports document the source; barrels force readers to dig through `index.ts`.
+6. **Unnecessary rebuilds**: Any change inside a barrel touches every consumer and triggers extra rebuilds.
+7. **Import autocomplete noise**: IDEs suggest every export from the barrel even when irrelevant.
+
+> Further reading: [A practical guide against barrel files for library authors](https://dev.to/thepassle/a-practical-guide-against-barrel-files-for-library-authors-118c)
+
+### Exception
+
+The only acceptable barrel is a library's intentional public API boundary (for example `@/components/ui/button` from shadcn). Do not create new ones inside this codebase.
+
 ## JavaScript
 
 ### Use `const`
