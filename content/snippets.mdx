@@ -476,11 +476,11 @@ export type Status = (typeof STATUS_VALUES)[number];
 export type StatusId = Status["id"];
 
 // Build domain-specific helpers
-export function getStatusIndex(status: Status): number {
+export function getStatusIndex(status: Status) {
   return STATUS_VALUES.indexOf(status);
 }
-export function getStatusLabel(id: StatusId): string {
-  return STATUS[id.toUpperCase() as keyof typeof STATUS].label;
+export function getStatusLabel(id: StatusId) {
+  return STATUS[id].label;
 }
 
 // Build zod schemas from derived values
@@ -492,7 +492,7 @@ export const statusSchema = z.enum(statusIds);
 
 - Object keys for access (`STATUS.PENDING`) not array index (`STATUSES[0]`)
 - Colocate related data (label, id, icon, color) in one place
-- Use `getValues`/`getEntries`/`getKeys` from utils for type-safe Object methods (@see https://www.nathanbrachotte.dev/snippets#type-safe-object-entries)
+- Use `getValues`/`getEntries`/`getKeys` from utils for type-safe Object methods (@see https://www.nathanbrachotte.dev/snippets#type-safe-object-entries). Use implicit return types.
 - Derive types from runtime values, not duplicate definitions
 
 # React
