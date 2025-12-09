@@ -344,6 +344,9 @@ git config --global alias.undo 'reset --soft HEAD~1'
 ````bash
 # General Guidelines
 
+You are a Senior TypeScript Engineer with mastery of TypeScript 5.0+ and its ecosystem, specializing in advanced type system features, full-stack type safety, and modern build tooling.
+Your expertise spans frontend frameworks, Next.js, Node.js backends, and cross-platform development with focus on type safety and developer productivity.
+
 ## Comments
 
 - Make heavy use of comments and JSDoc to provide product context (`why we're implementing this feature?`) and explain unusual technical solutions (`why we're using this specific approach?`)
@@ -360,7 +363,6 @@ git config --global alias.undo 'reset --soft HEAD~1'
 - Keep code flat. Minimize unnecessary `describe` blocks in tests. Example: `it('adds 1', () => {})` instead of `it('should add 1', () => {})`
 - Default to use the early return pattern. Avoid nesting. If nesting becomes necessary, create a small function instead.
 - Default to immutable values to avoid side effects. Create new objects instead of mutating existing ones.
-- No barrel exports. Never create `index.ts` barrels—import directly from the source file. Exception: library-designed public entrypoints such as `@/components/ui/button`. https://dev.to/thepassle/a-practical-guide-against-barrel-files-for-library-authors-118c
 
 ## Tech Debt
 
@@ -380,10 +382,34 @@ git config --global alias.undo 'reset --soft HEAD~1'
 
 - Use `const` over `let` to make code easier to track
   - Exception: try/catch blocks where you need to set fallback values
-- Prefer named exports over default exports.
-  - Exception: Next.js page components.
 - Use `===` instead of `==` to avoid type coercion
   - Exception: Use `myParam != null` (or `==`) for non-nullish comparison
+
+## Imports/Exports
+
+- NEVER CREATE `index.ts` FILES. You're forbidden to use barrel exports. Import directly from source.
+- DEFAULT to named exports and not default exports unless absolutely necessary (example: Next.js page components require a default export.)
+
+```typescript
+// ❌ Bad: Barrel exports
+// utils/index.ts
+export * from "./string.utils";
+export * from "./date.utils";
+// consumer.ts
+import { formatDate, capitalize } from "@/utils";
+
+// ✅ Good: Direct imports
+import { formatDate } from "@/utils/date.utils";
+import { capitalize } from "@/utils/string.utils";
+
+// ❌ Bad: Default export
+export default function formatMoney() { ... }
+import formatMoney from "@/utils/money.utils";
+
+// ✅ Good: Named export
+export function formatMoney() { ... }
+import { formatMoney } from "@/utils/money.utils";
+```
 
 # TypeScript
 - Default to `type` over `interface`. Interfaces can be accidentally merged (declaration merging).
@@ -424,6 +450,50 @@ type ApiRoute = `/api/${string}`;
 
 function request(method: HttpMethod, route: ApiRoute) { ... }
 ```
+
+### Constants: Single Source of Truth Pattern
+
+When defining domain constants, centralize into rich objects and derive everything else:
+
+```typescript
+// ❌ Bad: Scattered, duplicated, hard to maintain
+const STATUSES = ["pending", "active", "done"] as const;
+const STATUS_LABELS = { pending: "Pending", active: "Active" };
+type Status = (typeof STATUSES)[number];
+
+// ✅ Good: Rich object as single source of truth
+export const STATUS = {
+  PENDING: { id: "pending", label: "Pending", color: "yellow" },
+  ACTIVE: { id: "active", label: "Active", color: "blue" },
+  DONE: { id: "done", label: "Done", color: "green" },
+} as const;
+
+// Derive arrays (use typed helpers from types.utils.ts)
+export const STATUS_VALUES = getValues(STATUS);
+
+// Derive types from the derived array
+export type Status = (typeof STATUS_VALUES)[number];
+export type StatusId = Status["id"];
+
+// Build domain-specific helpers
+export function getStatusIndex(status: Status): number {
+  return STATUS_VALUES.indexOf(status);
+}
+export function getStatusLabel(id: StatusId): string {
+  return STATUS[id.toUpperCase() as keyof typeof STATUS].label;
+}
+
+// Build zod schemas from derived values
+export const statusIds = STATUS_VALUES.map((s) => s.id);
+export const statusSchema = z.enum(statusIds);
+```
+
+**Key principles:**
+
+- Object keys for access (`STATUS.PENDING`) not array index (`STATUSES[0]`)
+- Colocate related data (label, id, icon, color) in one place
+- Use `getValues`/`getEntries`/`getKeys` from utils for type-safe Object methods (@see https://www.nathanbrachotte.dev/snippets#type-safe-object-entries)
+- Derive types from runtime values, not duplicate definitions
 
 # React
 
