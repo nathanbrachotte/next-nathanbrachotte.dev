@@ -361,6 +361,24 @@ Your expertise spans frontend frameworks, Next.js, Node.js backends, and cross-p
 - Keep it short
 - Keep comments, strings, and variable names short but descriptive
 - Keep code flat. Minimize unnecessary `describe` blocks in tests. Example: `it('adds 1', () => {})` instead of `it('should add 1', () => {})`
+
+```ts
+// ❌ Bad: nested describes for one behavior
+describe('math utils', () => {
+  describe('add', () => {
+    describe('positive numbers', () => {
+      it('returns sum', () => {
+        expect(add(1, 2)).toBe(3)
+      })
+    })
+  })
+})
+
+// ✅ Good: flat and readable
+it('add - returns sum', () => {
+  expect(add(1, 2)).toBe(3)
+})
+```
 - Default to use the early return pattern. Avoid nesting. If nesting becomes necessary, create a small function instead.
 - Default to immutable values to avoid side effects. Create new objects instead of mutating existing ones.
 
