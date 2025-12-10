@@ -3,9 +3,7 @@
 import Script from 'next/script'
 import React from 'react'
 
-export interface FollowTwitterButtonProps {}
-
-export const FollowTwitterButton = ({}: FollowTwitterButtonProps) => {
+export const FollowTwitterButton = () => {
   return (
     <>
       <a
