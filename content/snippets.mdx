@@ -432,9 +432,52 @@ import { formatMoney } from "@/utils/money.utils";
 # TypeScript
 - Default to `type` over `interface`. Interfaces can be accidentally merged (declaration merging).
   - Exception: When extending large types, use `interface` for performance
-- Default to implicit types. Only use explicit types when you need to. Let TypeScript infer types from function returns.
 
-## STRICT RULES ABOUT TYPES
+## Default to Implicit Return Types
+
+Don't define return types manually—TypeScript infers them automatically. This reduces duplication and keeps types in sync with implementation.
+
+```typescript
+/**
+ * ❌ Bad: Explicit typing forces you to write everything twice, figure out all the inferred types from other data sources and makes it hard to maintain
+ * Problems:
+ * 1. Add a field? Update both the type AND the return
+ * 2. Change a field type? Update both places
+ * 3. Type and implementation can drift out of sync
+ **/
+type UseHistoryReturn = {
+  data: HistoryResponse | undefined;
+  // ...
+};
+
+export function useHistory(options: UseHistoryOptions = {}): UseHistoryReturn {
+  // ... implementation
+  return {
+    data,
+  };
+}
+
+/**
+ * ✅ Good: Let TypeScript infer the return type
+ * 1. Add a field? Just add it to the return object
+ * 2. Change a field? Change it once, type updates automatically
+ * 3. Type is always accurate. Impossible to drift
+ **/
+export function useHistory(options: UseHistoryOptions = {}) {
+  // ... implementation
+  return {
+    data,
+  };
+}
+```
+
+**When explicit return types ARE useful:**
+
+- Public library APIs (enforce contract across versions)
+- Complex recursive types where you need to ensure calculation fits the type we want to return
+- When you want the return type to be narrower than inferred
+
+## STRICT TYPESCRIPT RULES (ALWAYS FOLLOW)
 
 - NEVER use the `as` keyword for type assertions
 - NEVER use the `any` keyword, not as a type, not as a type parameter.
