@@ -251,9 +251,18 @@ The `transform` method takes `value: any` and returns... `any`. Even after valid
 
 ### The query params trap
 
-Unless you specify a DTO, there's no type validation, and your types will be completely wrong:
+Unless you specify a DTO, there's no type validation, and your types will be completely wrong. Your TS code will assume it's a `number` anyways:
 
-{/* Original: Pasted image 20231208231535.png */}
+{/* Original: Pasted image -20231204-jd8.png.png */}
+
+<Image
+  alt="Query params without DTO validation"
+  src="/images/blog/hidden-dangers-nestjs/NOquery-params-trap.webp"
+  width={1400}
+  height={700}
+/>
+
+You'll find that the error handling is also pretty bad:
 
 <Image
   alt="Query params without DTO validation"
@@ -261,8 +270,6 @@ Unless you specify a DTO, there's no type validation, and your types will be com
   width={1400}
   height={700}
 />
-
-Pass anything as a query parameter with code that doesn't specify a DTO, and your `query` will just be whatever you passed—no questions asked.
 
 The basic error message from `ValidationPipe` is also super generic. It can be frustrating to work with if you don't know the implementation specifically:
 
@@ -275,7 +282,7 @@ The basic error message from `ValidationPipe` is also super generic. It can be f
   height={600}
 />
 
-## Danger #4: Class Validator—the problematic default
+## Danger #4: Class Validator - Just use ZOD omg
 
 Class Validator is the default validation library in NestJS, and it presents its own set of challenges.
 
@@ -303,16 +310,30 @@ logoUrl?: string;
 logoUrl: string;
 ```
 
+It gets worse: `null` and `undefined` have different semantic meanings, and you need different decorators for each:
+
+```ts
+// Primitive values from DB: either present or null
+@ApiProperty({ type: 'string', nullable: true })
+@Expose()
+@IsNullable() // Custom decorator you have to build!
+@IsString()
+routingCode: string | null;
+
+// Relationships: either present or undefined (not from DB)
+@ApiProperty({ type: BankAccountMetadata, nullable: true })
+@Expose()
+@IsOptional() // Built-in, but means undefined, not null
+@Type(() => BankAccountMetadata)
+@ValidateNested()
+bankAccountMetadata?: BankAccountMetadata;
+```
+
+The distinction between `null` (DB value doesn't exist) and `undefined` (relationship not loaded) is crucial, but class-validator treats them completely differently—and `@IsNullable` doesn't even exist out of the box.
+
 ### Problem 2: Nested validation is confusing
 
 `@ValidateNested()` requires `@Type()` decorator to work properly, but this isn't obvious:
-
-<Image
-  alt="ValidateNested issues"
-  src="/images/blog/hidden-dangers-nestjs/validate-nested.webp"
-  width={1400}
-  height={700}
-/>
 
 ```ts
 export class CurrencyExchangeRate {
@@ -337,6 +358,11 @@ export class CurrencyExchangeResponseDto {
 ```
 
 And what happens if you don't add `{ each: true }` to `@ValidateNested()` when validating arrays? The validation silently doesn't work as expected.
+
+More issues raised by users:
+
+- [Validate nested objects using class-validator and nestjs](https://stackoverflow.com/questions/53786383/validate-nested-objects-using-class-validator-and-nestjs)
+- [class-validator#193 - @ValidateNested not working](https://github.com/typestack/class-validator/issues/193#issuecomment-386877352)
 
 ### Problem 3: Missing validators
 
@@ -403,9 +429,7 @@ export class Mapper {
 
 Class Validator has numerous unresolved issues on GitHub, and the project appears to have limited active maintenance. Building your production system on a library that may not receive timely security updates or bug fixes is a risk worth considering.
 
-## Danger #5: Swagger integration limitations
-
-Integrating Swagger with NestJS reveals additional nuances.
+## Danger #5: Swagger integration, or lack thereof
 
 ### ApiProperty type inference
 
@@ -429,82 +453,29 @@ settings: ComplexSettingsType;
 
 `nullable` doesn't come out of the box as you'd expect:
 
-<Image
-  alt="ApiProperty nullable issues"
-  src="/images/blog/hidden-dangers-nestjs/api-property-nullable.webp"
-  width={1400}
-  height={600}
-/>
-
 `@ApiProperty` doesn't work seamlessly with `@IsNullable`, and you need to specify the type in the decorator. This isn't documented well.
 
 ### Object types are painful
 
-Defining an `ApiProperty` that returns an object is surprisingly difficult:
-
-<Image
-  alt="ApiProperty object return type issues"
-  src="/images/blog/hidden-dangers-nestjs/api-property-object.webp"
-  width={1400}
-  height={600}
-/>
+Defining an `ApiProperty` that returns an object is surprisingly difficult.
 
 ### Swagger types can drift from actual types
 
 You always have a risk that your type isn't being recognized when it's complex, and also of your Swagger type and entity types going out of sync. This defeats the purpose of auto-generated documentation.
 
-<Callout emoji="🔗" type="info">
-  Related issue:
-  [nestjs/swagger#2129](https://github.com/nestjs/swagger/issues/2129)
-</Callout>
+More issues raised by users:
+
+- [nestjs/swagger#521 - Support for nullable](https://github.com/nestjs/swagger/issues/521)
+- [nestjs/swagger#2129 - Type inference issues](https://github.com/nestjs/swagger/issues/2129)
 
 ## Danger #6: Circular dependency hell
 
 NestJS's module system can lead to circular dependency nightmares:
-
-<Image
-  alt="Circular dependency error"
-  src="/images/blog/hidden-dangers-nestjs/circular-deps.webp"
-  width={1400}
-  height={600}
-/>
-
 The error messages are often cryptic and don't point you to the actual source of the problem. Debugging these issues can waste hours of development time.
 
-## Danger #7: The class-based conundrum
+## Danger #7: OOP is a thing of the past
 
-NestJS's reliance on classes—a pattern now considered outdated by many in the JavaScript community—poses scalability issues.
-
-### BaseEntity inheritance problems
-
-When using entities, defining a `BaseEntity` and attempting to override its properties can lead to unexpected errors:
-
-<Image
-  alt="BaseEntity override issues"
-  src="/images/blog/hidden-dangers-nestjs/base-entity-override-1.webp"
-  width={1400}
-  height={600}
-/>
-
-<Image
-  alt="BaseEntity validation failures"
-  src="/images/blog/hidden-dangers-nestjs/base-entity-override-2.webp"
-  width={1400}
-  height={600}
-/>
-
-Overriding existing values doesn't work as expected. This will make `@IsDate` validation fail, but you won't get any good error message for it.
-
-### Enums don't play nice
-
-<Image
-  alt="Enum issues with class-validator"
-  src="/images/blog/hidden-dangers-nestjs/enum-issues.webp"
-  width={1400}
-  height={600}
-/>
-
-Class Validator doesn't work well with enums, requiring workarounds for effective use.
+NestJS's reliance on classes is outdated. It's 2022 (now 2026 as I publish this. React move away 10 years ago now.). This pattern is not scalable and will cause you pain in the long run.
 
 ## Choosing an alternative
 
@@ -549,7 +520,7 @@ export const greetAction = actionClient
   })
 ```
 
-No decorators, no classes, just functions with proper type inference. The DX is excellent and it's actively maintained with a growing community.
+No decorators, no classes, just functions with proper type inference. The DX is excellent. It's actively maintained and there is no incentive to sell a course to learn it.
 
 ### AdonisJS
 
@@ -558,48 +529,41 @@ No decorators, no classes, just functions with proper type inference. The DX is 
 - **First-class TypeScript support** from the ground up
 - **Comprehensive documentation** that doesn't upsell you
 - **Built-in ORM (Lucid)** that's actually well-designed
-- **Active maintainer** (Harminder Virk) who's responsive to the community
-- **No Angular-style decorators** abuse
 
-It seems like what NestJS should have been—a serious, well-documented framework that doesn't cut corners.
+If you really want to write 10x more code than needed using classes and MVC patterns, this is probably the best alternative.
 
 <Callout emoji="💡" type="info">
-  The best framework is the one your team can use effectively. If everyone knows
-  Express, stick with Express. If you're building a Next.js app anyway,
-  next-safe-action is a no-brainer. Choose boring technology when possible.
+  This is only my opinion. The best framework is the one your team can use
+  effectively. If everyone knows Express, stick with Express. If you're building
+  a Next.js app anyway, next-safe-action is a no-brainer.
 </Callout>
 
 ## Conclusion: The unspoken cost
 
-It looks simple because the docs show simplistic code examples, but once facing the reality and complexity of real-life applications, NestJS can become a wasp nest if you don't stay on top of things.
+It looks simple because the docs show simplistic code examples, but once you're actually building something, NestJS can become a wasp nest.
+
+Companies often don't hire developers with NestJS experience, and therefore all these issues occur repeatedly across the industry. If you're considering NestJS, make sure you have at least one person on the team with real-world experience, or be prepared to learn these lessons the hard way.
 
 <ConsCard
   title="NestJS hidden costs"
   cons={[
-    'Default tsconfig ships with strictNullChecks disabled',
-    'Documentation optimized for selling courses, not comprehensive guidance',
+    'Types are hacked into the framework',
+    'Documentation is light on the edge cases',
     'Complex data flow with multiple concepts to master simultaneously',
-    'Class Validator has numerous footguns and maintenance concerns',
-    'Swagger integration requires constant vigilance to keep types in sync',
+    'Class Validator has numerous footguns',
+    'Swagger integration is a pain and will go out of sync',
     'Circular dependencies are easy to create and hard to debug',
-    'Class-based patterns make inheritance and extension error-prone',
   ]}
 />
-
-In conclusion, while NestJS offers a structured entry point into the TypeScript/JavaScript world, it comes with hidden complexities that can escalate into significant challenges—especially for teams without seasoned NestJS developers.
-
-This gap in expertise, coupled with the potential hidden motive behind the documentation's vagueness, suggests a larger issue: **the unspoken costs of adopting NestJS without a thorough understanding of its intricacies.**
-
-Companies often don't hire developers with NestJS experience, and therefore all these issues occur repeatedly across the industry. If you're considering NestJS, make sure you have at least one person on the team with real-world experience, or be prepared to learn these lessons the hard way.
 
 <ProsCard
   title="If you still choose NestJS"
   pros={[
     'Enable strict TypeScript settings immediately',
     'Have someone experienced with NestJS on the team',
-    'Consider alternatives to class-validator like Zod',
-    "Don't trust the docs—always test edge cases",
+    'Consider alternatives to class-validator like Zod (last I tried the zod integration was a still buggy)',
     'Build validation and mapping utilities early',
-    'Keep Swagger types in sync with runtime validation',
   ]}
 />
+
+Good luck out there!
