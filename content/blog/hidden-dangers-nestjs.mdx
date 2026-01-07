@@ -197,7 +197,7 @@ But I feel deceiving users into thinking things are straightforward without givi
 
 Even NestJS's Twitter presence is basically about retweeting people who bought the course. Does the NestJS team have any incentive to proactively make the docs more exhaustive and comprehensive when the money they make from the framework is from tutorials?
 
-## Danger #3: The data flow labyrinth
+## Danger #3: Data Flow - GLHF
 
 NestJS's architecture follows a specific data flow, utilizing concepts such as Middlewares, Guards, Interceptors, Pipes, Validators, Entities, and Data Transfer Objects (DTOs). A crucial aspect of this flow is understanding how validation works both at the entry and exit points of the backend.
 
@@ -236,7 +236,9 @@ const request = context.switchToHttp().getRequest()
 
 ### Pipes and validation confusion
 
-Even in the official validation pipe examples, the types can be misleading:
+Even the official validation pipe example from the docs is riddled with `any`:
+
+{/* Original: Pasted image 20231208230416.png */}
 
 <Image
   alt="Pipes documentation type issues"
@@ -245,9 +247,13 @@ Even in the official validation pipe examples, the types can be misleading:
   height={600}
 />
 
+The `transform` method takes `value: any` and returns... `any`. Even after validation succeeds, you don't get a typed object back. The `metatype` is typed as `Function`. This is the **official documentation** teaching you to bypass TypeScript entirely.
+
 ### The query params trap
 
 Unless you specify a DTO, there's no type validation, and your types will be completely wrong:
+
+{/* Original: Pasted image 20231208231535.png */}
 
 <Image
   alt="Query params without DTO validation"
@@ -259,6 +265,8 @@ Unless you specify a DTO, there's no type validation, and your types will be com
 Pass anything as a query parameter with code that doesn't specify a DTO, and your `query` will just be whatever you passed—no questions asked.
 
 The basic error message from `ValidationPipe` is also super generic. It can be frustrating to work with if you don't know the implementation specifically:
+
+{/* Original: Pasted image 20231208231857.png */}
 
 <Image
   alt="Generic ValidationPipe error message"
