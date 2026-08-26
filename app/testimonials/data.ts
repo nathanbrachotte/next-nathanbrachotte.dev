@@ -12,6 +12,23 @@ export interface Testimonial {
 
 export const testimonials = [
   {
+    name: 'Jade Muller',
+    position: 'Senior Product Manager at Klarna',
+    paragraphs: [
+      'Nathan has been leading the Referrals and Deals team of 7 engineers for roughly 2 years now.',
+      'He led the release of the new referral program and architected a scalable incentive engine now used by many teams across Klarna and by millions of users.',
+      "He's the perfect mix of a top-tier engineer and a natural team leader.",
+      "As the tech lead, he's built a strong engineering culture while making sure every engineer gets both a say and a chance to contribute. His deep knowledge of the TypeScript ecosystem, combined with how quickly he adopts and masters new AI tools, means he drives our technical decisions while remaining one of our strongest contributors.",
+      'His focus on teamwork and candid communication created an environment where people love working with one another and grow together. He has a real eye for what each of his reports is good at and where they can improve, and actively coaches them toward it.',
+      "He's low ego and excellent at giving and receiving constructive feedback. In high-stress situations, his calm and competence carry over to everyone around him, and his sense of humor makes him genuinely fun to work with.",
+      "I've been lucky to work with Nathan these past two years. Having someone like him on the team is what every PM hopes for.",
+    ],
+    testimonialLink: 'https://www.linkedin.com/in/nathan-brachotte/',
+    pic: '/images/testimonials/jade.webp',
+    authorLink: 'https://www.linkedin.com/in/jademuller/',
+    type: 'leads',
+  },
+  {
     name: 'Ferhat Beyaz',
     paragraphs: [
       'When Nate joined our team as a freelance engineer, we felt his impact from day one. The guy knows his way around JS, TS, GraphQL, and many related technologies. Nate immediately took ownership of projects, began mentoring engineers across multiple teams, handled stakeholder requests and discussions with ease, and navigated through ambiguous requirements. He also challenged our existing technologies and helped modernize our stack, all while managing day-to-day projects.',
