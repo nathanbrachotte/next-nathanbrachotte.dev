@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { allBlogs } from 'contentlayer/generated'
+import { releasedBlogs } from 'helpers/posts'
 import { twMerge } from 'tailwind-merge'
 import { parseISO, format } from 'date-fns'
 import { getTimePerPost } from 'helpers/time'
@@ -26,7 +26,7 @@ export const BlogPostCard = ({
   index,
   allViews,
 }: {
-  blog: (typeof allBlogs)[number]
+  blog: (typeof releasedBlogs)[number]
   index: number
   allViews: ViewsCount
 }) => {
@@ -98,11 +98,6 @@ export const BlogPostCard = ({
     </Link>
   )
 }
-
-const releasedBlogs =
-  process.env.NODE_ENV === 'development'
-    ? allBlogs
-    : allBlogs.filter((blog) => !blog.draft)
 
 // TODO: Vercel analytics
 export default async function BlogPage() {

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { Mdx } from 'app/components/mdx'
-import { allBlogs } from 'contentlayer/generated'
+import { releasedBlogs } from 'helpers/posts'
 import Balancer from 'react-wrap-balancer'
 import ViewCounter from '../view-counter'
 import { getTimePerPost } from 'helpers/time'
@@ -19,7 +19,7 @@ import Link from 'next/link'
 import { DownloadMarkdownButton } from 'app/components/DownloadMarkdownButton'
 
 const findBlogPost = (slug: string) => {
-  return allBlogs.find((post) => post.slug.includes(slug))
+  return releasedBlogs.find((post) => post.slug.includes(slug))
 }
 
 export async function generateMetadata({

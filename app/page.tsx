@@ -2,7 +2,8 @@ import { Badges } from 'app/components/Badges'
 import { GradientLink } from 'app/components/GradientLink'
 import { H1, H2, H3 } from 'app/components/Typography'
 import { ProjectCard } from 'app/projects/ProjectCard'
-import { allBlogs, allProjects } from 'contentlayer/generated'
+import { allProjects } from 'contentlayer/generated'
+import { releasedBlogs } from 'helpers/posts'
 import Image from 'next/image'
 import React from 'react'
 
@@ -109,8 +110,7 @@ export default async function Page() {
       <div className="mt-12 flex flex-col gap-6">
         <H2>Latest Blog Posts</H2>
         <div>
-          {allBlogs
-            .filter((post) => !post.draft)
+          {releasedBlogs
             .sort((a, b) => {
               if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
                 return -1
