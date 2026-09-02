@@ -5,7 +5,8 @@ import { Badge } from '@/components/ui/badge'
 import { GradientLink } from 'app/components/GradientLink'
 import { H1 } from 'app/components/Typography'
 import { ProjectStatus } from 'app/projects/ProjectStatus'
-import { ownedDomains } from './data'
+import { cn } from '@/lib/utils'
+import { domainOnlyStatusConfig, ownedDomains } from './data'
 
 export const metadata: Metadata = {
   title: 'Domains',
@@ -39,8 +40,14 @@ export default function DomainsPage() {
                 {project?.status ? (
                   <ProjectStatus status={project.status} />
                 ) : (
-                  <Badge variant="outline" className="rounded-full">
-                    {status === 'stopped' ? 'Stopped' : 'Parked'}
+                  <Badge
+                    variant="outline"
+                    className={cn(
+                      'rounded-full',
+                      domainOnlyStatusConfig[status ?? 'parked'].className,
+                    )}
+                  >
+                    {domainOnlyStatusConfig[status ?? 'parked'].label}
                   </Badge>
                 )}
               </div>
