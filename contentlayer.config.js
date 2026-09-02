@@ -5,6 +5,24 @@ import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import { transformerCopyButton } from '@rehype-pretty/transformers'
 
+// Every content type lives under a folder that matches its route, so
+// `flattenedPath` is already the full path ("blog/my-post", "projects/klarna").
+// Prefixing it again is what pointed every post's structured data at a 404.
+const SITE_URL = 'https://nathanbrachotte.dev'
+
+const pageUrl = (doc) => `${SITE_URL}/${doc._raw.flattenedPath}`
+
+const ogImage = (doc) =>
+  doc.image
+    ? `${SITE_URL}${doc.image}`
+    : `${SITE_URL}/og?title=${encodeURIComponent(doc.title)}`
+
+const author = {
+  '@type': 'Person',
+  name: 'Nathan Brachotte',
+  url: SITE_URL,
+}
+
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const computedFields = {
   slug: {
@@ -18,6 +36,11 @@ const computedFields = {
       return tweetMatches?.map((tweet) => tweet.match(/[0-9]+/g)[0]) || []
     },
   },
+}
+
+/** @type {import('contentlayer/source-files').ComputedFields} */
+const blogComputedFields = {
+  ...computedFields,
   structuredData: {
     type: 'object',
     resolve: (doc) => ({
@@ -25,16 +48,35 @@ const computedFields = {
       '@type': 'BlogPosting',
       headline: doc.title,
       datePublished: doc.publishedAt,
+      // No updated date is tracked in frontmatter yet, so this carries no
+      // freshness signal beyond the publish date.
       dateModified: doc.publishedAt,
       description: doc.summary,
-      image: doc.image
-        ? `https://nathanbrachotte.dev${doc.image}`
-        : `https://nathanbrachotte.dev/og?title=${doc.title}`,
-      url: `https://nathanbrachotte.dev/blog/${doc._raw.flattenedPath}`,
-      author: {
-        '@type': 'Person',
-        name: 'Nathan Brachotte',
-      },
+      image: ogImage(doc),
+      url: pageUrl(doc),
+      mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl(doc) },
+      author,
+    }),
+  },
+}
+
+/** @type {import('contentlayer/source-files').ComputedFields} */
+const projectComputedFields = {
+  ...computedFields,
+  structuredData: {
+    type: 'object',
+    resolve: (doc) => ({
+      '@context': 'https://schema.org',
+      // A portfolio write-up, not an article. SoftwareApplication would need
+      // applicationCategory and operatingSystem, which aren't in frontmatter.
+      '@type': 'CreativeWork',
+      name: doc.title,
+      datePublished: doc.publishedAt,
+      description: doc.summary,
+      image: ogImage(doc),
+      url: pageUrl(doc),
+      mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl(doc) },
+      author,
     }),
   },
 }
@@ -66,7 +108,7 @@ export const Blog = defineDocumentType(() => ({
       type: 'string',
     },
   },
-  computedFields,
+  computedFields: blogComputedFields,
 }))
 
 export const Project = defineDocumentType(() => ({
@@ -128,7 +170,7 @@ export const Project = defineDocumentType(() => ({
       type: 'string',
     },
   },
-  computedFields,
+  computedFields: projectComputedFields,
 }))
 
 export const Tips = defineDocumentType(() => ({
