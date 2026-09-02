@@ -1,8 +1,13 @@
 import * as React from 'react'
-import { cn } from '@/lib/utils'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion'
 
 interface CollapsibleProps {
-  /** Shown on the always-visible summary line */
+  /** Shown on the always-visible trigger line */
   title: string
   /** Optional one-liner rendered next to the title */
   subtitle?: string
@@ -14,8 +19,8 @@ interface CollapsibleProps {
 }
 
 /**
- * Native <details> disclosure, collapsed by default.
- * Server-component friendly, no JS needed.
+ * Single-item accordion for MDX, collapsed by default.
+ * Wraps the shadcn/ui accordion so content files stay declarative.
  */
 export function Collapsible({
   title,
@@ -25,48 +30,40 @@ export function Collapsible({
   children,
 }: CollapsibleProps) {
   return (
-    <details className="group/collapsible my-4 overflow-hidden rounded-lg border border-border bg-muted/20">
-      <summary
-        className={cn(
-          'not-prose flex cursor-pointer list-none items-center gap-3 px-4 py-3',
-          'transition-colors hover:bg-muted/40',
-          '[&::-webkit-details-marker]:hidden',
-        )}
-      >
-        <svg
-          className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200 group-open/collapsible:rotate-90"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
-        >
-          <path d="M9 18l6-6-6-6" />
-        </svg>
-        <span className="font-medium">{title}</span>
-        {subtitle ? (
-          <span className="text-sm text-muted-foreground">{subtitle}</span>
-        ) : null}
-      </summary>
+    <Accordion
+      type="single"
+      collapsible
+      className="my-4 overflow-hidden rounded-lg border border-border bg-muted/20"
+    >
+      <AccordionItem value={title} className="border-b-0">
+        <AccordionTrigger className="px-4 py-3 hover:bg-muted/40 hover:no-underline">
+          <span className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-left">
+            <span className="font-medium">{title}</span>
+            {subtitle ? (
+              <span className="text-sm font-normal text-muted-foreground">
+                {subtitle}
+              </span>
+            ) : null}
+          </span>
+        </AccordionTrigger>
 
-      <div className="border-t border-border px-4 pb-4 pt-2">
-        {source ? (
-          <p className="not-prose mb-3 mt-2 text-sm text-muted-foreground">
-            {`${sourceLabel}: `}
-            <a
-              href={source}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gradient-blue underline decoration-gradient-blue decoration-[0.1em] underline-offset-2 transition-colors hover:text-gradient-cyan hover:decoration-gradient-cyan"
-            >
-              {source.replace(/^https?:\/\//, '')}
-            </a>
-          </p>
-        ) : null}
-        {children}
-      </div>
-    </details>
+        <AccordionContent className="border-t border-border px-4 pb-4 pt-2 text-base">
+          {source ? (
+            <p className="not-prose mb-3 mt-2 text-sm text-muted-foreground">
+              {`${sourceLabel}: `}
+              <a
+                href={source}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gradient-blue underline decoration-gradient-blue decoration-[0.1em] underline-offset-2 transition-colors hover:text-gradient-cyan hover:decoration-gradient-cyan"
+              >
+                {source.replace(/^https?:\/\//, '')}
+              </a>
+            </p>
+          ) : null}
+          {children}
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
   )
 }
