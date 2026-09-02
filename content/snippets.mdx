@@ -260,6 +260,11 @@ sake of concision.
 From Lauren Tan's [pstack](https://github.com/cursor/plugins/tree/main/pstack). Set it to always apply and everything the agent writes for you (PR descriptions, docs, Slack messages) stops sounding like a press release.
 
 ```md
+---
+name: unslop
+description: Cut AI tells from any writing. Must always apply.
+---
+
 # Unslop
 
 Edit text to remove AI patterns and add human voice.
@@ -344,6 +349,14 @@ Removing patterns is half the job. Sterile, voiceless writing is just as obvious
 From Theo Browne's fleet setup, demoed in [this video](https://youtu.be/e1snsuY4lTI). The good/bad title examples are the whole trick: a PR title should say why the change matters, not list what moved.
 
 ```md
+---
+name: file-pr
+description: File a concise pull request. Use when the user asks to
+file, open, or create a PR.
+metadata:
+harness: [claude, codex]
+---
+
 # File PR
 
 Before filing, check whether a PR for this branch already exists.
@@ -384,6 +397,13 @@ to babysit it, continue with the 'babysit-pr' skill.
 Also from Theo Browne. Pairs with `file-pr`. The part that earns its keep: verify every bot finding against the source before touching code, and reply with a reason when dismissing a false positive.
 
 ````md
+---
+name: babysit-pr
+description: Monitor a pull request through reviews until merged. Use when someone asks you to monitor, watch or babysit a PR.
+metadata:
+harness: [claude, codex]
+---
+
 # Babysit PR
 
 All the repos we work in may have AI review bots. They're helpful, even if

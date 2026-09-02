@@ -29,11 +29,13 @@ export function Collapsible({
   sourceLabel = 'Source',
   children,
 }: CollapsibleProps) {
+  // The [&_h3] resets undo prose's h3 rule on the trigger Radix renders.
+  // `not-prose` can't do it: typography 0.5.9 only exempts descendants of it.
   return (
     <Accordion
       type="single"
       collapsible
-      className="my-4 overflow-hidden rounded-lg border border-border bg-muted/20"
+      className="my-4 overflow-hidden rounded-lg border border-border bg-muted/20 [&_h3]:my-0 [&_h3]:text-base [&_h3]:font-normal"
     >
       <AccordionItem value={title} className="border-b-0">
         <AccordionTrigger className="px-4 py-3 hover:bg-muted/40 hover:no-underline">
@@ -49,7 +51,7 @@ export function Collapsible({
 
         <AccordionContent className="border-t border-border px-4 pb-4 pt-2 text-base">
           {source ? (
-            <p className="not-prose mb-3 mt-2 text-sm text-muted-foreground">
+            <div className="not-prose mb-3 text-sm text-muted-foreground">
               {`${sourceLabel}: `}
               <a
                 href={source}
@@ -59,7 +61,7 @@ export function Collapsible({
               >
                 {source.replace(/^https?:\/\//, '')}
               </a>
-            </p>
+            </div>
           ) : null}
           {children}
         </AccordionContent>
