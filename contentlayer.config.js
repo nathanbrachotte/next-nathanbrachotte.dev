@@ -63,6 +63,17 @@ const blogComputedFields = {
 /** @type {import('contentlayer/source-files').ComputedFields} */
 const projectComputedFields = {
   ...computedFields,
+  // The bare hostname a project is served from, so the domains page can match
+  // an owned domain to its project without repeating the mapping by hand.
+  domain: {
+    type: 'string',
+    resolve: (doc) => {
+      if (!doc.projectUrl) {
+        return null
+      }
+      return new URL(doc.projectUrl).hostname.replace(/^www\./, '')
+    },
+  },
   structuredData: {
     type: 'object',
     resolve: (doc) => ({
@@ -160,7 +171,7 @@ export const Project = defineDocumentType(() => ({
     },
     status: {
       type: 'enum',
-      options: ['live', 'wip', 'abandoned'],
+      options: ['live', 'wip', 'abandoned', 'stopped'],
     },
     projectType: {
       type: 'enum',
