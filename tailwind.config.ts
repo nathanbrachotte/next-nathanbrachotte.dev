@@ -46,12 +46,15 @@ export default {
           },
         },
         'accordion-down': {
-          from: { height: 0 as any },
-          to: { height: 'var(--radix-accordion-content-height)' },
+          from: { height: 0 as any, opacity: '0' },
+          to: { height: 'var(--radix-accordion-content-height)', opacity: '1' },
         },
         'accordion-up': {
-          from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: 0 as any },
+          from: {
+            height: 'var(--radix-accordion-content-height)',
+            opacity: '1',
+          },
+          to: { height: 0 as any, opacity: '0' },
         },
         shine: {
           '0%': { transform: 'translateX(-100%)', opacity: '0' },

@@ -49,7 +49,7 @@ export function Collapsible({
           </span>
         </AccordionTrigger>
 
-        <AccordionContent className="border-t border-border px-4 pb-4 pt-2 text-base">
+        <AccordionContent className="max-h-[70vh] overflow-y-auto border-t border-border px-4 pb-4 pt-2 text-base">
           {source ? (
             <div className="not-prose mb-3 text-sm text-muted-foreground">
               {`${sourceLabel}: `}
