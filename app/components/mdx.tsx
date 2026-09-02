@@ -6,6 +6,7 @@ import { Badges } from 'app/components/Badges'
 import { cn } from '@/lib/utils'
 import { ZoomedImage } from 'app/components/ZoomedImage'
 import { CopyButton } from 'app/components/CopyButton'
+import { Collapsible } from 'app/components/Collapsible'
 
 const CustomLink = (props) => {
   const href = props.href
@@ -141,6 +142,7 @@ const components = {
   ConsCard,
   Badges,
   Video,
+  Collapsible,
   pre: Pre,
 }
 

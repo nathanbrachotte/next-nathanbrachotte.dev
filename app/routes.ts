@@ -21,7 +21,7 @@ export const routes = {
   },
   '/snippets': {
     url: '/snippets',
-    name: 'Snippets',
+    name: 'Snippets & Skills',
   },
   // '/resources': {
   //   url: '/resources',
