@@ -92,9 +92,13 @@ export default async function Project({ params }) {
 
   return (
     <section>
-      <script type="application/ld+json" suppressHydrationWarning>
-        {JSON.stringify(post.structuredData)}
-      </script>
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(post.structuredData)
+        }}
+      />
       <div className="flex flex-col items-start justify-between">
         <ProjectBadges
           status={post.status}

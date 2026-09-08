@@ -84,9 +84,13 @@ export default async function Blog({ params }) {
 
   return (
     <section>
-      <script type="application/ld+json" suppressHydrationWarning>
-        {JSON.stringify(post.structuredData)}
-      </script>
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(post.structuredData)
+        }}
+      />
       <div className="pb-8">
         <div className="relative h-80 w-full overflow-auto rounded-lg">
           {post.image ? (
