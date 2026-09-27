@@ -23,7 +23,7 @@ A URL (required). Optional context from the user about category/placement — ho
 5. **Edit** the file with the new entry.
 6. **Commit & push** automatically (no confirmation needed):
    - Commit message: `add <short-name> bookmark`
-   - End with `Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>`
+   - End with `Co-Authored-By: Claude <noreply@anthropic.com>`
    - `git push`
 
 ## Notes
