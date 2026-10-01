@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Link from 'next/link'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import Tweet from './tweet'
 import { Badges } from 'app/components/Badges'
@@ -7,46 +6,8 @@ import { cn } from '@/lib/utils'
 import { ZoomedImage } from 'app/components/ZoomedImage'
 import { CopyButton } from 'app/components/CopyButton'
 import { Collapsible } from 'app/components/Collapsible'
-
-const CustomLink = (props) => {
-  const href = props.href
-
-  const className = cn(
-    // Animation & Interaction
-    'animate-text-gradient-background cursor-pointer',
-    // Gradient & Colors
-    'bg-gradient-to-r from-gradient-cyan to-gradient-blue',
-    'bg-clip-text text-gradient-blue',
-    // Text Decoration
-    'decoration-gradient-blue decoration-[0.1em] underline-offset-2',
-    // State & Transitions
-    'transition-all',
-    'visited:text-gradient-cyan visited:decoration-gradient-cyan',
-    // 'visited:text-gradient-pink visited:decoration-gradient-pink',
-    'hover:text-gradient-cyan hover:decoration-gradient-cyan',
-  )
-
-  if (href.startsWith('/')) {
-    return (
-      <Link href={href} alt={props.children} className={className} {...props}>
-        {props.children}
-      </Link>
-    )
-  }
-
-  if (href.startsWith('#')) {
-    return <a {...props} />
-  }
-
-  return (
-    <a
-      target="_blank"
-      rel="noopener noreferrer"
-      className={className}
-      {...props}
-    />
-  )
-}
+import { MdxLink } from 'app/components/MdxLink'
+import { StartupDirectories } from 'app/components/StartupDirectories'
 
 function Video(props) {
   return (
@@ -136,13 +97,14 @@ function ConsCard({ title, cons }) {
 // https://cloudinary.com/pricing
 const components = {
   Image: ZoomedImage,
-  a: CustomLink,
+  a: MdxLink,
   Callout,
   ProsCard,
   ConsCard,
   Badges,
   Video,
   Collapsible,
+  StartupDirectories,
   pre: Pre,
 }
 
