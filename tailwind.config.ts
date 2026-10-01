@@ -62,6 +62,10 @@ export default {
           '40%': { transform: 'translateX(100%)', opacity: '0' },
           '100%': { transform: 'translateX(100%)', opacity: '0' },
         },
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         'spin-slow': 'spin 3s linear infinite',
@@ -72,6 +76,7 @@ export default {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         shine: 'shine 2s ease-in-out infinite',
+        marquee: 'marquee 40s linear infinite',
       },
       colors: {
         border: 'hsl(var(--border))',

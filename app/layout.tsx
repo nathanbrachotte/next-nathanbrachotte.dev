@@ -8,6 +8,7 @@ import Script from 'next/script'
 import './globals.css'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Toaster } from '@/components/ui/sonner'
+import { LiveProjectsBanner } from './components/LiveProjectsBanner'
 
 const graphik = localFont({
   src: [
@@ -69,21 +70,24 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={clsx('dark', graphik.variable)}>
-      <body className="mx-4 mb-40 mt-8 flex max-w-2xl flex-col antialiased md:flex-row lg:mx-auto">
-        <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0">
-          <Navbar />
-          {children}
-          <Footer />
-          {/* <Analytics /> */}
-          {/* https://docs.simpleanalytics.com/dnt */}
-          <Script
-            data-collect-dnt="true"
-            async
-            defer
-            src="https://scripts.simpleanalyticscdn.com/latest.js"
-          />
-          <SpeedInsights />
-        </main>
+      <body className="antialiased">
+        <LiveProjectsBanner />
+        <div className="mx-4 mb-40 mt-8 flex max-w-2xl flex-col md:flex-row lg:mx-auto">
+          <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0">
+            <Navbar />
+            {children}
+            <Footer />
+            {/* <Analytics /> */}
+            {/* https://docs.simpleanalytics.com/dnt */}
+            <Script
+              data-collect-dnt="true"
+              async
+              defer
+              src="https://scripts.simpleanalyticscdn.com/latest.js"
+            />
+            <SpeedInsights />
+          </main>
+        </div>
         <Toaster richColors />
       </body>
     </html>

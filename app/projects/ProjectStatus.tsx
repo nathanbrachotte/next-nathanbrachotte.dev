@@ -58,7 +58,7 @@ export function ProjectStatus({ status, className }: ProjectStatusProps) {
   )
 }
 
-function LiveIndicator() {
+export function LiveIndicator() {
   return (
     <span
       aria-hidden="true"
