@@ -664,6 +664,31 @@ function ShadcnBadge() {
   )
 }
 
+function RechartsBadge() {
+  return (
+    <span className="not-prose">
+      <BadgeWrapper href="https://recharts.org/">
+        <svg
+          fill="none"
+          stroke="#22B5BF"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          role="img"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          {...commonProps}
+        >
+          <title>Recharts</title>
+          <path d="M3 3v18h18" />
+          <path d="m7 15 4-5 4 3 5-7" />
+        </svg>
+        Recharts
+      </BadgeWrapper>
+    </span>
+  )
+}
+
 export const Badges = {
   Vercel: VercelBadge,
   Next: NextBadge,
@@ -695,4 +720,5 @@ export const Badges = {
   Electron: ElectronBadge,
   Astro: AstroBadge,
   Shadcn: ShadcnBadge,
+  Recharts: RechartsBadge,
 }
