@@ -689,6 +689,86 @@ function RechartsBadge() {
   )
 }
 
+function SupabaseBadge() {
+  return (
+    <span className="not-prose">
+      <BadgeWrapper href="https://supabase.com/">
+        <svg
+          fill="#3FCF8E"
+          role="img"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          {...commonProps}
+        >
+          <title>Supabase</title>
+          <path d="M11.9 1.036c-.015-.986-1.26-1.41-1.874-.637L.764 12.05C-.33 13.427.65 15.455 2.409 15.455h9.579l.113 7.51c.014.985 1.259 1.408 1.873.636l9.262-11.653c1.093-1.375.113-3.403-1.645-3.403h-9.642z" />
+        </svg>
+        Supabase
+      </BadgeWrapper>
+    </span>
+  )
+}
+
+function StripeBadge() {
+  return (
+    <span className="not-prose">
+      <BadgeWrapper href="https://stripe.com/">
+        <svg
+          fill="#635BFF"
+          role="img"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          {...commonProps}
+        >
+          <title>Stripe</title>
+          <path d="M13.976 9.15c-2.172-.806-3.356-1.426-3.356-2.409 0-.831.683-1.305 1.901-1.305 2.227 0 4.515.858 6.09 1.631l.89-5.494C18.252.975 15.697 0 12.165 0 9.667 0 7.589.654 6.104 1.872 4.56 3.147 3.757 4.992 3.757 7.218c0 4.039 2.467 5.76 6.476 7.219 2.585.92 3.445 1.574 3.445 2.583 0 .98-.84 1.545-2.354 1.545-1.875 0-4.965-.921-6.99-2.109l-.9 5.555C5.175 22.99 8.385 24 11.714 24c2.641 0 4.843-.624 6.328-1.813 1.664-1.305 2.525-3.236 2.525-5.732 0-4.128-2.524-5.851-6.594-7.305h.003z" />
+        </svg>
+        Stripe
+      </BadgeWrapper>
+    </span>
+  )
+}
+
+function ResendBadge() {
+  return (
+    <span className="not-prose">
+      <BadgeWrapper href="https://resend.com/">
+        <svg
+          fill="#FFFFFF"
+          role="img"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          {...commonProps}
+        >
+          <title>Resend</title>
+          <path d="M14.679 0c4.648 0 7.413 2.765 7.413 6.434s-2.765 6.434-7.413 6.434H12.33L24 24h-8.245l-8.88-8.44c-.636-.588-.93-1.273-.93-1.86 0-.831.587-1.565 1.713-1.883l4.574-1.224c1.737-.465 2.936-1.81 2.936-3.572 0-2.153-1.761-3.4-3.939-3.4H0V0z" />
+        </svg>
+        Resend
+      </BadgeWrapper>
+    </span>
+  )
+}
+
+function PostHogBadge() {
+  return (
+    <span className="not-prose">
+      <BadgeWrapper href="https://posthog.com/">
+        <svg
+          fill="#F9BD2B"
+          role="img"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          {...commonProps}
+        >
+          <title>PostHog</title>
+          <path d="M9.854 14.5 5 9.647.854 5.5A.5.5 0 0 0 0 5.854V8.44a.5.5 0 0 0 .146.353L5 13.647l.147.146L9.854 18.5l.146.147v-.049c.065.03.134.049.207.049h2.586a.5.5 0 0 0 .353-.854L9.854 14.5zm0-5-4-4a.487.487 0 0 0-.409-.144.515.515 0 0 0-.356.21.493.493 0 0 0-.089.288V8.44a.5.5 0 0 0 .147.353l9 9a.5.5 0 0 0 .853-.354v-2.585a.5.5 0 0 0-.146-.354l-5-5zm1-4a.5.5 0 0 0-.854.354V8.44a.5.5 0 0 0 .147.353l4 4a.5.5 0 0 0 .853-.354V9.854a.5.5 0 0 0-.146-.354l-4-4zm12.647 11.515a3.863 3.863 0 0 1-2.232-1.1l-4.708-4.707a.5.5 0 0 0-.854.354v6.585a.5.5 0 0 0 .5.5H23.5a.5.5 0 0 0 .5-.5v-.6c0-.276-.225-.497-.499-.532zm-5.394.032a.8.8 0 1 1 0-1.6.8.8 0 0 1 0 1.6zM.854 15.5a.5.5 0 0 0-.854.354v2.293a.5.5 0 0 0 .5.5h2.293c.222 0 .39-.135.462-.309a.493.493 0 0 0-.109-.545L.854 15.501zM5 14.647.854 10.5a.5.5 0 0 0-.854.353v2.586a.5.5 0 0 0 .146.353L4.854 18.5l.146.147h2.793a.5.5 0 0 0 .353-.854L5 14.647z" />
+        </svg>
+        PostHog
+      </BadgeWrapper>
+    </span>
+  )
+}
+
 export const Badges = {
   Vercel: VercelBadge,
   Next: NextBadge,
@@ -721,4 +801,8 @@ export const Badges = {
   Astro: AstroBadge,
   Shadcn: ShadcnBadge,
   Recharts: RechartsBadge,
+  Supabase: SupabaseBadge,
+  Stripe: StripeBadge,
+  Resend: ResendBadge,
+  PostHog: PostHogBadge,
 }
