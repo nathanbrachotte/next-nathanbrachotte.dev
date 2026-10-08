@@ -9,6 +9,7 @@ import './globals.css'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Toaster } from '@/components/ui/sonner'
 import { LiveProjectsBanner } from './components/LiveProjectsBanner'
+import { HiddenOnClientPages } from './components/HiddenOnClientPages'
 
 const graphik = localFont({
   src: [
@@ -71,7 +72,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={clsx('dark', graphik.variable)}>
       <body className="antialiased">
-        <LiveProjectsBanner />
+        <HiddenOnClientPages>
+          <LiveProjectsBanner />
+        </HiddenOnClientPages>
         <div className="mx-4 mb-40 mt-8 flex max-w-2xl flex-col md:flex-row lg:mx-auto">
           <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0">
             <Navbar />
