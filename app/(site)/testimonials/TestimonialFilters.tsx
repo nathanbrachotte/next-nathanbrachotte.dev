@@ -7,7 +7,7 @@ import {
   clientTestimonials,
   colleagueTestimonials,
   leadTestimonials,
-} from 'app/testimonials/data'
+} from 'app/(site)/testimonials/data'
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useCallback } from 'react'
 

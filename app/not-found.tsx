@@ -1,9 +1,10 @@
 import Image from 'next/image'
 import { H1 } from 'app/components/Typography'
+import { SiteShell } from 'app/components/SiteShell'
 
 export default function NotFound() {
   return (
-    <>
+    <SiteShell>
       <H1>404 - You seriously messed up 👿</H1>
       Just kidding. But I don't know what you're looking for, sorry. Maybe ask
       the detective? Or the cat?
@@ -16,6 +17,6 @@ export default function NotFound() {
           className="rounded-lg object-cover"
         />
       </div>
-    </>
+    </SiteShell>
   )
 }

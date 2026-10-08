@@ -4,7 +4,7 @@ import { allProjects } from 'contentlayer/generated'
 import { Badge } from '@/components/ui/badge'
 import { GradientLink } from 'app/components/GradientLink'
 import { H1 } from 'app/components/Typography'
-import { ProjectStatus } from 'app/projects/ProjectStatus'
+import { ProjectStatus } from 'app/(site)/projects/ProjectStatus'
 import { cn } from '@/lib/utils'
 import { domainOnlyStatusConfig, ownedDomains } from './data'
 

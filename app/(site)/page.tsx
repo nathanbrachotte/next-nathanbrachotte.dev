@@ -1,7 +1,7 @@
 import { Badges } from 'app/components/Badges'
 import { GradientLink } from 'app/components/GradientLink'
 import { H1, H2, H3 } from 'app/components/Typography'
-import { ProjectCard } from 'app/projects/ProjectCard'
+import { ProjectCard } from 'app/(site)/projects/ProjectCard'
 import { allProjects } from 'contentlayer/generated'
 import { releasedBlogs } from 'helpers/posts'
 import Image from 'next/image'
@@ -9,7 +9,7 @@ import React from 'react'
 
 import { getViewsCount } from 'lib/metrics'
 import { BlogPostCard } from './blog/page'
-import { CopyEmailCta } from './components/CopyEmailCta'
+import { CopyEmailCta } from 'app/components/CopyEmailCta'
 
 export default async function Page() {
   const allViews = await getViewsCount()

@@ -1,8 +1,8 @@
 'use client'
 
-import { SeeOriginalButton, SeeOriginalLink } from 'app/testimonials/Links'
+import { SeeOriginalButton, SeeOriginalLink } from 'app/(site)/testimonials/Links'
 import { LayoutGroup, motion } from 'framer-motion'
-import { Testimonial, testimonials } from 'app/testimonials/data'
+import { Testimonial, testimonials } from 'app/(site)/testimonials/data'
 import clsx from 'clsx'
 import { getGradientPerIndex } from 'helpers/gradients'
 import { User } from 'icons/User'

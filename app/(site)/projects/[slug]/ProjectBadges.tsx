@@ -1,5 +1,5 @@
 import { ArchiveIcon, CodeIcon, MobileIcon } from '@radix-ui/react-icons'
-import { ProjectStatus } from 'app/projects/ProjectStatus'
+import { ProjectStatus } from 'app/(site)/projects/ProjectStatus'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 

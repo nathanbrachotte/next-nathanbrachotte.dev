@@ -7,7 +7,7 @@
 // import meetups from "public/images/home/meetups.webp";
 // import vercel from "public/images/home/vercel.webp";
 // import avatar from "app/avatar.webp";
-// import ViewCounter from "app/blog/view-counter";
+// import ViewCounter from "app/(site)/blog/view-counter";
 // import {
 //   getLeeYouTubeSubs,
 //   getVercelYouTubeSubs,

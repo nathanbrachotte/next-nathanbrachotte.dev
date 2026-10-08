@@ -1,4 +1,4 @@
-import { LiveIndicator } from 'app/projects/ProjectStatus'
+import { LiveIndicator } from 'app/(site)/projects/ProjectStatus'
 import { allProjects, type Project } from 'contentlayer/generated'
 import Image from 'next/image'
 

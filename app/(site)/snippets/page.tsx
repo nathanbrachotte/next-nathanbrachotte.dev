@@ -1,6 +1,6 @@
 import { allSnippets } from 'contentlayer/generated'
 import { notFound } from 'next/navigation'
-import { Mdx } from '../components/mdx'
+import { Mdx } from 'app/components/mdx'
 import { H1 } from 'app/components/Typography'
 
 const snippets = allSnippets[0]

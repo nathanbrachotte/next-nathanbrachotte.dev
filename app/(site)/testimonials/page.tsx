@@ -1,8 +1,8 @@
 import { TESTIMONIAL_TYPES } from 'app/constants'
 import { H1 } from 'app/components/Typography'
-import { TestimonialFilters } from 'app/testimonials/TestimonialFilters'
-import { TestimonialsSection } from 'app/testimonials/TestimonialsSection'
-import { testimonials } from 'app/testimonials/data'
+import { TestimonialFilters } from 'app/(site)/testimonials/TestimonialFilters'
+import { TestimonialsSection } from 'app/(site)/testimonials/TestimonialsSection'
+import { testimonials } from 'app/(site)/testimonials/data'
 import React from 'react'
 
 interface TestimonialsPageProps {

@@ -2,6 +2,9 @@ import { H1, H2, H3 } from 'app/components/Typography'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import type { Metadata } from 'next'
+import Image from 'next/image'
+import fs from 'node:fs'
+import path from 'node:path'
 
 // Protected by Basic Auth in middleware.ts
 export const metadata: Metadata = {
@@ -36,6 +39,23 @@ export default function StieblerRelocationPage() {
           link can find the site.
         </p>
       </div>
+
+      {hasGoogleScreenshot ? (
+        <figure className="-mt-8 flex flex-col gap-2">
+          <Image
+            src={googleScreenshotSrc}
+            alt='Google results for "franziska stiebler": LinkedIn, Instagram, RocketReach and other people with a similar name. Her website is not listed.'
+            width={2000}
+            height={1255}
+            className="rounded-lg border border-border"
+          />
+          <figcaption className="text-sm text-muted-foreground">
+            Google search for &quot;franziska stiebler&quot;, October 2026.
+            LinkedIn, Instagram and other people with a similar name show up.
+            Her website is not listed.
+          </figcaption>
+        </figure>
+      ) : null}
 
       <div className="flex flex-col gap-4">
         <Eyebrow>Goal</Eyebrow>
@@ -136,6 +156,16 @@ export default function StieblerRelocationPage() {
           <ResponsibilityCard title="Franziska provides" items={clientTasks} />
         </div>
       </div>
+
+      <div className="flex flex-col gap-4">
+        <Eyebrow>Before we start</Eyebrow>
+        <H2>Questions for you</H2>
+        <ol className="flex list-decimal flex-col gap-2 pl-5">
+          {questions.map((question) => (
+            <li key={question}>{question}</li>
+          ))}
+        </ol>
+      </div>
     </section>
   )
 }
@@ -180,6 +210,16 @@ function ResponsibilityCard({
     </div>
   )
 }
+
+const googleScreenshotSrc = '/images/clients/stiebler-google-search.png'
+const hasGoogleScreenshot = fs.existsSync(
+  path.join(process.cwd(), 'public', googleScreenshotSrc),
+)
+
+const questions = [
+  'Do you track how many visitors your website gets per month?',
+  'Do you track how many clients you get per month or per year?',
+]
 
 const priorityClassNames: Record<Priority, string> = {
   Critical: 'border-red-500/30 bg-red-500/20 text-red-400',

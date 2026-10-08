@@ -1,6 +1,6 @@
 import { H2 } from 'app/components/Typography'
-import { ProjectLogo } from 'app/projects/[slug]/ProjectLogo'
-import { ProjectBadges } from 'app/projects/[slug]/ProjectBadges'
+import { ProjectLogo } from 'app/(site)/projects/[slug]/ProjectLogo'
+import { ProjectBadges } from 'app/(site)/projects/[slug]/ProjectBadges'
 import clsx from 'clsx'
 import { type Project } from 'contentlayer/generated'
 import { SimpleAnalyticsIcon } from 'icons/SimpleAnalytics'

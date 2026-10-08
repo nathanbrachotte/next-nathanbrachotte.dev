@@ -1,6 +1,6 @@
 import { H1, H2 } from 'app/components/Typography'
-import { ProjectCard } from 'app/projects/ProjectCard'
-import { ToolFilter, getToolLabel } from 'app/projects/ToolFilter'
+import { ProjectCard } from 'app/(site)/projects/ProjectCard'
+import { ToolFilter, getToolLabel } from 'app/(site)/projects/ToolFilter'
 import { allProjects, type Project } from 'contentlayer/generated'
 import { Metadata } from 'next'
 

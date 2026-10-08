@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge'
 import { parseISO, format } from 'date-fns'
 import { getTimePerPost } from 'helpers/time'
 import { ViewsCount, getViewsCount } from 'lib/metrics'
-import ViewCounter from 'app/blog/view-counter'
+import ViewCounter from 'app/(site)/blog/view-counter'
 import Image from 'next/image'
 import { H1 } from 'app/components/Typography'
 

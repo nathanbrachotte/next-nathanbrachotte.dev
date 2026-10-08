@@ -1,15 +1,7 @@
 import clsx from 'clsx'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import Navbar from './components/navbar'
-import Footer from './components/footer'
-// import { Analytics } from '@vercel/analytics/react'
-import Script from 'next/script'
 import './globals.css'
-import { SpeedInsights } from '@vercel/speed-insights/next'
-import { Toaster } from '@/components/ui/sonner'
-import { LiveProjectsBanner } from './components/LiveProjectsBanner'
-import { HiddenOnClientPages } from './components/HiddenOnClientPages'
 
 const graphik = localFont({
   src: [
@@ -71,28 +63,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={clsx('dark', graphik.variable)}>
-      <body className="antialiased">
-        <HiddenOnClientPages>
-          <LiveProjectsBanner />
-        </HiddenOnClientPages>
-        <div className="mx-4 mb-40 mt-8 flex max-w-2xl flex-col md:flex-row lg:mx-auto">
-          <main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0">
-            <Navbar />
-            {children}
-            <Footer />
-            {/* <Analytics /> */}
-            {/* https://docs.simpleanalytics.com/dnt */}
-            <Script
-              data-collect-dnt="true"
-              async
-              defer
-              src="https://scripts.simpleanalyticscdn.com/latest.js"
-            />
-            <SpeedInsights />
-          </main>
-        </div>
-        <Toaster richColors />
-      </body>
+      <body className="antialiased">{children}</body>
     </html>
   )
 }
