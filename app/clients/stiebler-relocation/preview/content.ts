@@ -28,6 +28,7 @@ export interface SiteContent {
     recommendations: string
     contact: string
   }
+  tagline: string
   heroTitle: string
   heroLead: string
   intro: string[]
@@ -153,6 +154,7 @@ export const content: Record<Lang, SiteContent> = {
       recommendations: 'Recommendations',
       contact: 'Contact',
     },
+    tagline: 'Relocation Services in Berlin',
     heroTitle: 'Welcome to Berlin, Germany’s greatest city',
     heroLead:
       'Moving to a new city is a big step. I make your start in Berlin as smooth and pleasant as possible, from day one.',
@@ -284,6 +286,7 @@ export const content: Record<Lang, SiteContent> = {
       recommendations: 'Kundenstimmen',
       contact: 'Kontakt',
     },
+    tagline: 'Relocation Services in Berlin',
     heroTitle: 'Herzlich willkommen in Berlin, dieser großartigen Stadt!',
     heroLead:
       'Ich freue mich darauf, Ihnen den Start von Beginn an so angenehm wie möglich zu gestalten.',

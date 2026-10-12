@@ -50,9 +50,9 @@ export function StieblerSite({ lang }: { lang: Lang }) {
             </span>
             <span className="flex flex-col leading-tight">
               <span className="text-lg font-semibold tracking-tight text-[#2E2D4D]">
-                Relocation : Berlin
+                Franziska Stiebler
               </span>
-              <span className="text-xs text-[#6E6C80]">Franziska Stiebler</span>
+              <span className="text-xs text-[#6E6C80]">{t.tagline}</span>
             </span>
           </a>
           <nav className="hidden items-center gap-6 text-sm text-[#4A4860] md:flex">

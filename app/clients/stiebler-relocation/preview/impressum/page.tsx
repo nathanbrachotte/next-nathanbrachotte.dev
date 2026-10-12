@@ -17,7 +17,7 @@ export default function StieblerImpressumPage() {
           href="/clients/stiebler-relocation/preview"
           className="text-sm font-semibold text-[#6B5BA8] hover:underline"
         >
-          ← Relocation : Berlin
+          ← Franziska Stiebler · Relocation Services in Berlin
         </Link>
 
         <header>
