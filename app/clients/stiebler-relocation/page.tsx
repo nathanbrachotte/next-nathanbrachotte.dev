@@ -14,159 +14,183 @@ export const metadata: Metadata = {
 
 export default function StieblerRelocationPage() {
   return (
-    <section className="flex flex-col gap-14">
-      <header>
-        <div className="flex flex-wrap items-baseline justify-between gap-2 pb-3 text-xs uppercase tracking-wider text-muted-foreground">
-          <span>Website rebuild · Proposal</span>
-          <span className="ml-auto normal-case tracking-normal">
-            07 October 2026
-          </span>
+    <main className="mx-auto max-w-3xl px-4 pb-24 pt-12 sm:px-6">
+      <section className="flex flex-col gap-14">
+        <header>
+          <div className="flex flex-wrap items-baseline justify-between gap-2 pb-3 text-xs uppercase tracking-wider text-muted-foreground">
+            <span>Website rebuild · Proposal</span>
+            <span className="ml-auto normal-case tracking-normal">
+              07 October 2026
+            </span>
+          </div>
+          <H1 className="pb-4">Stiebler Relocation : Berlin</H1>
+          <p className="text-lg text-muted-foreground">
+            A new website for Franziska Stiebler-Liebenberg&apos;s relocation
+            service, built so that expats moving to Berlin can find her on
+            Google and get in touch easily.
+          </p>
+        </header>
+
+        <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-5">
+          <H3 className="pb-1">
+            Right now, Google is told not to show the site.
+          </H3>
+          <p className="text-muted-foreground">
+            All six pages carry a <Code>noindex</Code> tag, which asks search
+            engines to leave them out of results. Searching for the business
+            name or the domain returns nothing. Today, only people who already
+            have the link can find the site.
+          </p>
         </div>
-        <H1 className="pb-4">Stiebler Relocation : Berlin</H1>
-        <p className="text-lg text-muted-foreground">
-          A new website for Franziska Stiebler-Liebenberg&apos;s relocation
-          service, built so that expats moving to Berlin can find her on Google
-          and get in touch easily.
-        </p>
-      </header>
 
-      <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-5">
-        <H3 className="pb-1">Right now, Google is told not to show the site.</H3>
-        <p className="text-muted-foreground">
-          All six pages carry a <Code>noindex</Code> tag, which asks search
-          engines to leave them out of results. Searching for the business name
-          or the domain returns nothing. Today, only people who already have the
-          link can find the site.
-        </p>
-      </div>
+        {hasGoogleScreenshot ? (
+          <figure className="-mt-8 flex flex-col gap-2">
+            <Image
+              src={googleScreenshotSrc}
+              alt='Google results for "franziska stiebler": LinkedIn, Instagram, RocketReach and other people with a similar name. Her website is not listed.'
+              width={2000}
+              height={1255}
+              className="rounded-lg border border-border"
+            />
+            <figcaption className="text-sm text-muted-foreground">
+              Google search for &quot;franziska stiebler&quot;, October 2026.
+              LinkedIn, Instagram and other people with a similar name show up.
+              Her website is not listed.
+            </figcaption>
+          </figure>
+        ) : null}
 
-      {hasGoogleScreenshot ? (
-        <figure className="-mt-8 flex flex-col gap-2">
-          <Image
-            src={googleScreenshotSrc}
-            alt='Google results for "franziska stiebler": LinkedIn, Instagram, RocketReach and other people with a similar name. Her website is not listed.'
-            width={2000}
-            height={1255}
-            className="rounded-lg border border-border"
-          />
-          <figcaption className="text-sm text-muted-foreground">
-            Google search for &quot;franziska stiebler&quot;, October 2026.
-            LinkedIn, Instagram and other people with a similar name show up.
-            Her website is not listed.
-          </figcaption>
-        </figure>
-      ) : null}
+        <div className="flex flex-col gap-4">
+          <Eyebrow>Goal</Eyebrow>
+          <p className="border-l-2 border-gradient-purple pl-4 text-xl font-semibold leading-snug">
+            When someone plans a move to Berlin and searches for help, they find
+            Franziska, trust her, and contact her.
+          </p>
+          <p className="text-muted-foreground">
+            Most of her clients search before they arrive: from India, the US,
+            Spain, Brazil. The site has to work for them in English first and in
+            German for HR departments and local clients. It also has to show
+            what the testimonials already say: personal care, a maximum of three
+            clients at a time, and deep knowledge of the Berlin housing market
+            and the Bürgeramt.
+          </p>
+        </div>
 
-      <div className="flex flex-col gap-4">
-        <Eyebrow>Goal</Eyebrow>
-        <p className="border-l-2 border-gradient-purple pl-4 text-xl font-semibold leading-snug">
-          When someone plans a move to Berlin and searches for help, they find
-          Franziska, trust her, and contact her.
-        </p>
-        <p className="text-muted-foreground">
-          Most of her clients search before they arrive: from India, the US,
-          Spain, Brazil. The site has to work for them in English first and in
-          German for HR departments and local clients. It also has to show what
-          the testimonials already say: personal care, a maximum of three
-          clients at a time, and deep knowledge of the Berlin housing market and
-          the Bürgeramt.
-        </p>
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <Eyebrow>Targets</Eyebrow>
-        <H2>Measurable targets</H2>
-        <ol className="flex flex-col overflow-hidden rounded-lg border border-border">
-          {targets.map((target, index) => (
-            <li
-              key={target.metric}
-              className="grid grid-cols-[2rem_1fr] gap-3 border-t border-border p-4 first:border-t-0"
-            >
-              <span className="tabular-nums text-muted-foreground">
-                {index + 1}
-              </span>
-              <div className="flex min-w-0 flex-col gap-2">
-                <span className="font-semibold">{target.metric}</span>
-                <div className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
-                  <div>
-                    <span className="block text-xs uppercase tracking-wider text-muted-foreground">
-                      Today
-                    </span>
-                    <span
-                      className={cn(
-                        target.isTodayBad
-                          ? 'text-red-400'
-                          : 'text-muted-foreground',
-                      )}
-                    >
-                      {target.today}
-                    </span>
-                  </div>
-                  <div>
-                    <span className="block text-xs uppercase tracking-wider text-muted-foreground">
-                      Target
-                    </span>
-                    <span className="font-medium text-green-400">
-                      {target.target}
-                    </span>
+        <div className="flex flex-col gap-4">
+          <Eyebrow>Targets</Eyebrow>
+          <H2>Measurable targets</H2>
+          <ol className="flex flex-col overflow-hidden rounded-lg border border-border">
+            {targets.map((target, index) => (
+              <li
+                key={target.metric}
+                className="grid grid-cols-[2rem_1fr] gap-3 border-t border-border p-4 first:border-t-0"
+              >
+                <span className="tabular-nums text-muted-foreground">
+                  {index + 1}
+                </span>
+                <div className="flex min-w-0 flex-col gap-2">
+                  <span className="font-semibold">{target.metric}</span>
+                  <div className="grid grid-cols-1 gap-2 text-sm sm:grid-cols-2">
+                    <div>
+                      <span className="block text-xs uppercase tracking-wider text-muted-foreground">
+                        Today
+                      </span>
+                      <span
+                        className={cn(
+                          target.isTodayBad
+                            ? 'text-red-400'
+                            : 'text-muted-foreground',
+                        )}
+                      >
+                        {target.today}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="block text-xs uppercase tracking-wider text-muted-foreground">
+                        Target
+                      </span>
+                      <span className="font-medium text-green-400">
+                        {target.target}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <Eyebrow>What to improve</Eyebrow>
-        <H2>What I will fix, in priority order</H2>
-        {fixGroups.map((group) => (
-          <div key={group.label} className="flex flex-col gap-1 pt-2">
-            <span className="text-xs uppercase tracking-wider text-gradient-purple">
-              {group.label}
-            </span>
-            <ol className="flex flex-col">
-              {group.fixes.map((fix) => (
-                <li
-                  key={fix.number}
-                  className="grid grid-cols-[2rem_1fr] gap-3 border-b border-border py-4"
-                >
-                  <span className="pt-0.5 tabular-nums text-muted-foreground">
-                    {fix.number}
-                  </span>
-                  <div className="flex min-w-0 flex-col gap-1">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <H3>{fix.title}</H3>
-                      <PriorityBadge priority={fix.priority} />
-                    </div>
-                    <p className="text-muted-foreground">{fix.description}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </div>
-        ))}
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <Eyebrow>Who does what</Eyebrow>
-        <H2>Where I bring my expertise</H2>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <ResponsibilityCard title="I take care of" items={myTasks} />
-          <ResponsibilityCard title="Franziska provides" items={clientTasks} />
+              </li>
+            ))}
+          </ol>
         </div>
-      </div>
 
-      <div className="flex flex-col gap-4">
-        <Eyebrow>Before we start</Eyebrow>
-        <H2>Questions for you</H2>
-        <ol className="flex list-decimal flex-col gap-2 pl-5">
-          {questions.map((question) => (
-            <li key={question}>{question}</li>
+        <div className="flex flex-col gap-4">
+          <Eyebrow>What to improve</Eyebrow>
+          <H2>What I will fix, in priority order</H2>
+          {fixGroups.map((group) => (
+            <div key={group.label} className="flex flex-col gap-1 pt-2">
+              <span className="text-xs uppercase tracking-wider text-gradient-purple">
+                {group.label}
+              </span>
+              <ol className="flex flex-col">
+                {group.fixes.map((fix) => (
+                  <li
+                    key={fix.number}
+                    className="grid grid-cols-[2rem_1fr] gap-3 border-b border-border py-4"
+                  >
+                    <span className="pt-0.5 tabular-nums text-muted-foreground">
+                      {fix.number}
+                    </span>
+                    <div className="flex min-w-0 flex-col gap-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <H3>{fix.title}</H3>
+                        <PriorityBadge priority={fix.priority} />
+                      </div>
+                      <p className="text-muted-foreground">{fix.description}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
           ))}
-        </ol>
-      </div>
-    </section>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <Eyebrow>Who does what</Eyebrow>
+          <H2>Where I bring my expertise</H2>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <ResponsibilityCard title="I take care of" items={myTasks} />
+            <ResponsibilityCard
+              title="Franziska provides"
+              items={clientTasks}
+            />
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <Eyebrow>Before we start</Eyebrow>
+          <H2>Questions for you</H2>
+          <ol className="flex list-decimal flex-col gap-2 pl-5">
+            {questions.map((question) => (
+              <li key={question}>{question}</li>
+            ))}
+          </ol>
+        </div>
+
+        <div className="flex flex-col gap-4">
+          <Eyebrow>From your documents</Eyebrow>
+          <H2>TODOs</H2>
+          {todoGroups.map((group) => (
+            <div key={group.source} className="flex flex-col gap-2 pt-2">
+              <span className="text-xs uppercase tracking-wider text-gradient-purple">
+                {group.source}
+              </span>
+              <ul className="flex list-disc flex-col gap-2 pl-5 text-muted-foreground">
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
   )
 }
 
@@ -219,6 +243,45 @@ const hasGoogleScreenshot = fs.existsSync(
 const questions = [
   'Do you track how many visitors your website gets per month?',
   'Do you track how many clients you get per month or per year?',
+]
+
+const todoGroups: TodoGroup[] = [
+  {
+    source: 'Facts and Figures (October 2026)',
+    items: [
+      'Colour scheme: dark blue, grey and violet',
+      'Apply the German and English text changes',
+      'Modernise the contact options in the website text',
+      'Check the privacy policy text, and whether the VAT ID and tax number are required in the Impressum',
+      'Visibility of the website in search',
+      'LinkedIn appearance',
+      'Business card (to discuss)',
+      'Hosting: webgo "Webhosting Profi" now bills PHP 5 extended support (6.99 € per month since August 2026). Moving to the new setup removes this cost',
+    ],
+  },
+  {
+    source: 'Webpage Relocation Text 2026',
+    items: [
+      'Use this document as the new text for all sections, German and English',
+      'Remove the Corona note from the residence permit section ("subject to permission in times of Corona COVID 19")',
+      'Impressum: replace the placeholder VAT ID and tax number with the real ones',
+      'Impressum: replace TMG with DDG and remove the EU dispute platform section (closed in 2025)',
+      'Update the copyright year in the footer automatically',
+    ],
+  },
+  {
+    source: '2026 Recommendations',
+    items: [
+      'Same tiles and text in both languages',
+      'Keep: Lukas Stephan, Nataliia Androsova, Tomer Turbovich, Burcin Guclu, Ritwick Mukherjee',
+      'Add: Sharon Brandt, General Manager, Crown World Mobility New Zealand (tile only)',
+      'Add: Melanie Sy, Human Resources, Fincompare (tile and full text, German)',
+      'Add: Mariia Zelenova and Stanislav Kirillov, relocating from Kazakhstan (tile and full text)',
+      'Remove all other current recommendations',
+      'Fix typos in the Zelenova text: "expecially", "kindergarden", "truely"',
+      'Ask the new clients if they would also post their text as a Google review',
+    ],
+  },
 ]
 
 const priorityClassNames: Record<Priority, string> = {
@@ -404,6 +467,11 @@ interface Fix {
   title: string
   priority: Priority
   description: string
+}
+
+interface TodoGroup {
+  source: string
+  items: string[]
 }
 
 interface FixGroup {

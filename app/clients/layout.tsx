@@ -4,9 +4,5 @@ export default function ClientsLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <main className="mx-auto max-w-3xl px-4 pb-24 pt-12 sm:px-6">
-      {children}
-    </main>
-  )
+  return children
 }
