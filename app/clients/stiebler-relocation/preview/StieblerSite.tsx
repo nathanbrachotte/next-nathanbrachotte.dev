@@ -216,35 +216,40 @@ export function StieblerSite({ lang }: { lang: Lang }) {
 
         <section
           id="contact"
-          className="relative scroll-mt-20 overflow-hidden bg-[#2E2D4D] py-20 text-white"
+          className="relative scroll-mt-20 overflow-hidden bg-[#1E2147] text-white"
         >
           <Image
             src="/images/clients/stiebler/hero.jpg"
             alt=""
             fill
             sizes="100vw"
-            className="opacity-15 object-cover"
+            className="object-cover object-right opacity-30 md:opacity-100"
           />
-          <Reveal className="relative mx-auto flex max-w-3xl flex-col items-center gap-6 px-4 text-center sm:px-6">
-            <Portrait size="small" />
-            <h2 className="text-3xl font-semibold">{t.contactTitle}</h2>
-            <p className="text-[#D9D6EA]">{t.contactLead}</p>
-            <ContactButtons lang={lang} isCentered />
-            <div className="flex flex-col gap-1 text-sm text-[#D9D6EA]">
-              <a
-                href={`mailto:${email}`}
-                className="inline-flex items-center justify-center gap-2 hover:text-white"
-              >
-                <Mail className="h-4 w-4" aria-hidden />
-                {email}
-              </a>
-              <a
-                href={phoneUrl}
-                className="inline-flex items-center justify-center gap-2 hover:text-white"
-              >
-                <Phone className="h-4 w-4" aria-hidden />
-                {phoneLabel}
-              </a>
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1E2147] via-[#1E2147]/90 to-[#1E2147]/10" />
+          <Reveal className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6">
+            <div className="flex max-w-lg flex-col gap-6">
+              <div className="flex items-center gap-4">
+                <Portrait size="small" />
+                <h2 className="text-3xl font-semibold">{t.contactTitle}</h2>
+              </div>
+              <p className="text-lg text-[#E6E3F2]">{t.contactLead}</p>
+              <ContactButtons lang={lang} />
+              <div className="flex flex-col gap-2 text-[#E6E3F2]">
+                <a
+                  href={`mailto:${email}`}
+                  className="inline-flex items-center gap-2 hover:text-white hover:underline"
+                >
+                  <Mail className="h-4 w-4" aria-hidden />
+                  {email}
+                </a>
+                <a
+                  href={phoneUrl}
+                  className="inline-flex items-center gap-2 hover:text-white hover:underline"
+                >
+                  <Phone className="h-4 w-4" aria-hidden />
+                  {phoneLabel}
+                </a>
+              </div>
             </div>
           </Reveal>
         </section>
@@ -338,7 +343,7 @@ function Portrait({ size }: { size: 'small' | 'large' }) {
     size === 'large' ? 'h-72 w-72 border-[6px]' : 'h-24 w-24 border-4'
   return (
     <div
-      className={`${sizeClassName} relative overflow-hidden rounded-full border-white/20 shadow-2xl ring-1 ring-white/10`}
+      className={`${sizeClassName} relative shrink-0 overflow-hidden rounded-full border-white/20 shadow-2xl ring-1 ring-white/10`}
     >
       <Image
         src="/images/clients/stiebler/franziska.jpg"
