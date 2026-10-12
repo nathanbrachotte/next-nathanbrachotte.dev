@@ -38,11 +38,22 @@ export function StieblerSite({ lang }: { lang: Lang }) {
 
       <header className="sticky top-0 z-20 border-b border-[#E3E1EC] bg-white/90 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <a href="#top" className="flex flex-col leading-tight">
-            <span className="text-lg font-semibold tracking-tight text-[#2E2D4D]">
-              Relocation : Berlin
+          <a href="#top" className="flex items-center gap-3">
+            <span className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full ring-2 ring-[#6B5BA8]/30">
+              <Image
+                src="/images/clients/stiebler/franziska.jpg"
+                alt="Franziska Stiebler"
+                fill
+                sizes="40px"
+                className="object-cover object-top"
+              />
             </span>
-            <span className="text-xs text-[#6E6C80]">Franziska Stiebler</span>
+            <span className="flex flex-col leading-tight">
+              <span className="text-lg font-semibold tracking-tight text-[#2E2D4D]">
+                Relocation : Berlin
+              </span>
+              <span className="text-xs text-[#6E6C80]">Franziska Stiebler</span>
+            </span>
           </a>
           <nav className="hidden items-center gap-6 text-sm text-[#4A4860] md:flex">
             <a href="#services" className="hover:text-[#6B5BA8]">
@@ -82,11 +93,8 @@ export function StieblerSite({ lang }: { lang: Lang }) {
             className="object-cover object-right opacity-40 md:opacity-100"
           />
           <div className="absolute inset-0 bg-gradient-to-r from-[#1E2147] via-[#1E2147]/80 to-transparent" />
-          <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:px-6 md:grid-cols-[1.5fr_1fr] md:py-28">
+          <div className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 md:py-32">
             <div className="flex max-w-xl flex-col gap-6">
-              <Reveal className="md:hidden">
-                <Portrait size="small" />
-              </Reveal>
               <Reveal delay={0.1}>
                 <Corners>
                   <h1 className="text-3xl font-semibold leading-tight sm:text-5xl">
@@ -101,9 +109,6 @@ export function StieblerSite({ lang }: { lang: Lang }) {
                 <ContactButtons lang={lang} />
               </Reveal>
             </div>
-            <Reveal delay={0.3} className="hidden justify-self-end md:block">
-              <Portrait size="large" />
-            </Reveal>
           </div>
         </section>
 
@@ -246,7 +251,13 @@ export function StieblerSite({ lang }: { lang: Lang }) {
       </main>
 
       <footer className="bg-[#1F1E36] px-4 pb-24 pt-6 text-center text-xs text-[#9C99B3] sm:pb-6">
-        © {new Date().getFullYear()} Franziska Stiebler · {t.footerLegal}
+        © {new Date().getFullYear()} Franziska Stiebler ·{' '}
+        <Link
+          href="/clients/stiebler-relocation/preview/impressum"
+          className="underline-offset-2 hover:text-white hover:underline"
+        >
+          {t.footerLegal}
+        </Link>
       </footer>
 
       <div className="fixed inset-x-0 bottom-0 z-20 flex gap-2 border-t border-[#E3E1EC] bg-white p-3 sm:hidden">
@@ -434,12 +445,13 @@ function RecommendationCard({
         <p className="font-medium leading-relaxed">{recommendation.quote}</p>
       </blockquote>
       <figcaption className="mt-5 flex items-center gap-3 text-sm">
-        <span
-          aria-hidden
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#2E2D4D] text-xs font-semibold text-white"
-        >
-          {getInitials(recommendation.name)}
-        </span>
+        <Image
+          src={recommendation.avatar}
+          alt=""
+          width={48}
+          height={48}
+          className="h-12 w-12 shrink-0 rounded-full"
+        />
         <span>
           <span className="block font-semibold">{recommendation.name}</span>
           {details ? (
@@ -464,15 +476,6 @@ function RecommendationCard({
       ) : null}
     </figure>
   )
-}
-
-function getInitials(name: string) {
-  return name
-    .split(',')[0]
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2)
 }
 
 // Same order as the services in content.ts

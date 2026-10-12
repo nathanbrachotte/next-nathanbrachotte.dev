@@ -17,6 +17,7 @@ export interface Recommendation {
   name: string
   role?: string
   origin?: string
+  avatar: string
   text?: string[]
 }
 
@@ -53,12 +54,14 @@ export const recommendations: Recommendation[] = [
     quote:
       'You are doing an awesome job, thank you (in my last I don’t know how many European services – you far outshine…)',
     name: 'Sharon Brandt',
+    avatar: '/images/clients/stiebler/avatars/1.jpg',
     role: 'General Manager, Crown World Mobility New Zealand',
   },
   {
     quote:
       'Wir schätzen die Zusammenarbeit mit Ihnen sehr und bekommen nur gute Rückmeldungen unserer Mitarbeiter über Ihre Betreuung.',
     name: 'Melanie Sy',
+    avatar: '/images/clients/stiebler/avatars/2.jpg',
     role: 'Human Resources, Fincompare',
     text: [
       'Wir schätzen die Zusammenarbeit mit Ihnen sehr und bekommen nur gute Rückmeldungen unserer Mitarbeiter über Ihre Betreuung.',
@@ -69,6 +72,7 @@ export const recommendations: Recommendation[] = [
     quote:
       'As late repatriates (Spätaussiedler) our case involved documents that not every official is familiar with, but she took the time to understand everything, scheduled all our appointments, and personally accompanied us.',
     name: 'Mariia Zelenova, Stanislav Kirillov',
+    avatar: '/images/clients/stiebler/avatars/3.jpg',
     origin: 'relocating from Kazakhstan',
     text: [
       'Franziska was an incredible support to our family throughout our relocation process in Berlin.',
@@ -79,6 +83,7 @@ export const recommendations: Recommendation[] = [
   {
     quote: 'She is a meticulous and consummate professional.',
     name: 'Lukas Stephan',
+    avatar: '/images/clients/stiebler/avatars/4.jpg',
     role: 'Lead Security Engineer',
     origin: 'from USA, relocating from UK',
     text: [
@@ -90,6 +95,7 @@ export const recommendations: Recommendation[] = [
   {
     quote: 'She was extremely helpful and pleasant.',
     name: 'Nataliia Androsova',
+    avatar: '/images/clients/stiebler/avatars/5.jpg',
     role: 'Software Engineer',
     origin: 'relocating from Ukraine',
     text: [
@@ -101,6 +107,7 @@ export const recommendations: Recommendation[] = [
   {
     quote: 'Franziska´s knowledge was amazing.',
     name: 'Tomer Turbovich',
+    avatar: '/images/clients/stiebler/avatars/6.jpg',
     origin: 'from Israel, relocating from Thailand',
     text: [
       'I would highly recommend Franziska as a relocation agent for Berlin.',
@@ -114,6 +121,7 @@ export const recommendations: Recommendation[] = [
     quote:
       'Franziska …. was there for us at every step of the way and it is thanks to her that we are living in the house that we wanted the most.',
     name: 'Burçin Guçlu',
+    avatar: '/images/clients/stiebler/avatars/7.jpg',
     origin: 'from Turkey, relocating from Spain',
     text: [
       'We had the pleasure to work with Mrs. Franziska Stiebler-Liebenberg in the summer of 2020, when the pandemic made many things even more difficult. My husband was not in Berlin since long while I was relocating from Barcelona.',
@@ -125,6 +133,7 @@ export const recommendations: Recommendation[] = [
     quote:
       'I finally have an apartment that I like after 3 long years in Berlin… She will fight for you and with you throughout the process.',
     name: 'Ritwick Mukherjee',
+    avatar: '/images/clients/stiebler/avatars/8.jpg',
     origin: 'from India, relocating within Berlin',
     text: [
       'Thanks to Ms. Franziska, I finally have an apartment that I like in Berlin after 3 long years. I can totally recommend her services to anyone looking to relocate in Berlin. Her services allowed me to focus on my new job and helped me avoid spending hours on ImmoScout.',
@@ -266,8 +275,7 @@ export const content: Record<Lang, SiteContent> = {
     call: 'Call',
     email: 'Email',
     footerLegal: 'Impressum & Data Protection',
-    previewNotice:
-      'Preview of your new website. Not live yet.',
+    previewNotice: 'Preview of your new website. Not live yet.',
   },
   de: {
     nav: {
