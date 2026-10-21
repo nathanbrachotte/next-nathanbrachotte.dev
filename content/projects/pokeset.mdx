@@ -1,0 +1,31 @@
+---
+title: 'Pokémon Set Binder'
+publishedAt: '2026-10-20'
+summary: 'Every English Pokémon TCG set from 1999 to now, with logos, set symbols and the full card list of each set. Mark the sets you collect.'
+image: '/images/projects/pokeset/logo.webp'
+missions:
+  - Design
+  - Web
+tools:
+  - Astro
+  - TypeScript
+projectType: 'app'
+projectUrl: 'https://pokeset.nathan-brachotte-pro-cloudflare.workers.dev'
+isSideProject: true
+status: 'live'
+---
+
+A binder for Pokémon TCG collectors. It lists all 177 English sets in release order, grouped by era, and gives each one its own page with every card in it.
+
+## Features
+
+- **Every set since 1999**: official logo, set symbol, release date, set code and card count, filterable by era and searchable by name or code
+- **Full card lists**: 20,000+ cards with scans, searchable by name or number, with a high-res viewer you can step through with the arrow keys
+- **Read the card corner**: real cards from each era show where to find the set symbol, card number and regulation mark
+- **Track your collection**: mark the sets you collect, saved in your browser, no account
+
+## Technical Stack
+
+- Astro static site, one page per set (178 pages) built ahead of time
+- Card data and scans pulled at build time from the TCGdex and pokemontcg.io APIs, with every image link checked
+- Hosted on Cloudflare Workers static assets
