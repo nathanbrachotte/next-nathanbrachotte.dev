@@ -1,12 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 // Client slug -> Basic Auth credentials. Passwords live in env vars.
-const clientCredentials: Record<string, { user: string; password?: string }> = {
-  'stiebler-relocation': {
-    user: 'franziska',
-    password: process.env.CLIENT_STIEBLER_RELOCATION_PASSWORD,
-  },
-}
+const clientCredentials: Record<string, { user: string; password?: string }> =
+  {}
 
 export function middleware(request: NextRequest) {
   const slug = request.nextUrl.pathname.split('/')[2]
@@ -20,7 +16,8 @@ export function middleware(request: NextRequest) {
   }
 
   const authorization = request.headers.get('authorization')
-  const expected = 'Basic ' + btoa(`${credentials.user}:${credentials.password}`)
+  const expected =
+    'Basic ' + btoa(`${credentials.user}:${credentials.password}`)
 
   if (authorization !== expected) {
     return new NextResponse('Authentication required', {
