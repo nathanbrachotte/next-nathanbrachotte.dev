@@ -114,6 +114,11 @@ export const startupDirectoryCategories: StartupDirectoryCategory[] = [
         url: 'https://yourwebsitescore.com/',
         note: 'Free site analysis, then a score badge page with a backlink',
       },
+      {
+        name: 'scorebadge',
+        url: 'https://scorebadge.com/',
+        note: 'Free score for speed, SEO, security and AI readiness, public score page with a backlink and a badge',
+      },
       { name: 'Startup Stash', url: 'https://startupstash.com/' },
       { name: 'Startup Buffer', url: 'https://startupbuffer.com/' },
       {
