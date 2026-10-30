@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { simpleAnalyticsCredit } from './simpleAnalyticsCredit'
 
 // Deliberately not in the navbar: these are personal-admin pages, not content.
 const footerLinks = [{ href: '/domains', name: 'Domains' }]
@@ -17,20 +18,10 @@ export default function Footer() {
           </Link>
         ))}
         {/* Required to stay on the Simple Analytics free plan */}
-        <a
-          href="https://www.simpleanalytics.com?utm_source=nathanbrachotte.dev&utm_content=badge"
-          referrerPolicy="origin"
-          target="_blank"
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element -- external badge SA checks for */}
-          <img
-            src="https://simpleanalyticsbadges.com/nathanbrachotte.dev?mode=dark&counter=false"
-            alt="Simple Analytics"
-            loading="lazy"
-            referrerPolicy="no-referrer"
-            crossOrigin="anonymous"
-          />
-        </a>
+        <div
+          className="text-xs"
+          dangerouslySetInnerHTML={{ __html: simpleAnalyticsCredit }}
+        />
         <span className="ml-auto">
           © {new Date().getFullYear()} Nathan Brachotte
         </span>
