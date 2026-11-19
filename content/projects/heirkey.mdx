@@ -1,0 +1,41 @@
+---
+title: 'Heirkey'
+publishedAt: '2026-11-16'
+summary: "A vault for your digital estate with a dead man's switch. Store logins, documents and wishes, choose who gets each one, and they are released only if you stop checking in."
+image: '/images/projects/heirkey/logo.svg'
+missions:
+  - Web
+  - Design
+  - Product Strategy
+tools:
+  - Next
+  - TypeScript
+  - Shadcn
+  - Tailwind
+  - Supabase
+  - Resend
+projectType: 'app'
+projectUrl: 'https://heirkey.app'
+isSideProject: true
+status: 'wip'
+---
+
+Heirkey answers one question: when I die or can't be reached, how do the right people get into my accounts? You store logins, devices, contracts, documents and wishes, and pick who receives each entry. Entries are encrypted in your browser, so the server stores only ciphertext. The site is live in German and English. I'm finishing the legal pages and billing before launch.
+
+## Features
+
+- **Start from a checklist**: tick what you use from about 70 common accounts, brokers, wallets and contracts, then fill each one in with a guided template
+- **Assign per entry**: your sister gets the bank account, a friend gets the laptop, both get your wishes
+- **Dead man's switch**: confirm you're fine with one click in an email, on a schedule you choose. If check-ins stop, reminders, a grace period and a final warning follow before anything is released
+- **Verifiers**: name up to 5 people who have to confirm before a release, with a quorum such as 2 of 3
+- **Encrypted attachments**: up to 5 files of 10 MB per entry
+- **Export**: an encrypted backup and a printable emergency sheet
+
+## Technical Stack
+
+- Next.js on Cloudflare Workers through OpenNext, with an hourly Cron Trigger that runs the switch
+- Supabase in Frankfurt for Postgres, sign-in and file storage, with row-level security on every table
+- libsodium in the browser: Argon2id for the passphrase, XChaCha20-Poly1305 for entries, X25519 sealed boxes to share a key with a contact
+- A contact's copy of a key is useless on its own. The server holds the missing half and hands it over only at release
+- Emails sent through Resend's EU region
+- Unit tests for the switch's state machine, and Playwright tests that run the full flow from creating a vault to a contact reading their entries

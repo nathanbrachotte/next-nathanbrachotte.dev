@@ -56,6 +56,8 @@ export const ownedDomains: OwnedDomain[] = [
   { name: 'gitelarandonnee.fr' },
   { name: 'tarotmultijoueur.fr' },
   { name: 'pantou-fle.fr' },
+  { name: 'leafkeep.app' },
+  { name: 'heirkey.app' },
   { name: 'brachotte.com', status: 'redirect', note: 'Used as a redirect.' },
   {
     name: 'soulether.com',
