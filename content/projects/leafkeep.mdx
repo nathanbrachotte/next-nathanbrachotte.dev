@@ -1,0 +1,43 @@
+---
+title: 'Leafkeep'
+publishedAt: '2026-11-17'
+summary: 'Houseplant care for the whole household. Identify a plant from a photo, get a watering schedule that fits your light and season, and share one list with everyone at home. No subscription.'
+image: '/images/projects/leafkeep/logo.svg'
+missions:
+  - Mobile
+  - Web
+  - Design
+  - Product Strategy
+tools:
+  - ReactNative
+  - TypeScript
+  - Next
+  - Tailwind
+  - Supabase
+  - Resend
+  - PostHog
+projectType: 'app'
+projectUrl: 'https://leafkeep.app'
+isSideProject: true
+status: 'wip'
+---
+
+Leafkeep is a plant care app for homes where more than one person waters. Everyone shares one plant list, so nobody waters twice and nobody forgets. The website and waitlist are live. The iOS and Android apps are in testing.
+
+## Features
+
+- **Identify from a photo**: take a picture, get the three most likely species with a confidence score, confirm with one tap
+- **A schedule that fits the home**: watering and feeding intervals come from the species, the light, the pot size and the season
+- **One list per household**: invite people with a link. Everyone sees the same tasks, grouped by room, and who did what
+- **Pet and child warnings**: plants toxic to cats, dogs or toddlers are flagged before you add them
+- **Care log**: every watering, feed and repot is recorded, with notes and photos
+- **No subscription**: free for up to 5 plants, then one payment that unlocks the whole household
+
+## Technical Stack
+
+- React Native with Expo for iOS and Android, in English, French and German
+- Supabase for the database, sign-in, photo storage and Edge Functions. A daily cron job sends the push reminders
+- Plant identification through the Plant.id API, called from an Edge Function with a daily limit per household
+- One-time purchase through RevenueCat
+- Marketing site in Next.js with 20 species care guides, hosted on Cloudflare Workers
+- Emails built with React Email and sent through Resend
